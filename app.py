@@ -15,7 +15,7 @@ keepalive_kwargs = {
   "keepalives_count": 5
 }
 
-postgreSQL_pool = psycopg2.pool.SimpleConnectionPool(1,20,
+postgreSQL_pool = psycopg2.pool.SimpleConnectionPool(1,5,
                         database=credentials.database,
                         host=credentials.host,
                         user=credentials.user,
