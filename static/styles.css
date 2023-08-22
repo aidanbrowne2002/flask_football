@@ -18,3 +18,10 @@
     width: 35%;
     vertical-align: top; /* This aligns the top of the images if they have different heights */
 }
+div#loading {
+    width: 480px;
+    height: 480px;
+    display: none;
+    background: url(/static/images/loading.gif) no-repeat;
+    cursor: wait;
+    }

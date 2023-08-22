@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+
+{% block content %}
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>Find a player</title>
 </head>
 <body>
+    <div id="loading"></div>
+    <div id="content">
     <form id="myForm" method="POST" action="/findplayer">
         <label for="player">Player name</label>
         <input type="text" id="player" name="player" value="{{ player }}">
-        <button type="submit">Submit</button>
+        <button type="submit" id="submitButton">Submit</button>
     </form>
 
 
@@ -42,6 +46,21 @@
 
     </script>
 
+    <script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();
+        }
+// ]]></script>
+    <script>
+        $(document).ready(function() {
+    $("#submitButton").on('click', function() {
+        loading();
+    });
+});
+
+    </script>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -51,4 +70,4 @@
     {% endwith %}
 
 </body>
-</html>
+{% endblock %}
