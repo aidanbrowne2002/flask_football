@@ -62,10 +62,16 @@ def findPlayer():
 
 @app.route('/player/<player>')
 def player(player):
-    passingmapPNG.generate_player_plot(player,1, get_db_pool())
-    passingmapPNG.generate_player_plot(player, 0, get_db_pool())
-    stats = get.stats(player,get_db_pool())
-    xGgraph4.genGraphs(player)
+    try:
+        passingmapPNG.generate_player_plot(player,1, get_db_pool())
+        passingmapPNG.generate_player_plot(player, 0, get_db_pool())
+    except:
+        pass
+    try:
+        stats = get.stats(player,get_db_pool())
+        xGgraph4.genGraphs(player)
+    except:
+        pass
     return render_template('player.html', player_name = session['player'], player=player, stats = stats)
 
 
