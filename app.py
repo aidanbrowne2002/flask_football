@@ -8,22 +8,23 @@ from xGgraph4 import genGraphs
 app = Flask(__name__)
 app.secret_key = "jfoiajfoijdz"
 
-keepalive_kwargs = {
-  "keepalives": 1,
-  "keepalives_idle": 60,
-  "keepalives_interval": 10,
-  "keepalives_count": 5
-}
 
-postgreSQL_pool = psycopg2.pool.SimpleConnectionPool(1,5,
-                        database=credentials.database,
-                        host=credentials.host,
-                        user=credentials.user,
-                        password=credentials.password,
-                        port=credentials.port)
 
 @app.route('/')
 def hello_world():  # put application's code here
+    keepalive_kwargs = {
+        "keepalives": 1,
+        "keepalives_idle": 60,
+        "keepalives_interval": 10,
+        "keepalives_count": 5
+    }
+
+    postgreSQL_pool = psycopg2.pool.SimpleConnectionPool(1, 5,
+                                                         database=credentials.database,
+                                                         host=credentials.host,
+                                                         user=credentials.user,
+                                                         password=credentials.password,
+                                                         port=credentials.port)
     return render_template('index.html')
 
 
