@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{player_name}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <a href="/" class="button-link">Home</a>
+    <h1>{{ player_name }}</h1>
+    <img src="{{ url_for('static', filename='images/successful_passes/' + player + '.png') }}" alt="successful Passing Map" class="inline-image">
+    <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player + '.png') }}" alt="unsuccessful Passing Map" class="inline-image">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Stats</th>
+                <th>Total</th>
+                <th>Successful</th>
+                <th>Failed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in stats %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <img src="{{ url_for('static', filename='images/ranks/goals/' + player + '.png') }}" alt="Minutes/goals" class="inline-image">
+    <img src="{{ url_for('static', filename='images/ranks/xG/' + player + '.png') }}" alt="Miinutes/xg" class="inline-image">
+</body>
+</html>

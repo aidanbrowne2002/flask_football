@@ -1,0 +1,20 @@
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007BFF;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-link:hover {
+    background-color: #0056b3;
+}
+
+.inline-image {
+    display: inline-block;
+    width: 35%;
+    vertical-align: top; /* This aligns the top of the images if they have different heights */
+}
