@@ -4,9 +4,17 @@ from data import get, credentials
 import passingmapPNG
 import psycopg2
 from xGgraph4 import genGraphs
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 app = Flask(__name__)
 app.secret_key = "jfoiajfoijdz"
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
 
 global postgreSQL_pool
 postgreSQL_pool = None
@@ -29,12 +37,78 @@ def get_db_pool():
                             **keepalive_kwargs)
     return postgreSQL_pool
 
+class User(UserMixin):
+    def __init__(self, id, username):
+        self.id = id
+        self.username = username
+
+    @staticmethod
+    def get(user_id):
+        get_db_pool()
+        conn = postgreSQL_pool.getconn()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, username FROM users WHERE id = %s", (user_id,))
+            user_data = cursor.fetchone()
+            if user_data:
+                return User(id=user_data[0], username=user_data[1])
+        finally:
+            cursor.close()
+            postgreSQL_pool.putconn(conn)
+        return None
+
+    @staticmethod
+    def authenticate(username, password):
+        get_db_pool()
+        conn = postgreSQL_pool.getconn()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, username, password FROM users WHERE username = %s", (username,))
+            user_data = cursor.fetchone()
+            if user_data and check_password_hash(user_data[2], password):
+                return User(id=user_data[0], username=user_data[1])
+        finally:
+            cursor.close()
+            postgreSQL_pool.putconn(conn)
+        return None
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = User.authenticate(username, password)
+        if user:
+            login_user(user)
+            return redirect('/') # assuming you have a dashboard route
+        else:
+            flash('Invalid credentials', 'danger')
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'success')
+    return redirect('/')  # redirect to main page or you can redirect to 'login'
+
+
+
+
+
 @app.route('/')
 def hello_world():  # put application's code here
     return render_template('index.html')
 
 
+
 @app.route('/findplayer', methods=['GET', 'POST'])
+@login_required
 def findPlayer():
     players = get.players(get_db_pool())
     names_to_ids = {}
@@ -61,6 +135,7 @@ def findPlayer():
 
 
 @app.route('/player/<player>')
+@login_required
 def player(player):
     try:
         passingmapPNG.generate_player_plot(player,1, get_db_pool())
