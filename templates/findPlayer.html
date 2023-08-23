@@ -12,53 +12,41 @@
 <body>
     <div id="loading"></div>
     <div id="content">
-    <form id="myForm" method="POST" action="/findplayer">
-        <label for="player">Player name</label>
-        <input type="text" id="player" name="player" value="{{ player }}">
-        <button type="submit" id="submitButton">Submit</button>
-    </form>
-
-
-
+        <form id="myForm" method="POST" action="/findplayer">
+            <label for="player">Player name</label>
+            <input type="text" id="player" name="player" value="{{ player }}">
+            <input type="hidden" id="playerName" name="playerName" value="">
+            <button type="submit" id="submitButton">Submit</button>
+        </form>
+    </div>
 
     <script>
-    $( function() {
+    $(document).ready(function() {
         var availableTags = {{ autocompleteData|tojson|safe }};
-        var nameToID = {{ nameToID|tojson|safe }};
 
         $("#player").autocomplete({
-          source: availableTags,
-          autoFocus: true
+            source: availableTags,
+            autoFocus: true
         });
 
         $('#myForm').on('submit', function(e){
-            var name1 = $('#player').val();
+            var selectedName = $('#player').val();
 
-            if(!availableTags.includes(name1)) {
+            if (!availableTags.includes(selectedName)) {
                 alert('Please enter valid names.');
                 e.preventDefault();
             } else {
-                // Change the value of the input to the ID before submitting
-                $('#player').val(nameToID[name1]);
+                // Set the selected name as a hidden input value
+                $('#playerName').val(selectedName);
+                showLoading(); // Show the loading screen
             }
         });
-    });
 
-    </script>
-
-    <script type="text/javascript">// <![CDATA[
-        function loading(){
+        function showLoading() {
             $("#loading").show();
             $("#content").hide();
         }
-// ]]></script>
-    <script>
-        $(document).ready(function() {
-    $("#submitButton").on('click', function() {
-        loading();
     });
-});
-
     </script>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -68,6 +56,5 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-
 </body>
 {% endblock %}

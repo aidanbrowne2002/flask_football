@@ -120,18 +120,20 @@ def findPlayer():
         fullnames.append(full_name)
 
     if request.method == 'POST':
-        player_id = request.form.get('player')  # Now we're getting an ID, not a name
-        name = get.playername(player_id, get_db_pool())
-        session['player'] = f"{name[0]} {name[1]}"
+        selected_name = request.form.get('playerName')  # Get the selected player name
+        player_id = names_to_ids.get(selected_name)  # Look up the corresponding player ID
+        print(player_id)  # For debugging purposes
+        session['player'] = selected_name
 
-        # Check if the received player_id exists in our data
-        if player_id in [str(id) for id in names_to_ids.values()]:
+        if player_id:
             return redirect(f"player/{player_id}")
         else:
             flash('Player not found.', 'error')
             return redirect(url_for('findPlayer'))
 
     return render_template('findPlayer.html', autocompleteData=fullnames, nameToID=names_to_ids)
+
+
 
 
 @app.route('/player/<player>')
