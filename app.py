@@ -151,7 +151,7 @@ def player(player):
         pass
     return render_template('player.html', player_name = session['player'], player=player, stats = stats)
 
-@app.route('/comparison')
+@app.route('/comparison', methods=['GET', 'POST'])
 @login_required
 def comparison():
     players = get.players(get_db_pool())
@@ -162,8 +162,42 @@ def comparison():
         full_name = f"{first_name} {last_name}"
         names_to_ids[full_name] = player_id
         fullnames.append(full_name)
+
+    if request.method == 'POST':
+        selected_names = request.form.getlist('playerName')  # Get the selected player names as a list
+        print (selected_names)
+        player_ids = [names_to_ids.get(name) for name in selected_names]  # Look up the corresponding player IDs
+        print(player_ids)  # For debugging purposes
+        session['players'] = selected_names
+
+        if all(player_ids):
+            for p in player_ids:
+                try:
+                    passingmapPNG.generate_player_plot(p, 1, get_db_pool())
+                    passingmapPNG.generate_player_plot(p, 0, get_db_pool())
+                except:
+                    pass
+                try:
+                    stats = get.stats(p, get_db_pool())
+                    xGgraph4.genGraphs(p)
+                except:
+                    pass
+            return render_template('comparison.html', autocompleteData=fullnames, compare = True, players = player_ids, playernames = selected_names, player1 = str(player_ids[0]), player2 = str(player_ids[1]))
+        else:
+            flash('One or more players not found.', 'error')
+            print ("One or more players not found.")
+            return redirect(url_for('comparison'))
+
     return render_template('comparison.html', autocompleteData=fullnames)
 
+
+@app.route('/load_stats', methods=['POST'])
+def load_stats():
+  playerIDs = request.json.get('playerIDs')
+  # Process the playerIDs and load the stats
+  print (playerIDs)
+
+  return jsonify({'message': 'Stats loaded'})  # Return a response to the frontend
 
 
 if __name__ == '__main__':
