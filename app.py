@@ -151,6 +151,21 @@ def player(player):
         pass
     return render_template('player.html', player_name = session['player'], player=player, stats = stats)
 
+@app.route('/comparison')
+@login_required
+def comparison():
+    players = get.players(get_db_pool())
+    names_to_ids = {}
+    fullnames = []
+    for player in players:
+        player_id, first_name, last_name = player
+        full_name = f"{first_name} {last_name}"
+        names_to_ids[full_name] = player_id
+        fullnames.append(full_name)
+    return render_template('comparison.html', autocompleteData=fullnames)
+
+
 
 if __name__ == '__main__':
     app.run()
+

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Comparison{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <div style="display: flex;">
+        <div style="flex: 1;">
+            <h1>Player 1</h1>
+            <input type="text" id="player1Name" name="player1Name" value="{{ player }}">
+            <!-- Add player 1 stats and visualization here -->
+        </div>
+        <div style="flex: 1;">
+            <h1>Player 2</h1>
+            <input type="text" id="player2Name" name="player2Name" value="{{ player }}">
+            <!-- Add player 2 stats and visualization here -->
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        var availableTags = {{ autocompleteData|tojson|safe }};
+
+        $('#player1Name, #player2Name').autocomplete({
+            source: availableTags,
+            autoFocus: true
+        });
+    });
+</script>
+{% endblock %}
