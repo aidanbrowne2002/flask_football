@@ -5,15 +5,25 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>{% block title %}{% endblock %}</title>
     <style>
-        body {
-            background-color: #333;
-            color: #fff;
+        .navbar li.active a {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <header>
-        <!-- Add header content here -->
+        <div class="navbar">
+            <ul>
+                <li{% if active_page == 'home' %} class="active"{% endif %}><a href="/">Home</a></li>
+                <li{% if active_page == 'findplayer' %} class="active"{% endif %}><a href="/findplayer">Find Player</a></li>
+                <li{% if active_page == 'comparison' %} class="active"{% endif %}><a href="/comparison">Comparison</a></li>
+                {% if current_user.is_authenticated %}
+                    <li{% if active_page == 'logout' %} class="active"{% endif %}><a href="/logout">Logout</a></li>
+                {% else %}
+                    <li{% if active_page == 'login' %} class="active"{% endif %}><a href="/login">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </header>
 
     <div class="content">
@@ -21,7 +31,9 @@
     </div>
 
     <footer>
-        <!-- Add footer content here -->
+        <div class="footer">
+            <p>This is the footer content.</p>
+        </div>
     </footer>
 </body>
 </html>

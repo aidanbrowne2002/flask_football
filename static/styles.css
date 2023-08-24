@@ -1,3 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
 form {
     display: flex;
     justify-content: center;
@@ -46,13 +53,36 @@ form {
     width: 35%;
     vertical-align: top; /* This aligns the top of the images if they have different heights */
 }
-div#loading {
-    width: 480px;
-    height: 480px;
+#loader {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    margin-top: -120px;
+    margin-left: -70px;
     display: none;
-    background: url(/static/images/loading.gif) no-repeat;
-    cursor: wait;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #007bff;
+    border-bottom: 16px solid #007bff;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
     }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 .comparison-container {
     display: flex;
@@ -92,4 +122,51 @@ div#loading {
 }
 .centered-button {
     margin: auto;
+}
+body {
+    background-color: #333;
+    color: #fff;
+}
+.navbar {
+    background-color: #007BFF;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar li {
+    margin-right: 10px;
+}
+
+.navbar li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.navbar li a:hover {
+    background-color: #0056b3;
+}
+.navbar li.active a {
+            background-color: #0056b3;
+        }
+
+.footer {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }

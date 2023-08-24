@@ -103,7 +103,7 @@ def logout():
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return render_template('index.html')
+    return render_template('index.html', active_page = 'home')
 
 
 
@@ -122,7 +122,6 @@ def findPlayer():
     if request.method == 'POST':
         selected_name = request.form.get('playerName')  # Get the selected player name
         player_id = names_to_ids.get(selected_name)  # Look up the corresponding player ID
-        print(player_id)  # For debugging purposes
         session['player'] = selected_name
 
         if player_id:
@@ -131,7 +130,7 @@ def findPlayer():
             flash('Player not found.', 'error')
             return redirect(url_for('findPlayer'))
 
-    return render_template('findPlayer.html', autocompleteData=fullnames, nameToID=names_to_ids)
+    return render_template('findPlayer.html', autocompleteData=fullnames, nameToID=names_to_ids, active_page = 'findplayer')
 
 
 
@@ -149,7 +148,7 @@ def player(player):
         xGgraph4.genGraphs(player)
     except:
         pass
-    return render_template('player.html', player_name = session['player'], player=player, stats = stats)
+    return render_template('player.html', player_name = session['player'], player=player, stats = stats, active_page = 'player')
 
 @app.route('/comparison', methods=['GET', 'POST'])
 @login_required
@@ -157,6 +156,7 @@ def comparison():
     players = get.players(get_db_pool())
     names_to_ids = {}
     fullnames = []
+    selected_names = session.get('players', [])  # Get the previously selected names from the session, default to an empty list
     for player in players:
         player_id, first_name, last_name = player
         full_name = f"{first_name} {last_name}"
@@ -165,7 +165,11 @@ def comparison():
 
     if request.method == 'POST':
         selected_names = request.form.getlist('playerName')  # Get the selected player names as a list
-        print (selected_names)
+        if selected_names[0] == '':
+            selected_names[0] = session.get('players', [])[0]
+        if selected_names[1] == '':
+            selected_names[1] = session.get('players', [])[1]
+        print(selected_names)
         player_ids = [names_to_ids.get(name) for name in selected_names]  # Look up the corresponding player IDs
         print(player_ids)  # For debugging purposes
         session['players'] = selected_names
@@ -182,13 +186,14 @@ def comparison():
                     xGgraph4.genGraphs(p)
                 except:
                     pass
-            return render_template('comparison.html', autocompleteData=fullnames, compare = True, players = player_ids, playernames = selected_names, player1 = str(player_ids[0]), player2 = str(player_ids[1]))
+            return render_template('comparison.html', autocompleteData=fullnames, compare=True, players=player_ids, playernames=selected_names, player1=str(player_ids[0]), player2=str(player_ids[1]), active_page='comparison')
         else:
             flash('One or more players not found.', 'error')
-            print ("One or more players not found.")
+            print("One or more players not found.")
             return redirect(url_for('comparison'))
 
-    return render_template('comparison.html', autocompleteData=fullnames)
+    return render_template('comparison.html', autocompleteData=fullnames, active_page='comparison')
+
 
 
 @app.route('/load_stats', methods=['POST'])

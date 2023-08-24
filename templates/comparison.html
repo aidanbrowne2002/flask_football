@@ -37,8 +37,7 @@
         </div>
     </div>
 </form>
-    <div id="loading" style="display: none;">
-    <img src="/static/images/loading.gif" alt="Loading" />
+    <div id="loader">
     </div>
 
 
@@ -52,7 +51,7 @@
         });
 
         $('#loadStatsButton').click(function() {
-            $('#loading').show();
+            $('#loader').show();
             $('.form-container').hide();
             // You can add more elements to hide here
         });

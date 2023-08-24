@@ -10,7 +10,7 @@
     <title>Find a player</title>
 </head>
 <body>
-    <div id="loading"></div>
+    <div id="loader"></div>
     <div id="content">
         <form id="myForm" method="POST" action="/findplayer">
             <label for="player">Player name</label>
@@ -43,7 +43,7 @@
         });
 
         function showLoading() {
-            $("#loading").show();
+            $("#loader").show();
             $("#content").hide();
         }
     });
