@@ -113,6 +113,8 @@ def findPlayer():
     players = get.players(get_db_pool())
     names_to_ids = {}
     fullnames = []
+    if 'players' not in session:
+        session['players'] = []
     for player in players:
         player_id, first_name, last_name = player
         full_name = f"{first_name} {last_name}"
