@@ -165,7 +165,7 @@ def comparison():
     fullnames = []
     selected_names = session.get('players', ['',''])  # Get the previously selected names from the session, default to an empty list
     if len(session.get('players')) == 1:
-        session['players'][1] = session.get('players')[0]
+        session['players'].append(session.get('players')[0])
 
     for player in players:
         player_id, first_name, last_name = player
