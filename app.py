@@ -123,9 +123,13 @@ def findPlayer():
 
     if request.method == 'POST':
         selected_name = request.form.get('playerName')  # Get the selected player name
-        session['players'][0] = selected_name
+
         player_id = names_to_ids.get(selected_name)  # Look up the corresponding player ID
         session['player'] = selected_name
+        if session['players'][0]:
+            session['players'][0] = selected_name
+        else:
+            session['players'].append(selected_name)
 
         if player_id:
             return redirect(f"player/{player_id}")
