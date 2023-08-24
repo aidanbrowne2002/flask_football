@@ -164,7 +164,7 @@ def comparison():
     names_to_ids = {}
     fullnames = []
     selected_names = session.get('players', ['',''])  # Get the previously selected names from the session, default to an empty list
-    if not session.get('players')[1]:
+    if len(session.get('players')) == 1:
         session['players'][1] = session.get('players')[0]
 
     for player in players:
