@@ -121,6 +121,7 @@ def findPlayer():
 
     if request.method == 'POST':
         selected_name = request.form.get('playerName')  # Get the selected player name
+        session['players'][0] = selected_name
         player_id = names_to_ids.get(selected_name)  # Look up the corresponding player ID
         session['player'] = selected_name
 
@@ -156,18 +157,19 @@ def comparison():
     players = get.players(get_db_pool())
     names_to_ids = {}
     fullnames = []
-    selected_names = session.get('players', [])  # Get the previously selected names from the session, default to an empty list
+    selected_names = session.get('players', ['',''])  # Get the previously selected names from the session, default to an empty list
     for player in players:
         player_id, first_name, last_name = player
         full_name = f"{first_name} {last_name}"
         names_to_ids[full_name] = player_id
         fullnames.append(full_name)
 
-    if request.method == 'POST':
-        selected_names = request.form.getlist('playerName')  # Get the selected player names as a list
-        if selected_names[0] == '':
+    if request.method == 'POST' or (session.get('players', [])[0] and session.get('players', [])[1]):
+        if request.form.getlist('playerName'):
+            selected_names = request.form.getlist('playerName')  # Get the selected player names as a list
+        if not selected_names or selected_names[0] == '':
             selected_names[0] = session.get('players', [])[0]
-        if selected_names[1] == '':
+        if not selected_names or selected_names[1] == '':
             selected_names[1] = session.get('players', [])[1]
         print(selected_names)
         player_ids = [names_to_ids.get(name) for name in selected_names]  # Look up the corresponding player IDs

@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{player_name}}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <a href="/" class="button-link">Home</a>
+{% extends 'base.html' %}
+
+{% block content %}
     <h1>{{ player_name }}</h1>
     <img src="{{ url_for('static', filename='images/successful_passes/' + player + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
     <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player + '.png') }}" alt="unsuccessful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
@@ -32,5 +26,4 @@
     </table>
     <img src="{{ url_for('static', filename='images/ranks/goals/' + player + '.png') }}" alt="Minutes/goals" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
     <img src="{{ url_for('static', filename='images/ranks/xG/' + player + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
-</body>
-</html>
+{% endblock %}
