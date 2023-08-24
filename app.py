@@ -126,7 +126,7 @@ def findPlayer():
 
         player_id = names_to_ids.get(selected_name)  # Look up the corresponding player ID
         session['player'] = selected_name
-        if session['players'][0]:
+        if session['players']:
             session['players'][0] = selected_name
         else:
             session['players'].append(selected_name)
