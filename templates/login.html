@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <body class="login-page">
 
     {% for category, message in get_flashed_messages(with_categories=true) %}
         <div class="{{ category }}">{{ message }}</div>
@@ -23,5 +21,5 @@
             <input type="submit" value="Login">
         </div>
     </form>
-</body>
-</html>
+    </body>
+{% endblock %}
