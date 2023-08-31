@@ -6,55 +6,95 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
     <form action="/comparison" method="POST">
-    <div class="form-container">
-        <div class="player-container">
-            <h1>Player 1</h1>
+        <div class="form-container">
+        <div class="accordion-container" data-accordion="player1">
+            <h1>{{ playernames[0] }}</h1>
             <input type="text" id="player1Name" name="playerName" value="{{ player }}">
             <!-- Add player 1 stats and visualization here -->
             {% if compare %}
-                <p>{{ playernames[0] }}</p>
-                <img src="{{ url_for('static', filename='images/successful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
-                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player1 + '.png') }}" alt="unsuccessful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
-
+                <div class="accordion">
+                    <h3>Successful Passes</h3>
+                    <div class="accordion-content" info="successful passes">
+                        <img src="{{ url_for('static', filename='images/successful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                    </div>
+                </div>
+                <div class="accordion">
+                    <h3>Unsuccessful Passes</h3>
+                    <div class="accordion-content" info="unsuccessful passes">
+                        <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player1 + '.png') }}" alt="unsuccessful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                    </div>
+                </div>
             {% endif %}
         </div>
-        <div class="player-container">
-            <h1>Player 2</h1>
+        <div class="accordion-container" data-accordion="player2">
+            <h1>{{ playernames[1] }}</h1>
             <input type="text" id="player2Name" name="playerName" value="{{ player }}">
             <!-- Add player 2 stats and visualization here -->
             {% if compare %}
-                <p>{{ playernames[1] }}</p>
-                <img src="{{ url_for('static', filename='images/successful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
-                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player2 + '.png') }}" alt="unsuccessful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
-
+                <div class="accordion">
+                    <h3>Successful Passes</h3>
+                    <div class="accordion-content" info="successful passes">
+                        <img src="{{ url_for('static', filename='images/successful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                    </div>
+                </div>
+                <div class="accordion">
+                    <h3>Unsuccessful Passes</h3>
+                    <div class="accordion-content" info="unsuccessful passes">
+                        <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player2 + '.png') }}" alt="unsuccessful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                    </div>
+                </div>
             {% endif %}
         </div>
-        <div class="center-container">
-            <button type="submit" class="centered-button" id="loadStatsButton">Load Stats</button>
-
+            <div class="center-container">
+                <button type="submit" class="centered-button" id="loadStatsButton">Load Stats</button>
+            </div>
         </div>
-    </div>
-</form>
-    <div id="loader">
-    </div>
-
+    </form>
+    <div id="loader"></div>
 
     <script>
     $(document).ready(function() {
-        var availableTags = {{ autocompleteData|tojson|safe }};
+    var availableTags = {{ autocompleteData|tojson|safe }};
 
-        $('#player1Name, #player2Name').autocomplete({
-            source: availableTags,
-            autoFocus: true
-        });
-
-        $('#loadStatsButton').click(function() {
-            $('#loader').show();
-            $('.form-container').hide();
-            // You can add more elements to hide here
-        });
+    $('#player1Name, #player2Name').autocomplete({
+        source: availableTags,
+        autoFocus: true
     });
-</script>
+
+    $('#loadStatsButton').click(function () {
+        $('#loader').show();
+        $('.form-container').hide();
+        // You can add more elements to hide here
+    });
+
+    // Initialize the accordion widgets
+    var $accordionContainers = $('.accordion-container');
+    var $player1Accordion = $accordionContainers.filter('[data-accordion="player1"]');
+    var $player2Accordion = $accordionContainers.filter('[data-accordion="player2"]');
+
+    $accordionContainers.find('.accordion').accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content"
+    });
+
+      $player1Accordion.find('.accordion').on('accordionactivate', function(event, ui) {
+    var info = ui.newPanel.find('.accordion-content').attr('info');
+    $player2Accordion.find('.accordion').accordion('option', 'active',
+      $player2Accordion.find('[info="' + info + '"]'));
+  });
+
+  $player2Accordion.find('.accordion').on('accordionactivate', function(event, ui) {
+    var info = ui.newPanel.find('.accordion-content').attr('info');
+    $player1Accordion.find('.accordion').accordion('option', 'active',
+      $player1Accordion.find('[info="' + info + '"]'));
+  });
+});
+
+
+
+    </script>
 {% endblock %}
