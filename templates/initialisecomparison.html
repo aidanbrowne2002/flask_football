@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Comparison{% endblock %}
+
+{% block content %}
+
+    <div id="loaderini">
+    </div>
+    <script type="text/javascript">
+        window.onload = function() {
+            // Redirect to another page after the initial page has loaded
+            window.location.href = '/comparison';
+        };
+    </script>
+{% endblock %}

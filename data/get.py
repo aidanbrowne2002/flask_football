@@ -79,3 +79,17 @@ def stats(playerID, postgreSQL_pool):
 
 
     return stats
+
+def playerRanks(postgreSQL_pool, position):
+    # Function to get the ranks of players for a given position
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+
+    query = """select f_name, l_name from players where position = %s and avg_goals > 0
+            order by avg_goals asc"""
+    ps_cursor.execute(query, (position,))
+    data = ps_cursor.fetchall()
+    ps_cursor.close()
+    # release the connection back to connection pool
+    postgreSQL_pool.putconn(ps_connection)
+    return data

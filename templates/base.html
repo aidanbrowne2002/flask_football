@@ -16,7 +16,7 @@
             <ul>
                 <li{% if active_page == 'home' %} class="active"{% endif %}><a href="/">Home</a></li>
                 <li{% if active_page == 'findplayer' %} class="active"{% endif %}><a href="/findplayer">Find Player</a></li>
-                <li{% if active_page == 'comparison' %} class="active"{% endif %}><a href="/comparison">Comparison</a></li>
+                <li{% if active_page == 'comparison' %} class="active"{% endif %}><a href="/initialise_comparison">Comparison</a></li>
                 {% if current_user.is_authenticated %}
                     <li{% if active_page == 'logout' %} class="active"{% endif %}><a href="/logout">Logout</a></li>
                 {% else %}

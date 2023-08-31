@@ -126,10 +126,10 @@ def findPlayer():
 
         player_id = names_to_ids.get(selected_name)  # Look up the corresponding player ID
         session['player'] = selected_name
-        if session['players']:
-            session['players'][0] = selected_name
+        if session['selected_names']:
+            session['selected_names'][0] = selected_name
         else:
-            session['players'].append(selected_name)
+            session['selected_names'].append(selected_name)
 
         if player_id:
             return redirect(f"player/{player_id}")
@@ -157,15 +157,18 @@ def player(player):
         pass
     return render_template('player.html', player_name = session['player'], player=player, stats = stats, active_page = 'player')
 
+@app.route('/initialise_comparison')
+@login_required
+def initialise_comparison():
+    return render_template('initialisecomparison.html', active_page = 'comparison')
+    return redirect(url_for('comparison'))
+
 @app.route('/comparison', methods=['GET', 'POST'])
 @login_required
 def comparison():
     players = get.players(get_db_pool())
     names_to_ids = {}
     fullnames = []
-    selected_names = session.get('players', ['',''])  # Get the previously selected names from the session, default to an empty list
-    if len(session.get('players')) == 1:
-        session['players'].append(session.get('players')[0])
 
     for player in players:
         player_id, first_name, last_name = player
@@ -173,37 +176,51 @@ def comparison():
         names_to_ids[full_name] = player_id
         fullnames.append(full_name)
 
-    if request.method == 'POST' or (session.get('players', [])[0] and session.get('players', [])[1]):
-        if request.form.getlist('playerName'):
-            selected_names = request.form.getlist('playerName')  # Get the selected player names as a list
-        if not selected_names or selected_names[0] == '':
-            selected_names[0] = session.get('players', [])[0]
-        if not selected_names or selected_names[1] == '':
-            selected_names[1] = session.get('players', [])[1]
-        print(selected_names)
-        player_ids = [names_to_ids.get(name) for name in selected_names]  # Look up the corresponding player IDs
-        print(player_ids)  # For debugging purposes
-        session['players'] = selected_names
+    if request.method == 'POST':
+        selected_names = request.form.getlist('playerName')
+        session['selected_names'] = selected_names
+    else:
+        selected_names = session.get('selected_names', ['', ''])
 
-        if all(player_ids):
-            for p in player_ids:
-                try:
-                    passingmapPNG.generate_player_plot(p, 1, get_db_pool())
-                    passingmapPNG.generate_player_plot(p, 0, get_db_pool())
-                except:
-                    pass
-                try:
-                    stats = get.stats(p, get_db_pool())
-                    xGgraph4.genGraphs(p)
-                except:
-                    pass
-            return render_template('comparison.html', autocompleteData=fullnames, compare=True, players=player_ids, playernames=selected_names, player1=str(player_ids[0]), player2=str(player_ids[1]), active_page='comparison')
+    if selected_names[0] == '':
+        if session.get('players'):
+            selected_names[0] = session['players'][0]
         else:
-            flash('One or more players not found.', 'error')
-            print("One or more players not found.")
-            return redirect(url_for('comparison'))
+            striker_1 = get.playerRanks(get_db_pool(), 'Striker')[0]
+            selected_names[0] = f"{striker_1[0]} {striker_1[1]}"
 
-    return render_template('comparison.html', autocompleteData=fullnames, active_page='comparison')
+    if selected_names[1] == '':
+        if session.get('players'):
+            selected_names[1] = session['players'][1]
+        else:
+            striker_2 = get.playerRanks(get_db_pool(), 'Striker')[1]
+            selected_names[1] = f"{striker_2[0]} {striker_2[1]}"
+
+    # Rest of your code remains the same
+    session['selected_names'] = selected_names
+    print (session.get('selected_names'))
+
+    player_ids = [names_to_ids.get(name) for name in session['selected_names']]
+    print(player_ids)  # For debugging purposes
+    session['players'] = session['selected_names']
+
+    if all(player_ids):
+        for p in player_ids:
+            try:
+                passingmapPNG.generate_player_plot(p, 1, get_db_pool())
+                passingmapPNG.generate_player_plot(p, 0, get_db_pool())
+            except:
+                pass
+            try:
+                stats = get.stats(p, get_db_pool())
+                xGgraph4.genGraphs(p)
+            except:
+                pass
+    return render_template('comparison.html', autocompleteData=fullnames, compare=True, players=player_ids,
+                           playernames=session['selected_names'], player1=str(player_ids[0]),
+                           player2=str(player_ids[1]), active_page='comparison')
+
+
 
 
 
