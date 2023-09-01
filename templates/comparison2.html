@@ -54,13 +54,20 @@
                     </tr>
                     <tr class="title">
                         <td>Data 2.1</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Title 2</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>xG</td>
                         <td>Data 2.3</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
-                            <div class="child-data-left">Left Content 2</div>
-                            <div class="child-data-right">Right Content 2</div>
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <p>These graphics show a players xG</p>
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                            </div>
                             <div class="clear"></div>
                         </td>
                     </tr>
