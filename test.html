@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+
+<div class="accordion-container">
+    <div class="accordion">
+        <h3>Player 1</h3>
+        <div class="accordion-content">
+            Player 1 Content
+        </div>
+    </div>
+    <div class="accordion">
+        <h3>Player 2</h3>
+        <div class="accordion-content">
+            Player 2 Content
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.accordion h3').click(function() {
+            var content = $(this).parent().find('.accordion-content');
+            content.slideToggle();
+
+            // Find the other accordion in the same container and toggle its content too
+            var container = $(this).closest('.accordion-container');
+            var otherAccordion = container.find('.accordion').not($(this).parent());
+            var otherContent = otherAccordion.find('.accordion-content');
+            otherContent.slideUp();
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -64,37 +64,15 @@
         autoFocus: true
     });
 
-    $('#loadStatsButton').click(function () {
-        $('#loader').show();
-        $('.form-container').hide();
-        // You can add more elements to hide here
+    $(document).ready(function() {
+        $('.accordion h3').click(function () {
+            // Find the info attribute value of the clicked accordion
+            var infoAttr = $(this).parent().find('.accordion-content').attr('info');
+
+            // Select all accordion contents with the same info attribute and toggle them
+            $('.accordion-content[info="' + infoAttr + '"]').slideToggle();
+        });
     });
-
-    // Initialize the accordion widgets
-    var $accordionContainers = $('.accordion-container');
-    var $player1Accordion = $accordionContainers.filter('[data-accordion="player1"]');
-    var $player2Accordion = $accordionContainers.filter('[data-accordion="player2"]');
-
-    $accordionContainers.find('.accordion').accordion({
-        collapsible: true,
-        active: false,
-        heightStyle: "content"
-    });
-
-      $player1Accordion.find('.accordion').on('accordionactivate', function(event, ui) {
-    var info = ui.newPanel.find('.accordion-content').attr('info');
-    $player2Accordion.find('.accordion').accordion('option', 'active',
-      $player2Accordion.find('[info="' + info + '"]'));
-  });
-
-  $player2Accordion.find('.accordion').on('accordionactivate', function(event, ui) {
-    var info = ui.newPanel.find('.accordion-content').attr('info');
-    $player1Accordion.find('.accordion').accordion('option', 'active',
-      $player1Accordion.find('[info="' + info + '"]'));
-  });
-});
-
-
 
     </script>
 {% endblock %}

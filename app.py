@@ -216,7 +216,7 @@ def comparison():
                 xGgraph4.genGraphs(p)
             except:
                 pass
-    return render_template('comparison.html', autocompleteData=fullnames, compare=True, players=player_ids,
+    return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
                            player2=str(player_ids[1]), active_page='comparison')
 

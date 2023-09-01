@@ -311,55 +311,53 @@ body.login-page form input[type="submit"]:hover {
   to {opacity: 1}
 }
 
-
-/* Your existing CSS code */
-
-/* Your existing CSS code */
-
-.accordion-container {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: 0 10px;
-    align-items: flex-start;
-}
-
-
-.accordion {
-    background-color: #333333;
-    color: #333333;
-    cursor: pointer;
-    width: 100%; /* Set a consistent width for both closed and open states */
-    border: none;
-    text-align: left;
-    outline: none;
-    transition: background-color 0.6s ease;
-    box-sizing: border-box; /* Include padding and border in the width */
-}
-
-.accordion:hover {
-    background-color: #333333;
-}
-
-.accordion.active {
-    background-color: #333333;
-}
-
-.accordion-content {
+.child-row {
     display: none;
-    padding: 0 18px;
-    overflow: hidden;
-    background-color: #333333;
-    width: 100%;
-    box-sizing: border-box;
+}
+
+.child-data {
+    padding: 5px;
+}
+
+.child-data-left {
+    float: left;
+    width: 50%;
+}
+
+.child-data-right {
+    float: left;
+    width: 50%;
 }
 
 
-.accordion.active .accordion-content {
-    display: block;
+.clear {
+    clear: both;
 }
-.ui-widget-content{
-    border-width : 0px;
-}
-/* Your existing CSS code */
 
+/* Center the table */
+.table-container {
+    text-align: center;
+}
+
+/* Adjust the margin for centering */
+table {
+    margin: 0 auto;
+    width: 100%; /* Ensure the table takes the full width */
+    table-layout: fixed; /* Set the table layout to fixed */
+}
+/* Define the width for the 1st and 3rd columns */
+table th:nth-child(1),
+table td:nth-child(1),
+table th:nth-child(3),
+table td:nth-child(3) {
+    width: 150px; /* Adjust the width as per your preference */
+}
+.table-container table tbody tr.title {
+    background-color: #3b3a3a; /* You can adjust the color as needed */
+}
+
+/* Style the dropdown arrow icon */
+.dropdown-icon {
+    cursor: pointer;
+    margin-right: 5px;
+}
