@@ -1,44 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Animation Test</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <style>
-        /* Your CSS styles here */
-    </style>
 </head>
 <body>
+    <div class="title" id="dropdown1">Title</div>
+    <div class="child-row" style="display: none;">Content</div>
 
-<div class="accordion-container">
-    <div class="accordion">
-        <h3>Player 1</h3>
-        <div class="accordion-content">
-            Player 1 Content
-        </div>
-    </div>
-    <div class="accordion">
-        <h3>Player 2</h3>
-        <div class="accordion-content">
-            Player 2 Content
-        </div>
-    </div>
-</div>
+    <script>
+        $(document).ready(function () {
+            $('.title').click(function () {
+                var isOpen = $(this).next('.child-row').is(':visible');
 
-<script>
-    $(document).ready(function() {
-        $('.accordion h3').click(function() {
-            var content = $(this).parent().find('.accordion-content');
-            content.slideToggle();
-
-            // Find the other accordion in the same container and toggle its content too
-            var container = $(this).closest('.accordion-container');
-            var otherAccordion = container.find('.accordion').not($(this).parent());
-            var otherContent = otherAccordion.find('.accordion-content');
-            otherContent.slideUp();
+                if (isOpen) {
+                    $(this).next('.child-row').slideUp(); // Use slideUp for closing
+                } else {
+                    $(this).next('.child-row').slideDown(); // Use slideDown for opening
+                }
+            });
         });
-    });
-</script>
-
+    </script>
 </body>
 </html>
