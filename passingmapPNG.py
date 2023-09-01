@@ -88,6 +88,7 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
 
     # Ensuring values are within [0,1]
     normalized_threat = np.clip(normalized_threat, 0, 1)
+    average_threat = np.mean(normalized_threat)
     cmap = cm
 
     fig, ax = plt.subplots(figsize=(12, 7))
@@ -137,6 +138,6 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
         fig1.savefig(f'static/images/successful_passes/{player_id}.png', transparent = True)
     if (success == 0):
         fig1.savefig(f'static/images/unsuccessful_passes/{player_id}.png', transparent = True)
-
+    return average_threat
 # To generate a plot for a specific player:
 # generate_player_plot(28468)

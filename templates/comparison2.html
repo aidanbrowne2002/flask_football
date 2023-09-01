@@ -43,7 +43,7 @@
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <p>These graphics show a players successful passes and their threat level</p>
-                                <img src="{{ url_for('static', filename='images/color_key.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/color_key_success/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/successful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
@@ -63,7 +63,7 @@
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <p>These graphics show a players unsuccessful passes and their threat level</p>
-                                <img src="{{ url_for('static', filename='images/color_key.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/color_key_unsuccess/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
