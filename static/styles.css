@@ -100,7 +100,7 @@ button.centered-button {
 
 .inline-image {
     display: inline-block;
-    width: 35%;
+    width: 80%;
     vertical-align: top; /* This aligns the top of the images if they have different heights */
 }
 #loader {
@@ -370,12 +370,17 @@ body.login-page form input[type="submit"]:hover {
 
 .child-data-left {
     float: left;
-    width: 50%;
+    width: 40%;
+}
+
+.child-data-middle {
+    float: left;
+    width: 20%; /* Adjust the width as needed */
 }
 
 .child-data-right {
     float: left;
-    width: 50%;
+    width: 40%;
 }
 
 
@@ -387,6 +392,7 @@ body.login-page form input[type="submit"]:hover {
 .table-container {
     text-align: center;
     margin: 5px auto;
+    width: 90%; /* Set the container width to 80% */
 }
 
 /* Adjust the margin for centering */
@@ -395,7 +401,10 @@ table {
     width: 100%; /* Ensure the table takes the full width */
     table-layout: fixed; /* Set the table layout to fixed */
 }
-/* Define the width for the 1st and 3rd columns */
+/* Style the new middle child column */
+
+
+/* Adjust the width for other columns to accommodate the new middle child column */
 table th:nth-child(1),
 table td:nth-child(1),
 table th:nth-child(3),
@@ -403,10 +412,9 @@ table td:nth-child(3) {
     width: 40%; /* Adjust the width as per your preference */
 }
 
-/* Set a specific width for the middle column */
 table th:nth-child(2),
-table td:nth-child(2) {
-    width: 20%; /* Set the middle column to 20% width */
+table td:nth-child(2), {
+    width: 20%; /* Set the middle columns to 20% width */
 }
 .table-container table tbody tr.title {
     background-color: #3b3a3a; /* You can adjust the color as needed */
