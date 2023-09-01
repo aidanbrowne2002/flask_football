@@ -31,10 +31,10 @@
                 </tr>
             </thead>
                 <tbody>
-                        <tr class="title">
-                        <td>Data 1.1</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Passing</td>
-                        <td>Data 1.2</td>
+                        <tr class="title" id="dropdown1">
+                        <td>{{ (p1stats[0][2] / p1stats[0][1] * 100) | round(2) }}%</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Successful Passing</td>
+                        <td>{{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }}%</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
@@ -52,7 +52,28 @@
                     </tr>
                         </td>
                     </tr>
-                    <tr class="title">
+                    <tr class="title" id="dropdown2">
+                        <td>{{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}%</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Unsuccessful Passing</td>
+                        <td>{{ (p2stats[0][3] / p2stats[0][1] * 100) | round(2) }}%</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <p>These graphics show a players unsuccessful passes and their threat level</p>
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                        </td>
+                    </tr>
+                    <tr class="title" id="dropdown3">
                         <td>Data 2.1</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>xG</td>
                         <td>Data 2.3</td>
@@ -71,7 +92,7 @@
                             <div class="clear"></div>
                         </td>
                     </tr>
-                    <tr class="title">
+                    <tr class="title" id="dropdown4">
                         <td>Data 3.1</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Title 3</td>
                         <td>Data 3.3</td>
@@ -90,28 +111,76 @@
     </div>
 
     <script>
-    $(document).ready(function() {
-    var availableTags = {{ autocompleteData|tojson|safe }};
+    $(document).ready(function () {
+        var availableTags = {{ autocompleteData|tojson|safe }};
 
-    $('#player1Name, #player2Name').autocomplete({
-        source: availableTags,
-        autoFocus: true
+        $('#player1Name, #player2Name').autocomplete({
+            source: availableTags,
+            autoFocus: true
+        });
+
+        $('#loadStatsButton').click(function () {
+            $('#loader').show();
+            $('.form-container').hide();
+            $('.table-container').hide(); // Hide .table-container and its children
+            $('.footer').hide();
+        });
+
+        $('.title').each(function () {
+            // Check if a cookie exists for this dropdown
+            var dropdownId = $(this).attr('id');
+            var cookieValue = getCookie(dropdownId);
+
+            if (cookieValue === 'open') {
+                $(this).next('.child-row').show();
+                $(this).find('.dropdown-icon').removeClass('fa-caret-down').addClass('fa-caret-up');
+            }
+        });
+
+        $('.title').click(function () {
+            var dropdownId = $(this).attr('id');
+            var isOpen = $(this).next('.child-row').is(':visible');
+
+            if (isOpen) {
+                $(this).next('.child-row').hide();
+                $(this).find('.dropdown-icon').removeClass('fa-caret-up').addClass('fa-caret-down');
+                // Save the closed state in a cookie
+                setCookie(dropdownId, 'closed', 365);
+            } else {
+                $(this).next('.child-row').show();
+                $(this).find('.dropdown-icon').removeClass('fa-caret-down').addClass('fa-caret-up');
+                // Save the open state in a cookie
+                setCookie(dropdownId, 'open', 365);
+            }
+        });
+
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        // Function to get a cookie by name
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
     });
-
-    $('#loadStatsButton').click(function() {
-        $('#loader').show();
-        $('.form-container').hide();
-        $('.table-container').hide(); // Hide .table-container and its children
-    });
-
-    $('.title').next('.child-row').hide(); // Hide child rows initially
-    $('.title').click(function () {
-        $(this).next('.child-row').toggle();
-        $(this).find('.dropdown-icon').toggleClass('fa-caret-down fa-caret-up');
-    });
-});
-
 </script>
 
 
+    <br>
+    <br>
+    <br>
 {% endblock %}

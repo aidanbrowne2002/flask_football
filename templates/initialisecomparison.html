@@ -7,9 +7,16 @@
     <div id="loaderini">
     </div>
     <script type="text/javascript">
-        window.onload = function() {
-            // Redirect to another page after the initial page has loaded
-            window.location.href = '/comparison';
-        };
-    </script>
+    window.onload = function() {
+        // Redirect to another page after the initial page has loaded
+        window.location.href = '/comparison';
+
+        // Hide all elements with the class "footer"
+        var footers = document.getElementsByClassName('footer');
+        for (var i = 0; i < footers.length; i++) {
+            footers[i].style.display = 'none';
+        }
+    };
+</script>
+
 {% endblock %}

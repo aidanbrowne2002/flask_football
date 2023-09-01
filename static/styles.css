@@ -230,12 +230,10 @@ body {
     background-color: #007BFF;
     color: #fff;
     padding: 20px;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    clear: both; /* Add this property */
     text-align: center;
 }
+
 /* Center the login form on the login page */
 body.login-page form {
     margin-top: 50px;
@@ -413,7 +411,7 @@ table td:nth-child(3) {
 }
 
 table th:nth-child(2),
-table td:nth-child(2), {
+table td:nth-child(2) {
     width: 20%; /* Set the middle columns to 20% width */
 }
 .table-container table tbody tr.title {

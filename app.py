@@ -203,7 +203,7 @@ def comparison():
     player_ids = [names_to_ids.get(name) for name in session['selected_names']]
     print(player_ids)  # For debugging purposes
     session['players'] = session['selected_names']
-
+    stats = []
     if all(player_ids):
         for p in player_ids:
             try:
@@ -212,13 +212,17 @@ def comparison():
             except:
                 pass
             try:
-                stats = get.stats(p, get_db_pool())
+                stats.append(get.stats(p, get_db_pool()))
                 xGgraph4.genGraphs(p)
             except:
                 pass
+        p1stats = stats[0]
+        p2stats = stats[1]
+        print (p1stats)
+        print (p2stats)
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
-                           player2=str(player_ids[1]), active_page='comparison')
+                           player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats)
 
 
 
