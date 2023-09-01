@@ -9,13 +9,16 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
+    <div class="form-container">
+        <form action="/comparison" method="POST">
+            <h1>Player Comparison</h1>
+            <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
+            <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}">
+            <button type="submit" class="centered-button" id="loadStatsButton">Load Stats</button>
+        </form>
+    </div>
 
-    <form action="/comparison" method="POST">
-        <h1>Player Comparison</h1>
-        <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
-        <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}">
-        <button type="submit" class="centered-button" id="loadStatsButton">Load Stats</button>
-    </form>
+    <div id="loader"></div>
 
     <div>
         <div class="table-container">
@@ -76,20 +79,27 @@
 
     <script>
     $(document).ready(function() {
-        var availableTags = {{ autocompleteData|tojson|safe }};
+    var availableTags = {{ autocompleteData|tojson|safe }};
 
-        $('#player1Name, #player2Name').autocomplete({
-            source: availableTags,
-            autoFocus: true
-        });
+    $('#player1Name, #player2Name').autocomplete({
+        source: availableTags,
+        autoFocus: true
     });
-    $(document).ready(function () {
-            $('.title').next('.child-row').hide(); // Hide child rows initially
-            $('.title').click(function () {
-                $(this).next('.child-row').toggle();
-                $(this).find('.dropdown-icon').toggleClass('fa-caret-down fa-caret-up');
-            });
-        });
-    </script>
+
+    $('#loadStatsButton').click(function() {
+        $('#loader').show();
+        $('.form-container').hide();
+        $('.table-container').hide(); // Hide .table-container and its children
+    });
+
+    $('.title').next('.child-row').hide(); // Hide child rows initially
+    $('.title').click(function () {
+        $(this).next('.child-row').toggle();
+        $(this).find('.dropdown-icon').toggleClass('fa-caret-down fa-caret-up');
+    });
+});
+
+</script>
+
 
 {% endblock %}
