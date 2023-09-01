@@ -91,6 +91,7 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
     cmap = cm
 
     fig, ax = plt.subplots(figsize=(12, 7))
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     #fig.patch.set_facecolor('xkcd:light grey')
 
     # Load the pitch image
@@ -105,18 +106,26 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
     ax.axis('off')
 
 
-    if (success == 1):
+    '''if (success == 1):
         ax.set_title(f"Player({player_id})'s Successful Passes", fontsize=20, color='blue', fontweight='bold', pad=20)
     else:
-        ax.set_title(f"Player({player_id})'s Unsuccessful Passes", fontsize=20, color='blue', fontweight='bold', pad=20)
+        ax.set_title(f"Player({player_id})'s Unsuccessful Passes", fontsize=20, color='blue', fontweight='bold', pad=20)'''
     ax.set_xlabel("Pitch X", fontsize=12, fontweight='bold')
     ax.set_ylabel("Pitch Y", fontsize=12, fontweight='bold')
 
-    cax, _ = matplotlib.colorbar.make_axes(ax)
-    cbar = matplotlib.colorbar.ColorbarBase(cax, cmap=cmap, norm=matplotlib.colors.Normalize(vmin=-10, vmax=10))
-    cbar.set_ticks([-10, 0, 10])
-    cbar.set_ticklabels(['-10 (High Negative Threat)', '0 (Neutral Threat)', '10 (High Positive Threat)'])
-    cbar.set_label('Threat Level')
+    def save_color_key_image(cmap):
+        fig, ax = plt.subplots(figsize=(1, 4))
+        cax, _ = matplotlib.colorbar.make_axes(ax)
+        cbar = matplotlib.colorbar.ColorbarBase(cax, cmap=cmap, norm=matplotlib.colors.Normalize(vmin=-10, vmax=10))
+        cbar.set_ticks([-10, 0, 10])
+        cbar.set_ticklabels(['-10 (High Negative Threat)', '0 (Neutral Threat)', '10 (High Positive Threat)'])
+
+        ax.axis('off')
+        fig.savefig('static/images/color_key.png', bbox_inches='tight', transparent=True)
+        plt.close(fig)
+
+    # Call the function to save the color key image
+    save_color_key_image(cm)
 
     for spine in ax.spines.values():
         spine.set_visible(False)
@@ -125,9 +134,9 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
     fig1 = plt.gcf()
     #plt.show()
     if (success == 1):
-        fig1.savefig(f'static/images/successful_passes/{player_id}.png')
+        fig1.savefig(f'static/images/successful_passes/{player_id}.png', transparent = True)
     if (success == 0):
-        fig1.savefig(f'static/images/unsuccessful_passes/{player_id}.png')
+        fig1.savefig(f'static/images/unsuccessful_passes/{player_id}.png', transparent = True)
 
 # To generate a plot for a specific player:
 # generate_player_plot(28468)
