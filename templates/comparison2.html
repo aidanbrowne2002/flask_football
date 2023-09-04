@@ -267,7 +267,7 @@
             margin: { l: 5, r: 5, t: 5, b: 5 } // Set margin to zero
         };
 
-        Plotly.newPlot('sankey-plot1', data1, layout1);
+        Plotly.newPlot('sankey-plot1', data1, layout1, {displayModeBar: false});
 
         var source2 = {{ source2|tojson }};
         var target2 = {{ target2|tojson }};
@@ -301,7 +301,7 @@
             margin: { l: 5, r: 5, t: 5, b: 5 } // Set margin to zero
         };
 
-        Plotly.newPlot('sankey-plot2', data2, layout2);
+        Plotly.newPlot('sankey-plot2', data2, layout2, {displayModeBar: false});
     }
 
     // Call the resize function whenever the window is resized
@@ -345,12 +345,13 @@
         margin: { l: 0, r: 0, t: 20, b: 0 }, // Set margin to zero
         width: 300, // Set the desired width
         height: 300, // Set the desired height
+        modeBarButtonsToRemove: ['toImage', 'sendDataToCloud', 'autoScale2d', 'resetScale2d'],
         xaxis: {
         domain: [0.5, 1], // Align to the right
     },
     };
 
-    Plotly.newPlot("rating-chart1", data1, layout1);
+    Plotly.newPlot("rating-chart1", data1, layout1, {displayModeBar: false});
 
     // JavaScript code to create the second Plotly gauge chart
     var player2rating = {{ player2rating }};
@@ -386,12 +387,13 @@
         margin: { l: 0, r: 0, t: 20, b: 0 }, // Set margin to zero
         width: 300, // Set the desired width
         height: 300, // Set the desired height
+        modeBarButtonsToRemove: ['toImage', 'sendDataToCloud', 'autoScale2d', 'resetScale2d'],
         xaxis: {
         domain: [0, 0.5], // Align to the left
     },
     };
 
-    Plotly.newPlot("rating-chart2", data2, layout2);
+    Plotly.newPlot("rating-chart2", data2, layout2, {displayModeBar: false});
 </script>
 
 

@@ -229,8 +229,11 @@ def comparison():
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
         source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
 
-        player1rating = (p1stats[0][2] / p1stats[0][1] * 100) + ((p1stats[1][2] / p1stats[1][1] * 100))/2
-        player2rating = (p2stats[0][2] / p1stats[0][1] * 100) + ((p2stats[1][2] / p1stats[1][1] * 100))/2
+        print(p1stats)
+        print (p1stats[0][2] / p1stats[0][1] * 100)
+        print (p1stats[1][2] / p1stats[1][1] * 100)
+        player1rating = ((p1stats[0][2] / p1stats[0][1] * 100) + (p1stats[1][2] / p1stats[1][1] * 100))/2
+        player2rating = ((p2stats[0][2] / p1stats[0][1] * 100) + (p2stats[1][2] / p1stats[1][1] * 100))/2
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
