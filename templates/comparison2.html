@@ -40,14 +40,14 @@
                     <tr class="child-row">
                         <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
                             <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/successful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/successful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <p>These graphics show a players successful passes and their threat level</p>
-                                <img src="{{ url_for('static', filename='images/color_key_success/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/color_key_success/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/successful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/successful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="clear"></div>
                         </td>
@@ -60,14 +60,14 @@
                     <tr class="child-row">
                         <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
                             <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <p>These graphics show a players unsuccessful passes and their threat level</p>
-                                <img src="{{ url_for('static', filename='images/color_key_unsuccess/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/color_key_unsuccess/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="clear"></div>
                         </td>
@@ -81,21 +81,40 @@
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
                             <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <p>These graphics show a players xG</p>
                             </div>
                             <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.gif';">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="clear"></div>
                         </td>
                     </tr>
                     <tr class="title" id="dropdown4">
-                        <td>Data 3.1</td>
+                        <td>{{ (p1stats[1][2]) | round(2) }} Goals</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Goals</td>
+                        <td>{{ (p2stats[1][2]) | round(2) }} Goals</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/ranks/goals/' + player1 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <p>These graphics show a players xG</p>
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/ranks/goals/' + player2 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    <tr class="title" id="dropdown5">
+                        <td>{{ (p1stats[1][1]) | round(2) }} Shots</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Shot types</td>
-                        <td>Data 3.3</td>
+                        <td>{{ (p2stats[1][1]) | round(2) }} Shots</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -194,12 +213,12 @@
         // Update the layout of each Sankey plot
         Plotly.relayout('sankey-plot1', {
             width: availableWidth,
-            margin: { l: 0, r: 0, t: 0, b: 0 } // Set margin to zero
+            margin: { l: 8, r: 8, t: 8, b: 8 } // Set margin to zero
         });
 
         Plotly.relayout('sankey-plot2', {
             width: availableWidth,
-            margin: { l: 0, r: 0, t: 0, b: 0 } // Set margin to zero
+            margin: { l: 8, r: 8, t: 8, b: 8 } // Set margin to zero
         });
     }
 
