@@ -5,6 +5,34 @@
 }
 
 
+/* Apply styles to the page container */
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 250px;
+    max-width: 80%; /* Set the maximum width */
+    margin: 0 auto; /* Center horizontally by adding equal margins */
+}
+
+
+/* Apply styles to the left and right sections */
+.left-section,
+.right-section {
+    flex: 1; /* Equal width for both sections */
+    padding: 10px;
+    align-items: center;
+    margin: 0 auto;
+    /* Add other styling for your sections */
+}
+#rating-chart1,
+#rating-chart2 {
+  /* Center the Plotly graph horizontally and vertically within the section */
+  display: block;
+  margin: 0 auto;
+  width: 300px;
+}
+
 /* Apply styles to the form container */
 .form-container {
     width: 30%; /* Set a fixed width for the container */

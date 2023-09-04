@@ -10,13 +10,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-    <div class="form-container">
-        <form action="/comparison" method="POST">
-            <h1>Player Comparison</h1>
-            <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
-            <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}">
-            <button type="submit" class="centered-button" id="loadStatsButton">Load Stats</button>
-        </form>
+    <div class="page-container">
+        <div class="left-section">
+            <div id="rating-chart1"></div>
+        </div>
+
+        <div class="form-container">
+            <form action="/comparison" method="POST">
+                <h1>Player Comparison</h1>
+                <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
+                <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}">
+                <button type="submit" class="centered-button" id="loadStatsButton">Load Stats</button>
+            </form>
+        </div>
+
+        <div class="right-section">
+            <div id="rating-chart2"></div>
+        </div>
     </div>
 
     <div id="loader"></div>
@@ -300,6 +310,90 @@
     // Call the create function when the document is ready
     $(document).ready(createSankeyPlots);
 </script>
+    <script>
+    // JavaScript code to create the first Plotly gauge chart
+    var player1rating = {{ player1rating }};
+    var min_value1 = 0;
+    var max_value1 = 100;
+
+    var data1 = [
+        {
+            type: "indicator",
+            mode: "gauge+number",
+            value: player1rating,
+            title: { text: "Player 1's Rating" },
+            domain: { x: [0, 1], y: [0, 1] },
+            gauge: {
+                axis: { range: [min_value1, max_value1] },
+                bar: { color: "lightgray" },
+                steps: [
+                    { range: [min_value1, max_value1], color: "lightgray" },
+                    { range: [min_value1, player1rating], color: "white" },
+                ],
+                threshold: {
+                    line: { color: "red", width: 2 },
+                    thickness: 0.75,
+                    value: player1rating,
+                },
+            },
+        },
+    ];
+
+    var layout1 = {
+        paper_bgcolor: 'rgba(0,0,0,0)', // Set the background color to transparent
+        font: { color: "white", family: "Arial" },
+        margin: { l: 0, r: 0, t: 20, b: 0 }, // Set margin to zero
+        width: 300, // Set the desired width
+        height: 300, // Set the desired height
+        xaxis: {
+        domain: [0.5, 1], // Align to the right
+    },
+    };
+
+    Plotly.newPlot("rating-chart1", data1, layout1);
+
+    // JavaScript code to create the second Plotly gauge chart
+    var player2rating = {{ player2rating }};
+    var min_value2 = 0;
+    var max_value2 = 100;
+
+    var data2 = [
+        {
+            type: "indicator",
+            mode: "gauge+number",
+            value: player2rating,
+            title: { text: "Player 2's Rating" },
+            domain: { x: [0, 1], y: [0, 1] },
+            gauge: {
+                axis: { range: [min_value2, max_value2] },
+                bar: { color: "lightgray" },
+                steps: [
+                    { range: [min_value2, max_value2], color: "lightgray" },
+                    { range: [min_value2, player2rating], color: "white" },
+                ],
+                threshold: {
+                    line: { color: "red", width: 2 },
+                    thickness: 0.75,
+                    value: player2rating,
+                },
+            },
+        },
+    ];
+
+    var layout2 = {
+        paper_bgcolor: 'rgba(0,0,0,0)', // Set the background color to transparent
+        font: { color: "white", family: "Arial" },
+        margin: { l: 0, r: 0, t: 20, b: 0 }, // Set margin to zero
+        width: 300, // Set the desired width
+        height: 300, // Set the desired height
+        xaxis: {
+        domain: [0, 0.5], // Align to the left
+    },
+    };
+
+    Plotly.newPlot("rating-chart2", data2, layout2);
+</script>
+
 
 
 
