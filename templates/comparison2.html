@@ -151,6 +151,8 @@
                 $(this).find('.dropdown-icon').removeClass('fa-caret-down').addClass('fa-caret-up');
                 // Save the open state in a cookie
                 setCookie(dropdownId, 'open', 365);
+
+                resizeSankeyPlots();
             }
         });
 
