@@ -218,12 +218,19 @@ def comparison():
             except:
                 pass
             try:
+                grank = ''
+                xrank = ''
                 stats.append(get.stats(p, get_db_pool()))
                 grank, xrank = xGgraph4.genGraphs(p)
-                ranks.append([grank, xrank])
             except Exception as error:
                 print ("failed", error)
                 pass
+            if grank is None or grank == '':
+                grank = 'N/A'
+            if xrank is None or xrank == '':
+                xrank = 'N/A'
+            ranks.append([grank, xrank])
+        print (ranks)
         p1stats = stats[0]
         p2stats = stats[1]
         colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
