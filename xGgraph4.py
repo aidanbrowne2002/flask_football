@@ -93,17 +93,20 @@ def genGraphs(playerID):
                     # Set the tick label colors to white
                     plt.tick_params(axis='x', colors='white')
                     plt.tick_params(axis='y', colors='white')
-                    plt.title(f'{name[0]} {name[1]}-- rank {j} --- vs others {ylabel}', color='white')
+                    #plt.title(f'{name[0]} {name[1]}-- rank {j} --- vs others {ylabel}', color='white')
                     plt.grid(True)
                     plt.scatter(j, row[1], color='white', s=70)
                     plt.gca().invert_yaxis()
                     plt.legend(["Midfield", "Defence", "Strikers", "Wingers/Wingbacks"])
                     fig1 = plt.gcf()
+                    plt.subplots_adjust(left=0.1, right=0.9, top=0.98, bottom=0.1)
                     plt.show()
                     fig1.savefig(save_path, transparent=True)
+                    return j
 
-    generate_graph(avgGoalsTotals, 'Average Minutes per Goal', f'static/images/ranks/goals/{playerID}.png')
-    generate_graph(avgxGTotals, 'Average Minutes per xG', f'static/images/ranks/xG/{playerID}.png')
+    goals_rank = generate_graph(avgGoalsTotals, 'Average Minutes per Goal', f'static/images/ranks/goals/{playerID}.png')
+    xGRank = generate_graph(avgxGTotals, 'Average Minutes per xG', f'static/images/ranks/xG/{playerID}.png')
+    return (goals_rank + 1, xGRank + 1)
 
 
 #print("at end")

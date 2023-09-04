@@ -36,15 +36,15 @@
             <table>
                 <thead>
                 <tr>
-                    <th>{{ playernames[0] }}</th>
-                    <th>Comparison</th>
-                    <th>{{ playernames[1] }}</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
                 <tbody>
                         <tr class="title" id="dropdown1">
                         <td>{{ (p1stats[0][2] / p1stats[0][1] * 100) | round(2) }}%</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Successful Passing</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Successful Passes</td>
                         <td>{{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }}%</td>
                     </tr>
                     <tr class="child-row">
@@ -53,7 +53,6 @@
                                 <img src="{{ url_for('static', filename='images/successful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
-                                <p>These graphics show a players successful passes and their threat level</p>
                                 <img src="{{ url_for('static', filename='images/color_key_success/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-right">
@@ -64,7 +63,7 @@
                     </tr>
                     <tr class="title" id="dropdown2">
                         <td>{{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}%</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Unsuccessful Passing</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Unsuccessful Passes</td>
                         <td>{{ (p2stats[0][3] / p2stats[0][1] * 100) | round(2) }}%</td>
                     </tr>
                     <tr class="child-row">
@@ -73,7 +72,6 @@
                                 <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
-                                <p>These graphics show a players unsuccessful passes and their threat level</p>
                                 <img src="{{ url_for('static', filename='images/color_key_unsuccess/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-right">
@@ -84,9 +82,9 @@
                     </tr>
 
                     <tr class="title" id="dropdown3">
-                        <td>Data 2.1</td>
+                        <td>Ranked number {{ ranks[0][1] }} by position</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>xG</td>
-                        <td>Data 2.3</td>
+                        <td>Ranked number {{ ranks[1][1] }} by position</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -94,7 +92,6 @@
                                 <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
-                                <p>These graphics show a players xG</p>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -103,9 +100,9 @@
                         </td>
                     </tr>
                     <tr class="title" id="dropdown4">
-                        <td>{{ (p1stats[1][2]) | round(2) }} Goals</td>
+                        <td>Ranked Number {{ ranks[0][0] }} by position</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Goals</td>
-                        <td>{{ (p2stats[1][2]) | round(2) }} Goals</td>
+                        <td>Ranked Number {{ ranks[1][0] }} by position</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -113,7 +110,6 @@
                                 <img src="{{ url_for('static', filename='images/ranks/goals/' + player1 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
-                                <p>These graphics show a players xG</p>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/ranks/goals/' + player2 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -211,9 +207,9 @@
 </script>
     <script>
     // JavaScript code to generate the Sankey diagrams
-    var labels = ["penalty", "set piece", "direct free kick", "regular play", "corners", "fast break",
-                   "header", "left footer", "right footer", "other",
-                   "miss", "post", "blocked", "saved", "goal"];
+    var labels = ["Penalty", "Other Set Piece", "Direct Free Kick", "Open Play", "Corner", "Counterattack",
+                   "Head", "Left Foot", "Right Foot", "Other",
+                   "Missed", "Woodwork", "Blocked", "Saved", "Goal"];
 
     // Function to resize Sankey plots
     function resizeSankeyPlots() {
@@ -321,7 +317,7 @@
             type: "indicator",
             mode: "gauge+number",
             value: player1rating,
-            title: { text: "Player 1's Rating" },
+            title: { text: "{{ playernames[0] }}" },
             domain: { x: [0, 1], y: [0, 1] },
             gauge: {
                 axis: { range: [min_value1, max_value1] },
@@ -363,7 +359,7 @@
             type: "indicator",
             mode: "gauge+number",
             value: player2rating,
-            title: { text: "Player 2's Rating" },
+            title: { text: "{{ playernames[1] }}" },
             domain: { x: [0, 1], y: [0, 1] },
             gauge: {
                 axis: { range: [min_value2, max_value2] },

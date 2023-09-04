@@ -209,6 +209,7 @@ def comparison():
     stats = []
     spasses = []
     upasses = []
+    ranks = []
     if all(player_ids):
         for p in player_ids:
             try:
@@ -218,7 +219,8 @@ def comparison():
                 pass
             try:
                 stats.append(get.stats(p, get_db_pool()))
-                xGgraph4.genGraphs(p)
+                grank, xrank = xGgraph4.genGraphs(p)
+                ranks.append([grank, xrank])
             except Exception as error:
                 print ("failed", error)
                 pass
@@ -237,7 +239,7 @@ def comparison():
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
-                           player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats, source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2, value2 = value2, player1rating = player1rating, player2rating = player2rating)
+                           player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats, source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2, value2 = value2, player1rating = player1rating, player2rating = player2rating, ranks=ranks)
 
 
 

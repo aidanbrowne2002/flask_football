@@ -436,6 +436,7 @@ table td:nth-child(1),
 table th:nth-child(3),
 table td:nth-child(3) {
     width: 40%; /* Adjust the width as per your preference */
+    padding: 3px;
 }
 
 table th:nth-child(2),
