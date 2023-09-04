@@ -83,16 +83,24 @@ def genGraphs(playerID):
                     for line in new_array:
                         plt.plot(line)
 
-                    plt.xlabel('Players by Rank')
-                    plt.ylabel(ylabel)
-                    plt.title(f'{name[0]} {name[1]}-- rank {j} --- vs others {ylabel}')
+                    plt.xlabel('Players by Rank', color='white')
+                    plt.ylabel(ylabel, color='white')
+                    plt.gca().spines['bottom'].set_color('white')
+                    plt.gca().spines['top'].set_color('white')
+                    plt.gca().spines['right'].set_color('white')
+                    plt.gca().spines['left'].set_color('white')
+
+                    # Set the tick label colors to white
+                    plt.tick_params(axis='x', colors='white')
+                    plt.tick_params(axis='y', colors='white')
+                    plt.title(f'{name[0]} {name[1]}-- rank {j} --- vs others {ylabel}', color='white')
                     plt.grid(True)
-                    plt.scatter(j, row[1], color='black', s=50)
+                    plt.scatter(j, row[1], color='white', s=70)
                     plt.gca().invert_yaxis()
                     plt.legend(["Midfield", "Defence", "Strikers", "Wingers/Wingbacks"])
                     fig1 = plt.gcf()
                     plt.show()
-                    fig1.savefig(save_path)
+                    fig1.savefig(save_path, transparent=True)
 
     generate_graph(avgGoalsTotals, 'Average Minutes per Goal', f'static/images/ranks/goals/{playerID}.png')
     generate_graph(avgxGTotals, 'Average Minutes per xG', f'static/images/ranks/xG/{playerID}.png')

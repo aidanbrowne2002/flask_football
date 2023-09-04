@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <div class="form-container">
         <form action="/comparison" method="POST">
@@ -93,13 +94,13 @@
                     </tr>
                     <tr class="title" id="dropdown4">
                         <td>Data 3.1</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Title 3</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Shot types</td>
                         <td>Data 3.3</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
-                            <div class="child-data-left">Left Content 3</div>
-                            <div class="child-data-right">Right Content 3</div>
+                            <div class="child-data-left"><div class="sankey-plot-container" id="sankey-plot1"></div></div>
+                            <div class="child-data-right"><div class="sankey-plot-container" id="sankey-plot2"></div>
                             <div class="clear"></div>
                         </td>
                     </tr>
@@ -177,6 +178,109 @@
         }
     });
 </script>
+    <script>
+    // JavaScript code to generate the Sankey diagrams
+    var labels = ["penalty", "set piece", "direct free kick", "regular play", "corners", "fast break",
+                   "header", "left footer", "right footer", "other",
+                   "miss", "post", "blocked", "saved", "goal"];
+
+    // Function to resize Sankey plots
+    function resizeSankeyPlots() {
+        // Get the available width
+        var availableWidth = $(".sankey-plot-container").width();
+
+        // Update the layout of each Sankey plot
+        Plotly.relayout('sankey-plot1', {
+            width: availableWidth,
+            margin: { l: 0, r: 0, t: 0, b: 0 } // Set margin to zero
+        });
+
+        Plotly.relayout('sankey-plot2', {
+            width: availableWidth,
+            margin: { l: 0, r: 0, t: 0, b: 0 } // Set margin to zero
+        });
+    }
+
+    // Function to create Sankey plots
+    function createSankeyPlots() {
+        // Create the Sankey plots
+        var source1 = {{ source1|tojson }};
+        var target1 = {{ target1|tojson }};
+        var value1 = {{ value1|tojson }};
+
+        var data1 = [{
+            type: 'sankey',
+            node: {
+                pad: 30,
+                thickness: 20,
+                line: {
+                    color: "black",
+                    width: 0.5
+                },
+                label: labels
+            },
+            link: {
+                source: source1,
+                target: target1,
+                value: value1
+            }
+        }];
+
+        var layout1 = {
+            font: {
+                size: 10
+            },
+            plot_bgcolor: 'rgba(0,0,0,0)', // Transparent background
+            paper_bgcolor: 'rgba(0,0,0,0)', // Transparent paper (plot) background
+            width: $(".sankey-plot-container").width(), // Set initial width
+            margin: { l: 5, r: 5, t: 5, b: 5 } // Set margin to zero
+        };
+
+        Plotly.newPlot('sankey-plot1', data1, layout1);
+
+        var source2 = {{ source2|tojson }};
+        var target2 = {{ target2|tojson }};
+        var value2 = {{ value2|tojson }};
+
+        var data2 = [{
+            type: 'sankey',
+            node: {
+                pad: 30,
+                thickness: 20,
+                line: {
+                    color: "black",
+                    width: 0.5
+                },
+                label: labels
+            },
+            link: {
+                source: source2,
+                target: target2,
+                value: value2
+            }
+        }];
+
+        var layout2 = {
+            font: {
+                size: 10
+            },
+            plot_bgcolor: 'rgba(0,0,0,0)', // Transparent background
+            paper_bgcolor: 'rgba(0,0,0,0)', // Transparent paper (plot) background
+            width: $(".sankey-plot-container").width(), // Set initial width
+            margin: { l: 5, r: 5, t: 5, b: 5 } // Set margin to zero
+        };
+
+        Plotly.newPlot('sankey-plot2', data2, layout2);
+    }
+
+    // Call the resize function whenever the window is resized
+    $(window).on('resize', resizeSankeyPlots);
+
+    // Call the create function when the document is ready
+    $(document).ready(createSankeyPlots);
+</script>
+
+
 
 
 

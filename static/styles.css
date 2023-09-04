@@ -377,7 +377,7 @@ body.login-page form input[type="submit"]:hover {
 }
 
 .child-data-right {
-    float: left;
+    float: right;
     width: 40%;
 }
 
@@ -422,4 +422,11 @@ table td:nth-child(2) {
 .dropdown-icon {
     cursor: pointer;
     margin-right: 5px;
+}
+.sankey-plot-container {
+    width: 100%; /* Adjust as needed */
+    height: 300px; /* Initial height, adjust as needed */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    /* Add any other styling you need */
 }

@@ -1,12 +1,14 @@
+import data.sankey
 import xGgraph4
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from data import get, credentials
+from data import get, credentials, sankey
 import passingmapPNG
 import psycopg2
 from xGgraph4 import genGraphs
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import colourkey
+
 
 
 app = Flask(__name__)
@@ -217,15 +219,18 @@ def comparison():
             try:
                 stats.append(get.stats(p, get_db_pool()))
                 xGgraph4.genGraphs(p)
-            except:
+            except Exception as error:
+                print ("failed", error)
                 pass
         p1stats = stats[0]
         p2stats = stats[1]
         colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
         colourkey.save_color_key_image(upasses[0],upasses[1],str(player_ids[0]),str(player_ids[1]),0)
+        source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
+        source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
-                           player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats)
+                           player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats, source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2, value2 = value2)
 
 
 
