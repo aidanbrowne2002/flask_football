@@ -224,7 +224,7 @@ def comparison():
             stats.append(get.stats(p, get_db_pool()))
             grank, xrank = xGgraph4.genGraphs(p)
             #except Exception as error:
-            print ("failed", error)
+            print ("failed")
             #traceback.print_exc()
            # pass
             if grank is None or grank == '':
