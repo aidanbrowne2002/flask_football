@@ -41,7 +41,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #3b3a3a; /* Light gray background color */
+    background-color: #4d4d4d; /* Light gray background color */
     padding: 10px; /* Add some padding to the container */
     border-radius: 10px; /* Add rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */

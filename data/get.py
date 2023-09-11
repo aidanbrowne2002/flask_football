@@ -93,3 +93,18 @@ def playerRanks(postgreSQL_pool, position):
     # release the connection back to connection pool
     postgreSQL_pool.putconn(ps_connection)
     return data
+
+def playerPosition(postgreSQL_pool, playerID):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = """select position from players where id = %s"""
+    ps_cursor.execute(query, (playerID,))
+    data = ps_cursor.fetchone()  # Use fetchone() to get a single result
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+
+    if data:
+        return data[0]  # Return the first (and only) element of the tuple
+    else:
+        return None  # Return None if no data is found

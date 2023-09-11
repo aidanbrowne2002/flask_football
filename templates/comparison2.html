@@ -17,10 +17,10 @@
 
         <div class="form-container">
             <form action="/comparison" method="POST">
-                <h1>Players to be Compared</h1>
+                <h1>Players</h1>
                 <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
-                <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}">
-                <button type="submit" class="centered-button" id="loadStatsButton">Load Stats</button>
+                <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}" style="text-align: right;">
+                <button type="submit" class="centered-button" id="loadStatsButton">Compare</button>
             </form>
         </div>
 
@@ -80,29 +80,11 @@
                             <div class="clear"></div>
                         </td>
                     </tr>
-
+                    </tr>
                     <tr class="title" id="dropdown3">
-                        <td>Ranked number {{ ranks[0][1] }} by position</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>xG</td>
-                        <td>Ranked number {{ ranks[1][1] }} by position</td>
-                    </tr>
-                    <tr class="child-row">
-                        <td class="child-data" colspan="3">
-                            <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="child-data-middle"> <!-- New middle child column -->
-                            </div>
-                            <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="clear"></div>
-                        </td>
-                    </tr>
-                    <tr class="title" id="dropdown4">
-                        <td>Ranked Number {{ ranks[0][0] }} by position</td>
+                        <td>Ranked Number {{ ranks[0][0] }} Amongst {{ player1position }}s</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Goals</td>
-                        <td>Ranked Number {{ ranks[1][0] }} by position</td>
+                        <td>Ranked Number {{ ranks[1][0] }} Amongst {{ player2position }}s</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -117,6 +99,24 @@
                             <div class="clear"></div>
                         </td>
                     </tr>
+                    <tr class="title" id="dropdown4">
+                        <td>Ranked Number {{ ranks[0][1] }} Amongst {{ player1position }}s</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>xG</td>
+                        <td>Ranked Number {{ ranks[1][1] }} Amongst {{ player2position }}s</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+
                     <tr class="title" id="dropdown5">
                         <td>{{ (p1stats[1][1]) | round(2) }} Shots</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Shot types</td>
@@ -308,87 +308,133 @@
     $(document).ready(createSankeyPlots);
 </script>
     <script>
-    // JavaScript code to create the first Plotly gauge chart
     var player1rating = {{ player1rating }};
-    var min_value1 = 0;
-    var max_value1 = 100;
+var min_value1 = 0;
+var max_value1 = 100;
 
-    var data1 = [
-        {
-            type: "indicator",
-            mode: "gauge+number",
-            value: player1rating,
-            title: { text: "{{ playernames[0] }}" },
-            domain: { x: [0, 1], y: [0, 1] },
-            gauge: {
-                axis: { range: [min_value1, max_value1] },
-                bar: { color: "lightgray" },
-                steps: [
-                    { range: [min_value1, max_value1], color: "lightgray" },
-                    { range: [min_value1, player1rating], color: "white" },
-                ],
-                threshold: {
-                    line: { color: "red", width: 2 },
-                    thickness: 0.75,
-                    value: player1rating,
-                },
+var data1 = [
+    {
+        type: "indicator",
+        mode: "gauge+number",
+        value: player1rating,
+        title: { text: "", showticklabels: false }, // Remove title and axis numbers
+        domain: { x: [0, 1], y: [0, 1] },
+        gauge: {
+            axis: {
+                range: [min_value1, max_value1],
+                showticklabels: false,
+                tickvals: [], // Remove axis markers
+            },
+            bar: { color: "lightgray" },
+            steps: [
+                { range: [min_value1, max_value1], color: "lightgray" },
+                { range: [min_value1, player1rating], color: "white" },
+            ],
+            threshold: {
+                line: { color: '#f87c2c', width: 5 },
+                thickness: 1,
+                value: player1rating,
             },
         },
-    ];
-
-    var layout1 = {
-        paper_bgcolor: 'rgba(0,0,0,0)', // Set the background color to transparent
-        font: { color: "white", family: "Arial" },
-        margin: { l: 0, r: 0, t: 20, b: 0 }, // Set margin to zero
-        width: 300, // Set the desired width
-        height: 300, // Set the desired height
-        modeBarButtonsToRemove: ['toImage', 'sendDataToCloud', 'autoScale2d', 'resetScale2d'],
-        xaxis: {
-        domain: [0.5, 1], // Align to the right
     },
-    };
+];
+
+var layout1 = {
+    annotations: [
+        {
+            text: "{{ playernames[0] }}", // Add player name
+            x: 0.5,
+            y: 0.9,
+            xref: "paper",
+            yref: "paper",
+            showarrow: false,
+            font: {
+                size: 30,
+                color: "white",
+                family: "Arial",
+            },
+        },
+    ],
+    paper_bgcolor: 'rgba(0,0,0,0)', // Set the background color to transparent
+    font: { color: "white", family: "Arial" },
+    margin: { l: 0, r: 0, t: 0, b: 0 }, // Set margin to zero
+    width: 300, // Set the desired width
+    height: 300, // Set the desired height
+    modeBarButtonsToRemove: ['toImage', 'sendDataToCloud', 'autoScale2d', 'resetScale2d'],
+    xaxis: {
+        domain: [0.5, 1], // Align to the right
+        showticklabels: false, // Remove x-axis numbers
+    },
+    yaxis: {
+        showticklabels: false, // Remove y-axis numbers
+    },
+};
+
 
     Plotly.newPlot("rating-chart1", data1, layout1, {displayModeBar: false});
 
     // JavaScript code to create the second Plotly gauge chart
-    var player2rating = {{ player2rating }};
-    var min_value2 = 0;
-    var max_value2 = 100;
+var player2rating = {{ player2rating }};
+var min_value2 = 0;
+var max_value2 = 100;
 
-    var data2 = [
-        {
-            type: "indicator",
-            mode: "gauge+number",
-            value: player2rating,
-            title: { text: "{{ playernames[1] }}" },
-            domain: { x: [0, 1], y: [0, 1] },
-            gauge: {
-                axis: { range: [min_value2, max_value2] },
-                bar: { color: "lightgray" },
-                steps: [
-                    { range: [min_value2, max_value2], color: "lightgray" },
-                    { range: [min_value2, player2rating], color: "white" },
-                ],
-                threshold: {
-                    line: { color: "red", width: 2 },
-                    thickness: 0.75,
-                    value: player2rating,
-                },
+var data2 = [
+    {
+        type: "indicator",
+        mode: "gauge+number",
+        value: player2rating,
+        title: { text: "", showticklabels: false }, // Remove title and axis numbers
+        domain: { x: [0, 1], y: [0, 1] },
+        gauge: {
+            axis: {
+                range: [min_value2, max_value2],
+                showticklabels: false,
+                tickvals: [], // Remove axis markers
+            },
+            bar: { color: "lightgray" },
+            steps: [
+                { range: [min_value2, max_value2], color: "lightgray" },
+                { range: [min_value2, player2rating], color: "white" },
+            ],
+            threshold: {
+                line: { color: "#f87c2c", width: 5 },
+                thickness: 1,
+                value: player2rating,
             },
         },
-    ];
-
-    var layout2 = {
-        paper_bgcolor: 'rgba(0,0,0,0)', // Set the background color to transparent
-        font: { color: "white", family: "Arial" },
-        margin: { l: 0, r: 0, t: 20, b: 0 }, // Set margin to zero
-        width: 300, // Set the desired width
-        height: 300, // Set the desired height
-        modeBarButtonsToRemove: ['toImage', 'sendDataToCloud', 'autoScale2d', 'resetScale2d'],
-        xaxis: {
-        domain: [0, 0.5], // Align to the left
     },
-    };
+];
+
+var layout2 = {
+    annotations: [
+        {
+            text: "{{ playernames[1] }}", // Add player name
+            x: 0.5,
+            y: 0.9,
+            xref: "paper",
+            yref: "paper",
+            showarrow: false,
+            font: {
+                size: 30,
+                color: "white",
+                family: "Arial",
+            },
+        },
+    ],
+    paper_bgcolor: 'rgba(0,0,0,0)', // Set the background color to transparent
+    font: { color: "white", family: "Arial" },
+    margin: { l: 0, r: 0, t: 0, b: 0 }, // Set margin to zero
+    width: 300, // Set the desired width
+    height: 300, // Set the desired height
+    modeBarButtonsToRemove: ['toImage', 'sendDataToCloud', 'autoScale2d', 'resetScale2d'],
+    xaxis: {
+        domain: [0.5, 1], // Align to the right
+        showticklabels: false, // Remove x-axis numbers
+    },
+    yaxis: {
+        showticklabels: false, // Remove y-axis numbers
+    },
+};
 
     Plotly.newPlot("rating-chart2", data2, layout2, {displayModeBar: false});
 </script>

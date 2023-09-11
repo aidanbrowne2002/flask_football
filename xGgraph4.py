@@ -29,13 +29,15 @@ def fetch_players_by_positions(query):
 
 querys = [
     """select id from players
-        where position in ('Defensive Midfielder', 'Central Midfielder', 'Attacking Midfielder');""",
-    """select id from players
-        where position in ('Full Back', 'Central Defender', 'Full Back');""",
-    """select id from players
         where position in ('Striker', 'Second Striker');""",
     """select id from players
-        where position in ('Wing Back', 'Winger');"""
+        where position in ('Defensive Midfielder', 'Central Midfielder', 'Attacking Midfielder');""",
+    """select id from players
+        where position in ('Wing Back', 'Winger');""",
+    """select id from players
+        where position in ('Full Back', 'Central Defender', 'Full Back');"""
+
+
 ]
 
 avgGoalsTotals = []
@@ -81,9 +83,9 @@ def genGraphs(playerID):
                     new_array = [[value[1] for value in inner_list] for inner_list in avg_data]
 
                     for line in new_array:
-                        plt.plot(line)
+                        plt.plot(line, linewidth = 3)
 
-                    plt.xlabel('Players by Rank', color='white')
+                    plt.xlabel('Rank', color='white')
                     plt.ylabel(ylabel, color='white')
                     plt.gca().spines['bottom'].set_color('white')
                     plt.gca().spines['top'].set_color('white')
@@ -95,9 +97,9 @@ def genGraphs(playerID):
                     plt.tick_params(axis='y', colors='white')
                     #plt.title(f'{name[0]} {name[1]}-- rank {j} --- vs others {ylabel}', color='white')
                     plt.grid(True)
-                    plt.scatter(j, row[1], color='white', s=70)
+                    plt.scatter(j, row[1], color='white', s=90)
                     plt.gca().invert_yaxis()
-                    plt.legend(["Midfield", "Defence", "Strikers", "Wingers/Wingbacks"])
+                    plt.legend(["Strikers", "Midfielders", "Wingers/Wingbacks", "Defenders"])
                     fig1 = plt.gcf()
                     plt.subplots_adjust(left=0.1, right=0.9, top=0.98, bottom=0.1)
                     plt.show()

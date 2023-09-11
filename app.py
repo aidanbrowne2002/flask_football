@@ -243,10 +243,15 @@ def comparison():
         print (p1stats[1][2] / p1stats[1][1] * 100)
         player1rating = ((p1stats[0][2] / p1stats[0][1] * 100) + (p1stats[1][2] / p1stats[1][1] * 100))/2
         player2rating = ((p2stats[0][2] / p1stats[0][1] * 100) + (p2stats[1][2] / p1stats[1][1] * 100))/2
+        player1position = get.playerPosition(get_db_pool(), player_ids[0])
+        player2position = get.playerPosition(get_db_pool(), player_ids[1])
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
-                           player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats, source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2, value2 = value2, player1rating = player1rating, player2rating = player2rating, ranks=ranks)
+                           player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats,
+                           source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2,
+                           value2 = value2, player1rating = player1rating, player2rating = player2rating, ranks=ranks,
+                           player1position = player1position, player2position = player2position)
 
 
 
