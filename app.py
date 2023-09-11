@@ -218,15 +218,15 @@ def comparison():
                 upasses.append(passingmapPNG.generate_player_plot(p, 0, get_db_pool()))
             except:
                 pass
-            try:
-                grank = ''
-                xrank = ''
-                stats.append(get.stats(p, get_db_pool()))
-                grank, xrank = xGgraph4.genGraphs(p)
-            except Exception as error:
-                print ("failed", error)
-                traceback.print_exc()
-                pass
+            #try:
+            grank = ''
+            xrank = ''
+            stats.append(get.stats(p, get_db_pool()))
+            grank, xrank = xGgraph4.genGraphs(p)
+            #except Exception as error:
+            print ("failed", error)
+            #traceback.print_exc()
+           # pass
             if grank is None or grank == '':
                 grank = 'N/A'
             if xrank is None or xrank == '':
