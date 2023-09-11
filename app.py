@@ -224,7 +224,7 @@ def comparison():
                 upasses.append(passingMapPNG2.generate_player_plot(p, 0, get_db_pool()))
             except:
                 pass
-            xGgraph4.genGraphs(p, get_db_pool(), avgGoalsTotals, avgxGTotals)
+            #xGgraph4.genGraphs(p, get_db_pool(), avgGoalsTotals, avgxGTotals)
             try:
                 grank = ''
                 xrank = ''
@@ -241,8 +241,8 @@ def comparison():
         print (ranks)
         p1stats = stats[0]
         p2stats = stats[1]
-        #colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
-        #colourkey.save_color_key_image(upasses[0],upasses[1],str(player_ids[0]),str(player_ids[1]),0)
+        colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
+        colourkey.save_color_key_image(upasses[0],upasses[1],str(player_ids[0]),str(player_ids[1]),0)
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
         source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
 
