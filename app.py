@@ -3,6 +3,7 @@ import xGgraph4
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from data import get, credentials, sankey
 import passingmapPNG
+import passingMapPNG2
 import psycopg2
 from xGgraph4 import genGraphs
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -219,8 +220,8 @@ def comparison():
     if all(player_ids):
         for p in player_ids:
             try:
-                spasses.append(passingmapPNG.generate_player_plot(p, 1, get_db_pool()))
-                upasses.append(passingmapPNG.generate_player_plot(p, 0, get_db_pool()))
+                spasses.append(passingMapPNG2.generate_player_plot(p, 1, get_db_pool()))
+                upasses.append(passingMapPNG2.generate_player_plot(p, 0, get_db_pool()))
             except:
                 pass
             xGgraph4.genGraphs(p, get_db_pool(), avgGoalsTotals, avgxGTotals)
@@ -240,8 +241,8 @@ def comparison():
         print (ranks)
         p1stats = stats[0]
         p2stats = stats[1]
-        colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
-        colourkey.save_color_key_image(upasses[0],upasses[1],str(player_ids[0]),str(player_ids[1]),0)
+        #colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
+        #colourkey.save_color_key_image(upasses[0],upasses[1],str(player_ids[0]),str(player_ids[1]),0)
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
         source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
 
