@@ -1,77 +1,88 @@
 import psycopg2
+from psycopg2 import extras
 from data import credentials
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
-conn = psycopg2.connect(database=credentials.database,
-                        host=credentials.host,
-                        user=credentials.user,
-                        password=credentials.password,
-                        port=credentials.port)
-cursor = conn.cursor()
 
+# Initialize the database pool
 
-def fetch_avg_stats_from_db(player_id):
+def fetch_avg_stats_from_db(player_id, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
     """Fetch average xG and goals per minute from the player table in the database."""
     query = f"""SELECT xG, avg_goals FROM players WHERE id = {player_id};"""
-    cursor.execute(query)
-    result = cursor.fetchone()
-
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchone()
+    ps_cursor.close()
+    # release the connection back to connection pool
+    postgreSQL_pool.putconn(ps_connection)
     return {"AVGMinutes/xG": result[0], "AVGMinutes/Goals": result[1], "playerID": player_id}
 
 
-def fetch_players_by_positions(query):
+def fetch_players_by_positions(query, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
     """Fetch players based on the given query."""
-    cursor.execute(query)
-    results = cursor.fetchall()
+    ps_cursor.execute(query)
+    results = ps_cursor.fetchall()
+    ps_cursor.close()
+    # release the connection back to connection pool
+    postgreSQL_pool.putconn(ps_connection)
     return [t[0] for t in results]
 
-
-querys = [
-    """select id from players
-        where position in ('Striker', 'Second Striker');""",
-    """select id from players
-        where position in ('Defensive Midfielder', 'Central Midfielder', 'Attacking Midfielder');""",
-    """select id from players
-        where position in ('Wing Back', 'Winger');""",
-    """select id from players
-        where position in ('Full Back', 'Central Defender', 'Full Back');"""
-
-
-]
-
-avgGoalsTotals = []
-avgxGTotals = []
-
-for index, query in enumerate(querys):
-    players = fetch_players_by_positions(query)
-    avgGoals = []
-    avgxG = []
-
-    for x in players:
-        #print(f"Player: {x}")
-        #print(f"Position: {index + 1} of {len(querys)}")
-        #print(f"player {players.index(x) + 1} of {len(players)}")
-        stat = fetch_avg_stats_from_db(x)
-        avgGoals.append([stat['playerID'], stat['AVGMinutes/Goals']])
-        avgxG.append([stat['playerID'], stat['AVGMinutes/xG']])
-
-    avgGoals = [x for x in avgGoals if x[1] != 0]
-    avgGoals.sort(key=lambda x: x[1])
-    avgGoalsTotals.append(avgGoals)
-
-    avgxG = [x for x in avgxG if x[1] != 0 and x[1] < 2000]
-    avgxG.sort(key=lambda x: x[1])
-    avgxGTotals.append(avgxG)
+def initialisexgraph4(postgreSQL_pool):
+    querys = [
+        """select id from players
+            where position in ('Striker', 'Second Striker');""",
+        """select id from players
+            where position in ('Defensive Midfielder', 'Central Midfielder', 'Attacking Midfielder');""",
+        """select id from players
+            where position in ('Wing Back', 'Winger');""",
+        """select id from players
+            where position in ('Full Back', 'Central Defender', 'Full Back');"""
 
 
-def genGraphs(playerID):
+    ]
+
+    avgGoalsTotals = []
+    avgxGTotals = []
+
+    for index, query in enumerate(querys):
+        players = fetch_players_by_positions(query, postgreSQL_pool)
+        avgGoals = []
+        avgxG = []
+
+        for x in players:
+            #print(f"Player: {x}")
+            #print(f"Position: {index + 1} of {len(querys)}")
+            #print(f"player {players.index(x) + 1} of {len(players)}")
+            stat = fetch_avg_stats_from_db(x, postgreSQL_pool)
+            avgGoals.append([stat['playerID'], stat['AVGMinutes/Goals']])
+            avgxG.append([stat['playerID'], stat['AVGMinutes/xG']])
+
+        avgGoals = [x for x in avgGoals if x[1] != 0]
+        avgGoals.sort(key=lambda x: x[1])
+        avgGoalsTotals.append(avgGoals)
+
+        avgxG = [x for x in avgxG if x[1] != 0 and x[1] < 2000]
+        avgxG.sort(key=lambda x: x[1])
+        avgxGTotals.append(avgxG)
+    return avgGoalsTotals, avgxGTotals
+
+
+def genGraphs(playerID, postgreSQL_pool, avgGoalsTotals, avgxGTotals):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
     playerID = int(playerID)
     #print(f"THIS IS THE PLAYER ID ({playerID})")
     query = f"""select f_name, l_name from players where id = {playerID};"""
-    cursor.execute(query)
-    name = cursor.fetchall()
+    ps_cursor.execute(query)
+    name = ps_cursor.fetchall()
     name = list(name[0])
+    ps_cursor.close()
+    # release the connection back to connection pool
+    postgreSQL_pool.putconn(ps_connection)
 
     def generate_graph(avg_data, ylabel, save_path):
         for i, matrix in enumerate(avg_data):

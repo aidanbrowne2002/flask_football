@@ -8,7 +8,7 @@ from xGgraph4 import genGraphs
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import colourkey
-import traceback
+import importlib
 
 
 
@@ -41,6 +41,10 @@ def get_db_pool():
                             **keepalive_kwargs)
     return postgreSQL_pool
 
+#initialise the averages to save compute time for end user
+print("Initialising averages")
+avgGoalsTotals, avgxGTotals = xGgraph4.initialisexgraph4(get_db_pool())
+print("Initialising averages complete")
 class User(UserMixin):
     def __init__(self, id, username):
         self.id = id
@@ -170,6 +174,7 @@ def initialise_comparison():
 @app.route('/comparison', methods=['GET', 'POST'])
 @login_required
 def comparison():
+
     players = get.players(get_db_pool())
     names_to_ids = {}
     fullnames = []
@@ -218,15 +223,15 @@ def comparison():
                 upasses.append(passingmapPNG.generate_player_plot(p, 0, get_db_pool()))
             except:
                 pass
-            #try:
-            grank = ''
-            xrank = ''
-            stats.append(get.stats(p, get_db_pool()))
-            grank, xrank = xGgraph4.genGraphs(p)
-            #except Exception as error:
-            print ("failed")
-            #traceback.print_exc()
-           # pass
+            xGgraph4.genGraphs(p, get_db_pool(), avgGoalsTotals, avgxGTotals)
+            try:
+                grank = ''
+                xrank = ''
+                stats.append(get.stats(p, get_db_pool()))
+                grank, xrank = xGgraph4.genGraphs(p, get_db_pool(), avgGoalsTotals, avgxGTotals)
+            except Exception as error:
+                print ("failed", error)
+                pass
             if grank is None or grank == '':
                 grank = 'N/A'
             if xrank is None or xrank == '':
