@@ -102,7 +102,7 @@ def genGraphs(playerID):
                     plt.legend(["Strikers", "Midfielders", "Wingers/Wingbacks", "Defenders"])
                     fig1 = plt.gcf()
                     plt.subplots_adjust(left=0.1, right=0.9, top=0.98, bottom=0.1)
-                    plt.show()
+                    #plt.show()
                     fig1.savefig(save_path, transparent=True)
                     return j
 
