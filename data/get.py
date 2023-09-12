@@ -197,8 +197,10 @@ def shotPos(postgreSQL_pool, playerID):
             scored_shots_x.append(row[3])
             scored_shots_y.append(row[4])
 
-
-    onTarget = (len(scored_shots_x) + len(saved_shots_x))/((len(missed_shots_x) + len(post_shots_x) + len(saved_shots_x) + len(scored_shots_x)))
+    try:
+        onTarget = (len(scored_shots_x) + len(saved_shots_x))/((len(missed_shots_x) + len(post_shots_x) + len(saved_shots_x) + len(scored_shots_x)))
+    except:
+        onTarget = 0
     plt.figure(figsize=(12, 7))
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
 
