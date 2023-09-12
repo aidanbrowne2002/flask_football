@@ -224,7 +224,6 @@ def comparison():
                 upasses.append(passingMapPNG2.generate_player_plot(p, 0, get_db_pool()))
             except:
                 pass
-            #xGgraph4.genGraphs(p, get_db_pool(), avgGoalsTotals, avgxGTotals)
             try:
                 grank = ''
                 xrank = ''
@@ -253,13 +252,18 @@ def comparison():
         player2rating = ((p2stats[0][2] / p1stats[0][1] * 100) + (p2stats[1][2] / p1stats[1][1] * 100))/2
         player1position = get.playerPosition(get_db_pool(), player_ids[0])
         player2position = get.playerPosition(get_db_pool(), player_ids[1])
+        p1tackles = get.getPlayerTackles(player_ids[0], get_db_pool())
+        p2tackles = get.getPlayerTackles(player_ids[1], get_db_pool())
+        get.shotPos(get_db_pool(), player_ids[0])
+        get.shotPos(get_db_pool(), player_ids[1])
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
                            player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats,
                            source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2,
                            value2 = value2, player1rating = player1rating, player2rating = player2rating, ranks=ranks,
-                           player1position = player1position, player2position = player2position)
+                           player1position = player1position, player2position = player2position, p1tackles = p1tackles,
+                           p2tackles = p2tackles)
 
 
 

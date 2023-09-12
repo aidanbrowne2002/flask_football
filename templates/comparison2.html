@@ -129,6 +129,40 @@
                             <div class="clear"></div>
                         </td>
                     </tr>
+                        <tr class="title" id="dropdown6">
+                        <td>TBD</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Shot Positions</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/shotpos/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/shotpos/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    <tr class="title" id="dropdown7">
+                        <td>{{ (p1tackles["successful_tackles"]/ p1tackles["total_tackles"]*100) | round(2) }}% successful</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Tackles</td>
+                        <td>{{ (p2tackles["successful_tackles"]/ p2tackles["total_tackles"]*100) | round(2) }}% successful</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/tackles/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/tackles/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
                 </tbody>
             </table>
         </div>
@@ -438,12 +472,6 @@ var layout2 = {
 
     Plotly.newPlot("rating-chart2", data2, layout2, {displayModeBar: false});
 </script>
-
-
-
-
-
-
 
     <br>
     <br>

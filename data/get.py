@@ -2,6 +2,8 @@ from data import credentials
 import psycopg2
 from psycopg2 import pool
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import image
 
 
 
@@ -108,3 +110,109 @@ def playerPosition(postgreSQL_pool, playerID):
         return data[0]  # Return the first (and only) element of the tuple
     else:
         return None  # Return None if no data is found
+def getPlayerTackles(playerID, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select x, y, outcome from eventfact where event_type = 7 and player_id = {playerID}"""
+
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+
+    tx_tackles = []
+    ty_tackles = []
+    fx_tackles = []
+    fy_tackles = []
+
+    for a in result:
+        if a[2] == 0:
+            tx_tackles.append(a[0])
+            ty_tackles.append(a[1])
+        else:
+            fx_tackles.append(a[0])
+            fy_tackles.append(a[1])
+
+
+
+    plt.figure(figsize=(12, 7))
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+    # Creating scatter plot for each event type with different colors
+    pitch_image = image.imread('static/images/football_pitch.png')  # replace this with the actual path to your image
+
+    # Display the image on the axis
+    plt.imshow(pitch_image, extent=[0, 100, 0, 100], aspect='auto', alpha=0.7)
+
+    plt.scatter(tx_tackles, ty_tackles, color='red', label='Failed Tackle')
+
+    plt.scatter(fx_tackles, fy_tackles, color='green', label='Successful Tackle')
+
+
+    plt.legend()
+    plt.grid(False)
+    fig1 = plt.gcf()
+    fig1.savefig(f'static/images/tackles/{playerID}.png', transparent=True)
+    print(f"{len(fx_tackles)} successful tackles from: {len(tx_tackles) + len(fx_tackles)}")
+    return {"total_tackles": (len(tx_tackles) + len(fx_tackles)), "successful_tackles": len(fx_tackles)}
+
+def shotPos(postgreSQL_pool, playerID):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select event_id, event_type, player_id, x, y from eventfact
+                where event_type IN (13,14,15,16) and player_id = {playerID}"""
+
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+
+    missed_shots_x = []
+    missed_shots_y = []
+
+    post_shots_x = []
+    post_shots_y = []
+
+    saved_shots_x = []
+    saved_shots_y = []
+
+    scored_shots_x = []
+    scored_shots_y = []
+
+    for row in result:
+        if row[1] == 13:
+            missed_shots_x.append(row[3])
+            missed_shots_y.append(row[4])
+        elif row[1] == 14:
+            post_shots_x.append(row[3])
+            post_shots_y.append(row[4])
+        elif row[1] == 15:
+            saved_shots_x.append(row[3])
+            saved_shots_y.append(row[4])
+        elif row[1] == 16:
+            scored_shots_x.append(row[3])
+            scored_shots_y.append(row[4])
+
+    plt.figure(figsize=(12, 7))
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+    # Creating scatter plot for each event type with different colors
+    pitch_image = image.imread('static/images/football_pitch.png')  # replace this with the actual path to your image
+
+    # Display the image on the axis
+    plt.imshow(pitch_image, extent=[0, 100, 0, 100], aspect='auto', alpha=0.7)
+
+    # Creating scatter plot for each event type with different colors
+    plt.scatter(missed_shots_x, missed_shots_y, color='red', label='Missed')
+    plt.scatter(post_shots_x, post_shots_y, color='blue', label='Post Hit')
+    plt.scatter(saved_shots_x, saved_shots_y, color='green', label='Saved')
+    plt.scatter(scored_shots_x, scored_shots_y, color='yellow', label='Scored')
+
+    plt.legend()
+    plt.grid(False)
+    fig1 = plt.gcf()
+    fig1.savefig(f'static/images/shotpos/{playerID}.png', transparent=True)
