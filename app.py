@@ -237,7 +237,6 @@ def comparison():
             if xrank is None or xrank == '':
                 xrank = 'N/A'
             ranks.append([grank, xrank])
-        print (ranks)
         p1stats = stats[0]
         p2stats = stats[1]
         colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
@@ -245,17 +244,17 @@ def comparison():
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
         source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
 
-        print(p1stats)
-        print (p1stats[0][2] / p1stats[0][1] * 100)
-        print (p1stats[1][2] / p1stats[1][1] * 100)
         player1rating = ((p1stats[0][2] / p1stats[0][1] * 100) + (p1stats[1][2] / p1stats[1][1] * 100))/2
         player2rating = ((p2stats[0][2] / p1stats[0][1] * 100) + (p2stats[1][2] / p1stats[1][1] * 100))/2
         player1position = get.playerPosition(get_db_pool(), player_ids[0])
         player2position = get.playerPosition(get_db_pool(), player_ids[1])
+        p1type = get.type(player1position)
+        p2type = get.type(player2position)
+
         p1tackles = get.getPlayerTackles(player_ids[0], get_db_pool())
         p2tackles = get.getPlayerTackles(player_ids[1], get_db_pool())
-        get.shotPos(get_db_pool(), player_ids[0])
-        get.shotPos(get_db_pool(), player_ids[1])
+        p1onTarget = get.shotPos(get_db_pool(), player_ids[0])
+        p2onTarget = get.shotPos(get_db_pool(), player_ids[1])
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
@@ -263,7 +262,7 @@ def comparison():
                            source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2,
                            value2 = value2, player1rating = player1rating, player2rating = player2rating, ranks=ranks,
                            player1position = player1position, player2position = player2position, p1tackles = p1tackles,
-                           p2tackles = p2tackles)
+                           p2tackles = p2tackles, p1type = p1type, p2type = p2type, p1onTarget = p1onTarget, p2onTarget = p2onTarget)
 
 
 
@@ -278,9 +277,9 @@ def load_stats():
   return jsonify({'message': 'Stats loaded'})  # Return a response to the frontend
 
 
-@app.errorhandler(Exception)
+'''@app.errorhandler(Exception)
 def exception_handler(error):
-    return "!!!!"  + repr(error)
+    return "!!!!"  + repr(error)'''
 
 if __name__ == '__main__':
     app.run()

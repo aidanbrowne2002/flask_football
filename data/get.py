@@ -145,13 +145,13 @@ def getPlayerTackles(playerID, postgreSQL_pool):
 
     # Display the image on the axis
     plt.imshow(pitch_image, extent=[0, 100, 0, 100], aspect='auto', alpha=0.7)
-    size = 100
+    size = 140
     plt.scatter(tx_tackles, ty_tackles, color='red', label='Failed Tackle', s = size)
 
     plt.scatter(fx_tackles, fy_tackles, color='green', label='Successful Tackle', s = size)
 
 
-    plt.legend(fontsize=20)
+    plt.legend(fontsize=25)
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/tackles/{playerID}.png', transparent=True)
@@ -197,6 +197,8 @@ def shotPos(postgreSQL_pool, playerID):
             scored_shots_x.append(row[3])
             scored_shots_y.append(row[4])
 
+
+    onTarget = (len(scored_shots_x) + len(saved_shots_x))/((len(missed_shots_x) + len(post_shots_x) + len(saved_shots_x) + len(scored_shots_x)))
     plt.figure(figsize=(12, 7))
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
 
@@ -208,11 +210,25 @@ def shotPos(postgreSQL_pool, playerID):
     size = 100
     # Creating scatter plot for each event type with different colors
     plt.scatter(missed_shots_x, missed_shots_y, color='red', label='Missed', s=size)
-    plt.scatter(post_shots_x, post_shots_y, color='blue', label='Post Hit', s=size)
+    plt.scatter(post_shots_x, post_shots_y, color='blue', label='Woodwork', s=size)
     plt.scatter(saved_shots_x, saved_shots_y, color='yellow', label='Saved', s=size)
     plt.scatter(scored_shots_x, scored_shots_y, color='green', label='Scored', s=size)
 
-    plt.legend(fontsize=20, loc='upper left')
+
+
+    plt.legend(fontsize=25, loc='upper left')
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/shotpos/{playerID}.png', transparent=True)
+    return onTarget
+
+def type(positon):
+    if positon in ('Striker', 'Second Striker'):
+        type = "Striker"
+    if positon in ('Defensive Midfielder', 'Central Midfielder', 'Attacking Midfielder'):
+        type = "Midfielder"
+    if positon in ('Wing Back', 'Winger'):
+        type = "Winger"
+    if positon in ('Full Back', 'Central Defender', 'Full Back'):
+        type = "Defender"
+    return type

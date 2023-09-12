@@ -36,9 +36,9 @@
             <table>
                 <thead>
                 <tr>
+                    <th>{{ player1position }}</th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>{{ player2position }}</th>
                 </tr>
             </thead>
                 <tbody>
@@ -82,9 +82,9 @@
                     </tr>
                     </tr>
                     <tr class="title" id="dropdown3">
-                        <td>Ranked {{ ranks[0][0] }} Amongst {{ player1position }}s</td>
+                        <td>Ranked {{ ranks[0][0] }} Amongst {{ p1type }}s</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Goals</td>
-                        <td>Ranked {{ ranks[1][0] }} Amongst {{ player2position }}s</td>
+                        <td>Ranked {{ ranks[1][0] }} Amongst {{ p2type }}s</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -100,9 +100,9 @@
                         </td>
                     </tr>
                     <tr class="title" id="dropdown4">
-                        <td>Ranked {{ ranks[0][1] }} Amongst {{ player1position }}s</td>
+                        <td>Ranked {{ ranks[0][1] }} Amongst {{ p1type }}s</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>xG</td>
-                        <td>Ranked {{ ranks[1][1] }} Amongst {{ player2position }}s</td>
+                        <td>Ranked {{ ranks[1][1] }} Amongst {{ p2type }}s</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -125,14 +125,14 @@
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
                             <div class="child-data-left"><div class="sankey-plot-container" id="sankey-plot1"></div></div>
-                            <div class="child-data-right"><div class="sankey-plot-container" id="sankey-plot2"></div>
+                            <div class="child-data-right"><div class="sankey-plot-container" id="sankey-plot2"></div></div>
                             <div class="clear"></div>
                         </td>
                     </tr>
                         <tr class="title" id="dropdown6">
-                        <td>{{ (p1stats[1][1]) | round(2) }} Shots</td>
+                        <td>{{ (p1onTarget*100) | round(2) }}% on target from {{ p1stats[1][1] }}</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Shot Positions</td>
-                        <td>{{ (p2stats[1][1]) | round(2) }} Shots</td>
+                        <td>{{ (p2onTarget*100) | round(2) }}% on target from {{ p2stats[1][1] }}</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
