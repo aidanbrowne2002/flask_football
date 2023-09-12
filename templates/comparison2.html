@@ -92,6 +92,18 @@
                                 <img src="{{ url_for('static', filename='images/ranks/goals/' + player1 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Striker</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Midfield</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Winger/Wingbacks</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Defenders</span>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/ranks/goals/' + player2 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -110,6 +122,18 @@
                                 <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Striker</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Midfield</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Winger/Wingbacks</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Defenders</span>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -130,9 +154,9 @@
                         </td>
                     </tr>
                         <tr class="title" id="dropdown6">
-                        <td>{{ (p1onTarget*100) | round(2) }}% on target from {{ p1stats[1][1] }}</td>
+                        <td>{{ (p1onTarget*100) | round(2) }}% on target</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Shot Positions</td>
-                        <td>{{ (p2onTarget*100) | round(2) }}% on target from {{ p2stats[1][1] }}</td>
+                        <td>{{ (p2onTarget*100) | round(2) }}% on target</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -140,6 +164,18 @@
                                 <img src="{{ url_for('static', filename='images/shotpos/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: green; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Scored</span>
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: red; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Missed</span>
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: yellow; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Saved</span>
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: blue; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Woodwork</span>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/shotpos/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -147,9 +183,9 @@
                             <div class="clear"></div>
                         </td>
                     <tr class="title" id="dropdown7">
-                        <td>{{ (p1tackles["successful_tackles"]/ p1tackles["total_tackles"]*100) | round(2) }}% successful</td>
+                        <td>{{ (p1tackles["successful_tackles"]/ p1tackles["total_tackles"]*100) | round(2) }}% Successful</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Tackles</td>
-                        <td>{{ (p2tackles["successful_tackles"]/ p2tackles["total_tackles"]*100) | round(2) }}% successful</td>
+                        <td>{{ (p2tackles["successful_tackles"]/ p2tackles["total_tackles"]*100) | round(2) }}% Successful</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -157,6 +193,12 @@
                                 <img src="{{ url_for('static', filename='images/tackles/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: green; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Tackle Won</span>
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: red; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Tackle Lost</span>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/tackles/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -174,6 +216,9 @@
                                 <img src="{{ url_for('static', filename='images/interceptions/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: green; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Successful Interceptions</span>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/interceptions/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -182,7 +227,7 @@
                         </td>
                     <tr class="title" id="dropdown9">
                         <td>{{ (p1aerials["successful_aerials"]/ p1aerials["total_aerials"]*100) | round(2) }}% successful</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Aerials</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Aerial Duels</td>
                         <td>{{ (p2aerials["successful_aerials"]/ p2aerials["total_aerials"]*100) | round(2) }}% successful</td>
                     </tr>
                     <tr class="child-row">
@@ -191,6 +236,12 @@
                                 <img src="{{ url_for('static', filename='images/aerials/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: green; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Aerial Duel Won</span>
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: red; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Aerial Duel Lost</span>
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/aerials/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">

@@ -110,7 +110,7 @@ def genGraphs(playerID, postgreSQL_pool, avgGoalsTotals, avgxGTotals):
                     plt.grid(True)
                     plt.scatter(j, row[1], color='white', s=90)
                     plt.gca().invert_yaxis()
-                    plt.legend(["Strikers", "Midfielders", "Wingers/Wingbacks", "Defenders"])
+                    #plt.legend(["Strikers", "Midfielders", "Wingers/Wingbacks", "Defenders"])
                     fig1 = plt.gcf()
                     plt.subplots_adjust(left=0.1, right=0.9, top=0.98, bottom=0.1)
                     #plt.show()

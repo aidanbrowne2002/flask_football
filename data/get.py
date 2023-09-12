@@ -151,7 +151,7 @@ def getPlayerTackles(playerID, postgreSQL_pool):
     plt.scatter(fx_tackles, fy_tackles, color='green', label='Successful Tackle', s = size)
 
 
-    plt.legend(fontsize=25)
+    #plt.legend(fontsize=25)
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/tackles/{playerID}.png', transparent=True)
@@ -216,7 +216,7 @@ def shotPos(postgreSQL_pool, playerID):
 
 
 
-    plt.legend(fontsize=25, loc='upper left')
+    #plt.legend(fontsize=25, loc='upper left')
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/shotpos/{playerID}.png', transparent=True)
@@ -313,7 +313,7 @@ def getPlayeraerial(playerID, postgreSQL_pool):
     plt.scatter(fx_aerial, fy_aerial, color='green', label='Successful aerial', s = size)
 
 
-    plt.legend(fontsize=25)
+    #plt.legend(fontsize=25)
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/aerials/{playerID}.png', transparent=True)

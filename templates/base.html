@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="static/images/tigerX">
     <title>{% block title %}{% endblock %}</title>
     <style>
         .navbar li.active a {
@@ -15,7 +16,6 @@
         <div class="navbar">
             <ul>
                 <li{% if active_page == 'home' %} class="active"{% endif %}><a href="/">Home</a></li>
-                <li{% if active_page == 'findplayer' %} class="active"{% endif %}><a href="/findplayer">Find Player</a></li>
                 <li{% if active_page == 'comparison' %} class="active"{% endif %}><a href="/initialise_comparison">Comparison</a></li>
                 {% if current_user.is_authenticated %}
                     <li{% if active_page == 'logout' %} class="active"{% endif %}><a href="/logout">Logout</a></li>
@@ -31,9 +31,9 @@
     </div>
 
     <footer>
-        <div class="footer">
+        <!--<div class="footer">
             <p>This is the footer content.</p>
-        </div>
+        </div>-->
     </footer>
 </body>
 </html>
