@@ -82,7 +82,7 @@ def save_color_key_image(num1, num2, player1, player2, outcome):
         fig.savefig(f'static/images/color_key_success/{player1}_{player2}.png', bbox_inches='tight', transparent=True)
     else:
         fig.savefig(f'static/images/color_key_unsuccess/{player1}_{player2}.png', bbox_inches='tight', transparent=True)
-    plt.show()
+    #plt.show()
     plt.close(fig)
 
 

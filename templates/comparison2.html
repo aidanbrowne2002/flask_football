@@ -94,13 +94,13 @@
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Striker</span>
+                                <span style="vertical-align: middle;">Strikers</span>
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Midfield</span>
+                                <span style="vertical-align: middle;">Midfielders</span>
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Winger/Wingbacks</span>
+                                <span style="vertical-align: middle;">Wingers/Wingbacks</span>
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
                                 <span style="vertical-align: middle;">Defenders</span>
@@ -124,13 +124,13 @@
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Striker</span>
+                                <span style="vertical-align: middle;">Strikers</span>
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Midfield</span>
+                                <span style="vertical-align: middle;">Midfielders</span>
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Winger/Wingbacks</span>
+                                <span style="vertical-align: middle;">Wingers/Wingbacks</span>
                                 <br>
                                 <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
                                 <span style="vertical-align: middle;">Defenders</span>
@@ -168,13 +168,13 @@
                                 <div style="display: inline-block; width: 15px; height: 15px; background-color: green; border-radius: 50%; vertical-align: middle;"></div>
                                 <span style="vertical-align: middle;">Scored</span>
                                 <br>
-                                <div style="display: inline-block; width: 15px; height: 15px; background-color: red; border-radius: 50%; vertical-align: middle;"></div>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: #fd0000; border-radius: 50%; vertical-align: middle;"></div>
                                 <span style="vertical-align: middle;">Missed</span>
                                 <br>
-                                <div style="display: inline-block; width: 15px; height: 15px; background-color: yellow; border-radius: 50%; vertical-align: middle;"></div>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: #fdfd00; border-radius: 50%; vertical-align: middle;"></div>
                                 <span style="vertical-align: middle;">Saved</span>
                                 <br>
-                                <div style="display: inline-block; width: 15px; height: 15px; background-color: blue; border-radius: 50%; vertical-align: middle;"></div>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: #2b2bc4; border-radius: 50%; vertical-align: middle;"></div>
                                 <span style="vertical-align: middle;">Woodwork</span>
                             </div>
                             <div class="child-data-right">
@@ -183,9 +183,19 @@
                             <div class="clear"></div>
                         </td>
                     <tr class="title" id="dropdown7">
-                        <td>{{ (p1tackles["successful_tackles"]/ p1tackles["total_tackles"]*100) | round(2) }}% Successful</td>
+                        <td>{% if p2tackles["total_tackles"] == 0 %}
+                                0% Successful
+                            {% else %}
+                                {{ (p1tackles["successful_tackles"] / p1tackles["total_tackles"] * 100) | round(2) }}% Successful
+                            {% endif %}
+                        </td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Tackles</td>
-                        <td>{{ (p2tackles["successful_tackles"]/ p2tackles["total_tackles"]*100) | round(2) }}% Successful</td>
+                        <td>{% if p2tackles["total_tackles"] == 0 %}
+                                0% Successful
+                            {% else %}
+                                {{ (p2tackles["successful_tackles"] / p2tackles["total_tackles"] * 100) | round(2) }}% Successful
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -245,6 +255,26 @@
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/aerials/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    <tr class="title" id="dropdown10">
+                        <td>{{ p1blocks }} Blocks</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Blocks</td>
+                        <td>{{ p2blocks }} Blocks</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/blocks/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: green; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Successful</span>
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/blocks/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="clear"></div>
                         </td>

@@ -94,7 +94,10 @@ def login():
         user = User.authenticate(username, password)
         if user:
             login_user(user)
-            return redirect('/') # assuming you have a dashboard route
+            next_page = request.args.get('next')
+            if not next_page or not next_page.startswith('/'):
+                next_page = '/'  # Redirect to the homepage if 'next' is invalid
+            return redirect(next_page)
         else:
             flash('Invalid credentials', 'danger')
     return render_template('login.html')
@@ -259,6 +262,8 @@ def comparison():
         p2interceptions = get.getPlayerInterceptions(player_ids[1], get_db_pool())
         p1aerials = get.getPlayeraerial(player_ids[0], get_db_pool())
         p2aerials = get.getPlayeraerial(player_ids[1], get_db_pool())
+        p1blocks = get.getPlayerblocks(player_ids[0], get_db_pool())
+        p2blocks = get.getPlayerblocks(player_ids[1], get_db_pool())
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
@@ -268,7 +273,7 @@ def comparison():
                            player1position = player1position, player2position = player2position, p1tackles = p1tackles,
                            p2tackles = p2tackles, p1type = p1type, p2type = p2type, p1onTarget = p1onTarget,
                            p2onTarget = p2onTarget, p1interceptions = p1interceptions, p2interceptions = p2interceptions,
-                           p1aerials = p1aerials, p2aerials = p2aerials)
+                           p1aerials = p1aerials, p2aerials = p2aerials, p1blocks = p1blocks, p2blocks = p2blocks)
 
 
 
