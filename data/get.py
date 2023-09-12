@@ -232,3 +232,90 @@ def type(positon):
     if positon in ('Full Back', 'Central Defender', 'Full Back'):
         type = "Defender"
     return type
+
+def getPlayerInterceptions(playerID, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select x, y from eventfact where event_type = 8 and player_id = {playerID}"""
+
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+
+    interceptionsX = []
+    interceptionsY = []
+
+    for a in result:
+        interceptionsX.append(a[0])
+        interceptionsY.append(a[1])
+
+
+
+    plt.figure(figsize=(12, 7))
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+    # Creating scatter plot for each event type with different colors
+    pitch_image = image.imread('static/images/football_pitch.png')  # replace this with the actual path to your image
+
+    # Display the image on the axis
+    plt.imshow(pitch_image, extent=[0, 100, 0, 100], aspect='auto', alpha=0.7)
+    size = 140
+    plt.scatter(interceptionsX, interceptionsY, color='green', label='Interception', s = size)
+
+
+
+    plt.grid(False)
+    fig1 = plt.gcf()
+    fig1.savefig(f'static/images/interceptions/{playerID}.png', transparent=True)
+    return len(interceptionsX)
+
+def getPlayeraerial(playerID, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select x, y, outcome from eventfact where event_type = 44 and player_id = {playerID}"""
+
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+
+    tx_aerial = []
+    ty_aerial = []
+    fx_aerial = []
+    fy_aerial = []
+
+    for a in result:
+        if a[2] == 0:
+            tx_aerial.append(a[0])
+            ty_aerial.append(a[1])
+        else:
+            fx_aerial.append(a[0])
+            fy_aerial.append(a[1])
+
+
+
+    plt.figure(figsize=(12, 7))
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+    # Creating scatter plot for each event type with different colors
+    pitch_image = image.imread('static/images/football_pitch.png')  # replace this with the actual path to your image
+
+    # Display the image on the axis
+    plt.imshow(pitch_image, extent=[0, 100, 0, 100], aspect='auto', alpha=0.7)
+    size = 140
+    plt.scatter(tx_aerial, ty_aerial, color='red', label='Failed aerial', s = size)
+
+    plt.scatter(fx_aerial, fy_aerial, color='green', label='Successful aerial', s = size)
+
+
+    plt.legend(fontsize=25)
+    plt.grid(False)
+    fig1 = plt.gcf()
+    fig1.savefig(f'static/images/aerials/{playerID}.png', transparent=True)
+    print(f"{len(fx_aerial)} successful aerials from: {len(tx_aerial) + len(fx_aerial)}")
+    return {"total_aerials": (len(tx_aerial) + len(fx_aerial)), "successful_aerials": len(fx_aerial)}

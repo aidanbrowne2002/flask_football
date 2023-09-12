@@ -163,6 +163,40 @@
                             </div>
                             <div class="clear"></div>
                         </td>
+                    <tr class="title" id="dropdown8">
+                        <td>{{ p1interceptions }} Interceptions</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Interceptions</td>
+                        <td>{{ p2interceptions }} Interceptions</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/interceptions/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/interceptions/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    <tr class="title" id="dropdown9">
+                        <td>{{ (p1aerials["successful_aerials"]/ p1aerials["total_aerials"]*100) | round(2) }}% successful</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Aerials</td>
+                        <td>{{ (p2aerials["successful_aerials"]/ p2aerials["total_aerials"]*100) | round(2) }}% successful</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/aerials/' + player1 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/aerials/' + player2 + '.png') }}" alt="tackles" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
                 </tbody>
             </table>
         </div>

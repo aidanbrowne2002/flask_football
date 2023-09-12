@@ -255,6 +255,10 @@ def comparison():
         p2tackles = get.getPlayerTackles(player_ids[1], get_db_pool())
         p1onTarget = get.shotPos(get_db_pool(), player_ids[0])
         p2onTarget = get.shotPos(get_db_pool(), player_ids[1])
+        p1interceptions = get.getPlayerInterceptions(player_ids[0], get_db_pool())
+        p2interceptions = get.getPlayerInterceptions(player_ids[1], get_db_pool())
+        p1aerials = get.getPlayeraerial(player_ids[0], get_db_pool())
+        p2aerials = get.getPlayeraerial(player_ids[1], get_db_pool())
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
@@ -262,7 +266,9 @@ def comparison():
                            source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2,
                            value2 = value2, player1rating = player1rating, player2rating = player2rating, ranks=ranks,
                            player1position = player1position, player2position = player2position, p1tackles = p1tackles,
-                           p2tackles = p2tackles, p1type = p1type, p2type = p2type, p1onTarget = p1onTarget, p2onTarget = p2onTarget)
+                           p2tackles = p2tackles, p1type = p1type, p2type = p2type, p1onTarget = p1onTarget,
+                           p2onTarget = p2onTarget, p1interceptions = p1interceptions, p2interceptions = p2interceptions,
+                           p1aerials = p1aerials, p2aerials = p2aerials)
 
 
 
