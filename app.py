@@ -278,6 +278,10 @@ def load_stats():
   return jsonify({'message': 'Stats loaded'})  # Return a response to the frontend
 
 
+@app.errorhandler(Exception)
+def exception_handler(error):
+    return "!!!!"  + repr(error)
+
 if __name__ == '__main__':
     app.run()
 

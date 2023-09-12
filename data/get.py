@@ -145,13 +145,13 @@ def getPlayerTackles(playerID, postgreSQL_pool):
 
     # Display the image on the axis
     plt.imshow(pitch_image, extent=[0, 100, 0, 100], aspect='auto', alpha=0.7)
+    size = 100
+    plt.scatter(tx_tackles, ty_tackles, color='red', label='Failed Tackle', s = size)
 
-    plt.scatter(tx_tackles, ty_tackles, color='red', label='Failed Tackle')
-
-    plt.scatter(fx_tackles, fy_tackles, color='green', label='Successful Tackle')
+    plt.scatter(fx_tackles, fy_tackles, color='green', label='Successful Tackle', s = size)
 
 
-    plt.legend()
+    plt.legend(fontsize=20)
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/tackles/{playerID}.png', transparent=True)
@@ -205,14 +205,14 @@ def shotPos(postgreSQL_pool, playerID):
 
     # Display the image on the axis
     plt.imshow(pitch_image, extent=[0, 100, 0, 100], aspect='auto', alpha=0.7)
-
+    size = 100
     # Creating scatter plot for each event type with different colors
-    plt.scatter(missed_shots_x, missed_shots_y, color='red', label='Missed')
-    plt.scatter(post_shots_x, post_shots_y, color='blue', label='Post Hit')
-    plt.scatter(saved_shots_x, saved_shots_y, color='green', label='Saved')
-    plt.scatter(scored_shots_x, scored_shots_y, color='yellow', label='Scored')
+    plt.scatter(missed_shots_x, missed_shots_y, color='red', label='Missed', s=size)
+    plt.scatter(post_shots_x, post_shots_y, color='blue', label='Post Hit', s=size)
+    plt.scatter(saved_shots_x, saved_shots_y, color='yellow', label='Saved', s=size)
+    plt.scatter(scored_shots_x, scored_shots_y, color='green', label='Scored', s=size)
 
-    plt.legend()
+    plt.legend(fontsize=20, loc='upper left')
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/shotpos/{playerID}.png', transparent=True)

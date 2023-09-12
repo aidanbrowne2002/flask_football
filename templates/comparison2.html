@@ -82,9 +82,9 @@
                     </tr>
                     </tr>
                     <tr class="title" id="dropdown3">
-                        <td>Ranked Number {{ ranks[0][0] }} Amongst {{ player1position }}s</td>
+                        <td>Ranked {{ ranks[0][0] }} Amongst {{ player1position }}s</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Goals</td>
-                        <td>Ranked Number {{ ranks[1][0] }} Amongst {{ player2position }}s</td>
+                        <td>Ranked {{ ranks[1][0] }} Amongst {{ player2position }}s</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -100,9 +100,9 @@
                         </td>
                     </tr>
                     <tr class="title" id="dropdown4">
-                        <td>Ranked Number {{ ranks[0][1] }} Amongst {{ player1position }}s</td>
+                        <td>Ranked {{ ranks[0][1] }} Amongst {{ player1position }}s</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>xG</td>
-                        <td>Ranked Number {{ ranks[1][1] }} Amongst {{ player2position }}s</td>
+                        <td>Ranked {{ ranks[1][1] }} Amongst {{ player2position }}s</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
@@ -130,9 +130,9 @@
                         </td>
                     </tr>
                         <tr class="title" id="dropdown6">
-                        <td>TBD</td>
+                        <td>{{ (p1stats[1][1]) | round(2) }} Shots</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Shot Positions</td>
-                        <td>TBD</td>
+                        <td>{{ (p2stats[1][1]) | round(2) }} Shots</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">
