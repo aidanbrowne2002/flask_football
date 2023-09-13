@@ -396,5 +396,5 @@ def playerxG(playerID, postgreSQL_pool):
         print("No result or result is None")
     print (f"XG VALUES --- xg: {float_value}, total time played: {totalTimePlayed(playerID, postgreSQL_pool)}")
     xG = totalTimePlayed(playerID, postgreSQL_pool)/float_value
-    return xG
     postgreSQL_pool.putconn(ps_connection)
+    return xG
