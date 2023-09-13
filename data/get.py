@@ -222,7 +222,7 @@ def shotPos(postgreSQL_pool, playerID):
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/shotpos/{playerID}.png', transparent=True)
-    return onTarget
+    return onTarget, len(scored_shots_x)
 
 def type(positon):
     if positon in ('Striker', 'Second Striker'):
@@ -362,3 +362,39 @@ def getPlayerblocks(playerID, postgreSQL_pool):
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/blocks/{playerID}.png', transparent=True)
     return len(blocksx)
+
+def totalTimePlayed(playerID, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select sum(offtime-ontime+half_added) from players_in_game where game_player_id = {playerID};"""
+
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchone()
+
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+
+    if result and result[0] is not None:
+        float_value = float(result[0])
+        print(float_value)
+    else:
+        print("No result or result is None")
+    return float_value
+def playerxG(playerID, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select xg from players where id = {playerID};"""
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchone()
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    if result and result[0] is not None:
+        float_value = float(result[0])
+        print(float_value)
+    else:
+        print("No result or result is None")
+    print (f"XG VALUES --- xg: {float_value}, total time played: {totalTimePlayed(playerID, postgreSQL_pool)}")
+    xG = totalTimePlayed(playerID, postgreSQL_pool)/float_value
+    return xG
+    postgreSQL_pool.putconn(ps_connection)

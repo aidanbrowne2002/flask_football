@@ -457,9 +457,9 @@
     $(document).ready(createSankeyPlots);
 </script>
     <script>
-    var player1rating = {{ player1rating }};
+    var player1rating = {{ p1rating }};
 var min_value1 = 0;
-var max_value1 = 100;
+var max_value1 = 200;
 
 var data1 = [
     {
@@ -523,9 +523,9 @@ var layout1 = {
     Plotly.newPlot("rating-chart1", data1, layout1, {displayModeBar: false});
 
     // JavaScript code to create the second Plotly gauge chart
-var player2rating = {{ player2rating }};
+var player2rating = {{ p2rating }};
 var min_value2 = 0;
-var max_value2 = 100;
+var max_value2 = 200;
 
 var data2 = [
     {

@@ -10,6 +10,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, curren
 from werkzeug.security import generate_password_hash, check_password_hash
 import colourkey
 import importlib
+import tigerXRating
 
 
 
@@ -247,8 +248,6 @@ def comparison():
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
         source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
 
-        player1rating = ((p1stats[0][2] / p1stats[0][1] * 100) + (p1stats[1][2] / p1stats[1][1] * 100))/2
-        player2rating = ((p2stats[0][2] / p1stats[0][1] * 100) + (p2stats[1][2] / p1stats[1][1] * 100))/2
         player1position = get.playerPosition(get_db_pool(), player_ids[0])
         player2position = get.playerPosition(get_db_pool(), player_ids[1])
         p1type = get.type(player1position)
@@ -256,24 +255,27 @@ def comparison():
 
         p1tackles = get.getPlayerTackles(player_ids[0], get_db_pool())
         p2tackles = get.getPlayerTackles(player_ids[1], get_db_pool())
-        p1onTarget = get.shotPos(get_db_pool(), player_ids[0])
-        p2onTarget = get.shotPos(get_db_pool(), player_ids[1])
+        p1onTarget, p1scored = get.shotPos(get_db_pool(), player_ids[0])
+        p2onTarget, p2scored = get.shotPos(get_db_pool(), player_ids[1])
         p1interceptions = get.getPlayerInterceptions(player_ids[0], get_db_pool())
         p2interceptions = get.getPlayerInterceptions(player_ids[1], get_db_pool())
         p1aerials = get.getPlayeraerial(player_ids[0], get_db_pool())
         p2aerials = get.getPlayeraerial(player_ids[1], get_db_pool())
         p1blocks = get.getPlayerblocks(player_ids[0], get_db_pool())
         p2blocks = get.getPlayerblocks(player_ids[1], get_db_pool())
+        p1rating = tigerXRating.ratePlayer(p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], spasses[0], p1stats[0][3], upasses[0], float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), p1scored-p1onTarget, float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
+        p2rating = tigerXRating.ratePlayer(p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], spasses[1], p2stats[0][3], upasses[1], float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), p2scored-p2onTarget, float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
                            player2=str(player_ids[1]), active_page='comparison', p2stats = p2stats, p1stats = p1stats,
                            source1 = source1, target1 = target1, value1 = value1, source2 = source2, target2 = target2,
-                           value2 = value2, player1rating = player1rating, player2rating = player2rating, ranks=ranks,
+                           value2 = value2, ranks=ranks,
                            player1position = player1position, player2position = player2position, p1tackles = p1tackles,
                            p2tackles = p2tackles, p1type = p1type, p2type = p2type, p1onTarget = p1onTarget,
                            p2onTarget = p2onTarget, p1interceptions = p1interceptions, p2interceptions = p2interceptions,
-                           p1aerials = p1aerials, p2aerials = p2aerials, p1blocks = p1blocks, p2blocks = p2blocks)
+                           p1aerials = p1aerials, p2aerials = p2aerials, p1blocks = p1blocks, p2blocks = p2blocks,
+                           p1rating = p1rating, p2rating = p2rating)
 
 
 
