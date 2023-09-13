@@ -278,6 +278,34 @@
                             </div>
                             <div class="clear"></div>
                         </td>
+                    <tr class="title" id="dropdown11">
+                        <td>Tx Info</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Tx Info</td>
+                        <td>Tx Info</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <div style = "text-align: right;">
+                                {% for item in p1info %}
+                                  <p>{{ item }}</p>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 15px; height: 15px; background-color: green; border-radius: 50%; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">For Debugging Purposes</span>
+                            </div>
+                            <div class="child-data-right">
+                                <div style = "text-align: right;">
+                                {% for item in p2info %}
+                                  <p>{{ item }}</p>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </td>
                 </tbody>
             </table>
         </div>

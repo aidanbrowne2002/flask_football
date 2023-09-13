@@ -265,8 +265,8 @@ def comparison():
         p2aerials = get.getPlayeraerial(player_ids[1], get_db_pool())
         p1blocks = get.getPlayerblocks(player_ids[0], get_db_pool())
         p2blocks = get.getPlayerblocks(player_ids[1], get_db_pool())
-        p1rating = tigerXRating.ratePlayer(p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], spasses[0], p1stats[0][3], upasses[0], float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), p1scored-p1onTarget, float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
-        p2rating = tigerXRating.ratePlayer(p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], spasses[1], p2stats[0][3], upasses[1], float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), p2scored-p2onTarget, float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
+        p1rating, p1info = tigerXRating.ratePlayer(p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], spasses[0], p1stats[0][3], upasses[0], float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), p1scored-p1onTarget, float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
+        p2rating, p2info = tigerXRating.ratePlayer(p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], spasses[1], p2stats[0][3], upasses[1], float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), p2scored-p2onTarget, float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
@@ -277,7 +277,7 @@ def comparison():
                            p2tackles = p2tackles, p1type = p1type, p2type = p2type, p1onTarget = p1onTarget,
                            p2onTarget = p2onTarget, p1interceptions = p1interceptions, p2interceptions = p2interceptions,
                            p1aerials = p1aerials, p2aerials = p2aerials, p1blocks = p1blocks, p2blocks = p2blocks,
-                           p1rating = p1rating, p2rating = p2rating)
+                           p1rating = p1rating, p2rating = p2rating, p1info = p1info, p2info = p2info)
 
 
 
