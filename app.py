@@ -277,7 +277,7 @@ def comparison():
                            p2tackles = p2tackles, p1type = p1type, p2type = p2type, p1onTarget = p1onTarget,
                            p2onTarget = p2onTarget, p1interceptions = p1interceptions, p2interceptions = p2interceptions,
                            p1aerials = p1aerials, p2aerials = p2aerials, p1blocks = p1blocks, p2blocks = p2blocks,
-                           )
+                           p1rating = p1rating, p2rating = p2rating)
 
 
 
