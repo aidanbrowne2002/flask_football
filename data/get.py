@@ -227,11 +227,11 @@ def shotPos(postgreSQL_pool, playerID):
 def type(positon):
     if positon in ('Striker', 'Second Striker'):
         type = "Striker"
-    if positon in ('Defensive Midfielder', 'Central Midfielder', 'Attacking Midfielder'):
+    elif positon in ('Defensive Midfielder', 'Central Midfielder', 'Attacking Midfielder'):
         type = "Midfielder"
-    if positon in ('Wing Back', 'Winger'):
+    elif positon in ('Wing Back', 'Winger'):
         type = "Winger"
-    if positon in ('Full Back', 'Central Defender', 'Full Back'):
+    elif positon in ('Full Back', 'Central Defender', 'Full Back'):
         type = "Defender"
     else:
         type = "Goalkeeper"

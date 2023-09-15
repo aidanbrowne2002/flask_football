@@ -252,8 +252,8 @@ def comparison():
 
         player1position = get.playerPosition(get_db_pool(), player_ids[0])
         player2position = get.playerPosition(get_db_pool(), player_ids[1])
-        p1type = get.type(player1position)
-        p2type = get.type(player2position)
+        p1type = get.type(str(player1position))
+        p2type = get.type(str(player2position))
 
         p1tackles = get.getPlayerTackles(player_ids[0], get_db_pool())
         p2tackles = get.getPlayerTackles(player_ids[1], get_db_pool())
