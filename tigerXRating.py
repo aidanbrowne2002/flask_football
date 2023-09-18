@@ -54,7 +54,10 @@ def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successf
 
     print(f"txRating pre time: {txRating}")
     print (f"minutesPlayed: {minutesPlayed}")
-    txRating = txRating / (minutesPlayed/100)
+    try:
+        txRating = txRating / (minutesPlayed/100)
+    except:
+        txRating = 0
     print (f"txRating final: {txRating}")
 
     return txRating, txinfo

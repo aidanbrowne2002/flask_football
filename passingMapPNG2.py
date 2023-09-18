@@ -127,6 +127,9 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
         fig1.savefig(f'static/images/successful_passes/{player_id}.png', transparent=True)
     if (success == 0):
         fig1.savefig(f'static/images/unsuccessful_passes/{player_id}.png', transparent=True)
+    if not average_threat:
+        average_threat = 0
+    print (f"AVERAGE THREAT = '{average_threat}'")
     return average_threat
 
 

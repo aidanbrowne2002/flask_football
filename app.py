@@ -227,9 +227,12 @@ def comparison():
         for p in player_ids:
             try:
                 spasses.append(passingMapPNG2.generate_player_plot(p, 1, get_db_pool()))
+            except:
+                spasses.append(0)
+            try:
                 upasses.append(passingMapPNG2.generate_player_plot(p, 0, get_db_pool()))
             except:
-                pass
+                upasses.append(0)
             try:
                 grank = ''
                 xrank = ''
@@ -245,6 +248,7 @@ def comparison():
             ranks.append([grank, xrank])
         p1stats = stats[0]
         p2stats = stats[1]
+        print(spasses)
         colourkey.save_color_key_image(spasses[0],spasses[1],str(player_ids[0]),str(player_ids[1]),1)
         colourkey.save_color_key_image(upasses[0],upasses[1],str(player_ids[0]),str(player_ids[1]),0)
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())

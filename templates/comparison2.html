@@ -43,9 +43,18 @@
             </thead>
                 <tbody>
                         <tr class="title" id="dropdown1">
-                        <td>{{ (p1stats[0][2] / p1stats[0][1] * 100) | round(2) }}%</td>
+                        <td>{% if p1stats[0][1] != 0 %}
+                            {{ (p1stats[0][2] / p1stats[0][1] * 100) | round(2) }}%
+                            {% else %}
+                            0%
+                            {%  endif %}</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Successful Passes</td>
-                        <td>{{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }}%</td>
+                        <td>
+                            {% if p2stats[0][1] != 0 %}
+                            {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }}%
+                            {% else %}
+                            0%
+                            {% endif %}</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
@@ -62,9 +71,17 @@
                         </td>
                     </tr>
                     <tr class="title" id="dropdown2">
-                        <td>{{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}%</td>
+                        <td>{% if p1stats[0][1] != 0 %}
+                            {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}%
+                            {% else %}
+                            0%
+                            {% endif %}</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Unsuccessful Passes</td>
-                        <td>{{ (p2stats[0][3] / p2stats[0][1] * 100) | round(2) }}%</td>
+                        <td>{% if p2stats[0][1] != 0 %}
+                            {{ (p2stats[0][3] / p2stats[0][1] * 100) | round(2) }}%
+                            {% else %}
+                            0%
+                            {% endif %}</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
@@ -183,7 +200,7 @@
                             <div class="clear"></div>
                         </td>
                     <tr class="title" id="dropdown7">
-                        <td>{% if p2tackles["total_tackles"] == 0 %}
+                        <td>{% if p1tackles["total_tackles"] == 0 %}
                                 0% Successful
                             {% else %}
                                 {{ (p1tackles["successful_tackles"] / p1tackles["total_tackles"] * 100) | round(2) }}% Successful
@@ -236,9 +253,19 @@
                             <div class="clear"></div>
                         </td>
                     <tr class="title" id="dropdown9">
-                        <td>{{ (p1aerials["successful_aerials"]/ p1aerials["total_aerials"]*100) | round(2) }}% successful</td>
+                        <td>{% if p1aerials["total_aerials"] != 0 %}
+                            {{ (p1aerials["successful_aerials"]/ p1aerials["total_aerials"]*100) | round(2) }}% successful
+                            {% else %}
+                            0% successful
+                            {% endif %}
+                            </td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Aerial Duels</td>
-                        <td>{{ (p2aerials["successful_aerials"]/ p2aerials["total_aerials"]*100) | round(2) }}% successful</td>
+                        <td>{% if p2aerials["total_aerials"] != 0 %}
+                            {{ (p2aerials["successful_aerials"]/ p2aerials["total_aerials"]*100) | round(2) }}% successful
+                            {% else %}
+                            0% successful
+                            {% endif %}
+                            </td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3">

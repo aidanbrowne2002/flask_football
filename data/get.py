@@ -380,6 +380,7 @@ def totalTimePlayed(playerID, postgreSQL_pool):
         print(float_value)
     else:
         print("No result or result is None")
+        float_value = 0
     return float_value
 def playerxG(playerID, postgreSQL_pool):
     ps_connection = postgreSQL_pool.getconn()
@@ -395,6 +396,10 @@ def playerxG(playerID, postgreSQL_pool):
     else:
         print("No result or result is None")
     print (f"XG VALUES --- xg: {float_value}, total time played: {totalTimePlayed(playerID, postgreSQL_pool)}")
-    xG = totalTimePlayed(playerID, postgreSQL_pool)/float_value
+    try:
+        xG = float_value/totalTimePlayed(playerID, postgreSQL_pool)
+    except ZeroDivisionError:
+        xG = 0
+    #xG = totalTimePlayed(playerID, postgreSQL_pool)/float_value
     postgreSQL_pool.putconn(ps_connection)
     return xG
