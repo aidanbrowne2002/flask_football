@@ -40,6 +40,7 @@ def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successf
     print(f"Successful Challenges: {successfulChallenge}, multiplier: {successfulChallengeM}, score: {successfulChallenge * successfulChallengeM}")
     print(f"Unsuccessful Challenges: {unsuccessfulChallenge}, multiplier: {failedChallengeM}, score: {unsuccessfulChallenge * failedChallengeM}")
     print(f"Shot Off Target: {shotOffTarget}, multiplier: {shotOffTargetM}, score: {shotOffTarget * shotOffTargetM}")
+    print(f"minutesPlayed: {minutesPlayed}")
     txinfo = [(f"Goals: {goals}, multiplier: {goalM}, score: {goals * goalM}"),
               (f"Interceptions: {interceptions}, multiplier: {interceptionM}, score: {interceptions * interceptionM}"),
               (f"Aerial Duels Won: {aerialDuelsWon}, multiplier: {aerialWonM}, score: {aerialDuelsWon * aerialWonM}"),
@@ -50,7 +51,8 @@ def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successf
               (f"Failed Passes: {failedPasses}, multiplier: {failedPassM}, threat: {1-failedPassThreat}, score: {round(failedPasses * failedPassM *(1 - failedPassThreat), 2)}"),
               (f"Successful Challenges: {successfulChallenge}, multiplier: {successfulChallengeM}, score: {successfulChallenge * successfulChallengeM}"),
               (f"Unsuccessful Challenges: {unsuccessfulChallenge}, multiplier: {failedChallengeM}, score: {unsuccessfulChallenge * failedChallengeM}"),
-              (f"Shot Off Target: {shotOffTarget}, multiplier: {shotOffTargetM}, score: {shotOffTarget * shotOffTargetM}")]
+              (f"Shot Off Target: {shotOffTarget}, multiplier: {shotOffTargetM}, score: {shotOffTarget * shotOffTargetM}"),
+              (f"minutesPlayed: {minutesPlayed}")]
 
     print(f"txRating pre time: {txRating}")
     print (f"minutesPlayed: {minutesPlayed}")
