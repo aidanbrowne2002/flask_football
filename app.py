@@ -257,8 +257,8 @@ def comparison():
         p1stats = stats[0]
         p2stats = stats[1]
         print(spasses)
-        colourkey.save_color_key_image(sthreatvals[0],sthreatvals[1],str(player_ids[0]),str(player_ids[1]),1)
-        colourkey.save_color_key_image(uthreatvals[0],uthreatvals[1],str(player_ids[0]),str(player_ids[1]),0)
+        colourkey.save_color_key_image(sthreatvals[0],sthreatvals[1],str(player_ids[0]),str(player_ids[1]),1, session['selected_names'])
+        colourkey.save_color_key_image(uthreatvals[0],uthreatvals[1],str(player_ids[0]),str(player_ids[1]),0, session['selected_names'])
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
         source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
 
