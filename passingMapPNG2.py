@@ -94,6 +94,7 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
 
     threat_values = np.array([pt.calculate_threat_difference((start_x[i], start_y[i]), (end_x[i], end_y[i]))
                               for i in range(len(start_x))])
+    print (threat_values)
     scaled_threat = sigmoid_scale(threat_values)
 
     # Normalize the threat values to [0, 1]
@@ -131,6 +132,6 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
         average_threat = 0
     print (f"AVERAGE THREAT = '{average_threat}'")
     plt.close(fig1)
-    return average_threat
+    return threat_values, average_threat
 
 
