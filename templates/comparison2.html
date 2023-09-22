@@ -345,6 +345,26 @@
                             </div>
                             <div class="clear"></div>
                         </td>
+                    <tr class="title" id="dropdown12">
+                        <td>Radar Diagram</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Radar Diagram</td>
+                        <td>Radar Diagram</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <div style = "text-align: right;">
+                                <div id="radar-chart1"></div>
+                                </div>
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+
+                            </div>
+                            <div class="child-data-right">
+                                <div id="radar-chart2"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </td>
                 </tbody>
             </table>
         </div>
@@ -654,6 +674,82 @@ var layout2 = {
 
     Plotly.newPlot("rating-chart2", data2, layout2, {displayModeBar: false});
 </script>
+    <script>
+    // Define data for the first radar chart
+    var categories1 = ['Passing Success', 'On target', 'Successful Tackles', 'Aerial Duels Won', 'Interceptions made', 'Passing Success']; // Add the first category again
+    var values1 = [
+        {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }},
+        {{ (p1onTarget*100) | round(2) }},
+        {{ (p1tackles["successful_tackles"] / p1tackles["total_tackles"] * 100) | round(2) }},
+        {{ (p1aerials["successful_aerials"]/ p1aerials["total_aerials"]*100) | round(2) }},
+        {{ p1interceptions }},
+        {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }} // Add the first data point again
+    ];
+
+    // Create the first radar chart using Plotly
+    var data1 = [
+        {
+            type: 'scatterpolar',
+            r: values1,
+            theta: categories1,
+            fill: 'toself',
+            name: 'Dataset 1'
+        }
+    ];
+
+    var layout1 = {
+        polar: {
+            radialaxis: {
+                visible: true,
+                range: [0, 100]  // Adjust the range as needed
+            }
+        },
+        showlegend: true,
+        plot_bgcolor: 'rgba(0,0,0,0)',  // Transparent background
+        paper_bgcolor: 'rgba(0,0,0,0)'  // Transparent background
+    };
+
+    Plotly.newPlot('radar-chart1', data1, layout1, {displayModeBar: false});
+
+    // Define data for the second radar chart
+    var categories2 = ['Passing Success', 'On target', 'Successful Tackles', 'Aerial Duels Won', 'Interceptions Made', 'Passing Success']; // Add the first category again
+    var values2 = [
+        {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }},
+        {{ (p2onTarget*100) | round(2) }},
+        {{ (p2tackles["successful_tackles"] / p2tackles["total_tackles"] * 100) | round(2) }},
+        {{ (p2aerials["successful_aerials"]/ p2aerials["total_aerials"]*100) | round(2) }},
+        {{ p2interceptions }},
+        {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }} // Add the first data point again
+    ];
+
+    // Create the second radar chart using Plotly
+    var data2 = [
+        {
+            type: 'scatterpolar',
+            r: values2,
+            theta: categories2,
+            fill: 'toself',
+            name: 'Dataset 2'
+        }
+    ];
+
+    var layout2 = {
+        polar: {
+            radialaxis: {
+                visible: true,
+                range: [0, 100]  // Adjust the range as needed
+            }
+        },
+        showlegend: true,
+        plot_bgcolor: 'rgba(0,0,0,0)',  // Transparent background
+        paper_bgcolor: 'rgba(0,0,0,0)'  // Transparent background
+    };
+
+    Plotly.newPlot('radar-chart2', data2, layout2, {displayModeBar: false});
+</script>
+
+
+
 
     <br>
     <br>
