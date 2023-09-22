@@ -7,7 +7,8 @@ def save_color_key_image(num1, num2, player1, player2, outcome):
     # Create boxplots for the datasets with larger markers and labels
     data = [num1, num2]
     box = ax.boxplot(data, labels=['Player 1', 'Player 2'], patch_artist=True,
-                     boxprops=dict(facecolor='lightblue'), widths=0.8)  # Adjust the width as needed
+                     boxprops=dict(facecolor='lightblue'), widths=0.8, showfliers=False, whis=0,
+                     whiskerprops={'linestyle': '', 'linewidth': 0})  # Remove whiskers
 
     # Customize the plot
     ax.set_title('Boxplot of Two Datasets', fontsize=40)  # Increase title font size
