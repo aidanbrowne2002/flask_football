@@ -83,6 +83,7 @@ class PitchThreat:
         fig1 = plt.gcf()
         #plt.show()
         fig1.savefig(f'static/images/threatlevels.png')
+        plt.close(fig1)
         return pitch
 
     def log_scale_array(self, pitch, new_min=0, new_max=10):

@@ -4,6 +4,7 @@ from psycopg2 import pool
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import image
+import data.update
 
 
 
@@ -155,6 +156,7 @@ def getPlayerTackles(playerID, postgreSQL_pool):
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/tackles/{playerID}.png', transparent=True)
+    plt.close(fig1)
     print(f"{len(fx_tackles)} successful tackles from: {len(tx_tackles) + len(fx_tackles)}")
     return {"total_tackles": (len(tx_tackles) + len(fx_tackles)), "successful_tackles": len(fx_tackles)}
 
@@ -222,6 +224,7 @@ def shotPos(postgreSQL_pool, playerID):
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/shotpos/{playerID}.png', transparent=True)
+    plt.close(fig1)
     return onTarget, len(scored_shots_x)
 
 def type(positon):
@@ -274,6 +277,7 @@ def getPlayerInterceptions(playerID, postgreSQL_pool):
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/interceptions/{playerID}.png', transparent=True)
+    plt.close(fig1)
     return len(interceptionsX)
 
 def getPlayeraerial(playerID, postgreSQL_pool):
@@ -321,6 +325,7 @@ def getPlayeraerial(playerID, postgreSQL_pool):
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/aerials/{playerID}.png', transparent=True)
+    plt.close(fig1)
     print(f"{len(fx_aerial)} successful aerials from: {len(tx_aerial) + len(fx_aerial)}")
     return {"total_aerials": (len(tx_aerial) + len(fx_aerial)), "successful_aerials": len(fx_aerial)}
 
@@ -361,6 +366,7 @@ def getPlayerblocks(playerID, postgreSQL_pool):
     plt.grid(False)
     fig1 = plt.gcf()
     fig1.savefig(f'static/images/blocks/{playerID}.png', transparent=True)
+    plt.close(fig1)
     return len(blocksx)
 
 def totalTimePlayed(playerID, postgreSQL_pool):
@@ -383,6 +389,7 @@ def totalTimePlayed(playerID, postgreSQL_pool):
         float_value = 0
     return float_value
 def playerxG(playerID, postgreSQL_pool):
+    data.update.player_xg_goals(playerID, postgreSQL_pool)
     ps_connection = postgreSQL_pool.getconn()
     ps_cursor = ps_connection.cursor()
     query = f"""select xg from players where id = {playerID};"""
@@ -397,7 +404,7 @@ def playerxG(playerID, postgreSQL_pool):
         print("No result or result is None")
     print (f"XG VALUES --- xg: {float_value}, total time played: {totalTimePlayed(playerID, postgreSQL_pool)}")
     try:
-        xG = float_value/totalTimePlayed(playerID, postgreSQL_pool)
+        xG = totalTimePlayed(playerID, postgreSQL_pool)/float_value
     except ZeroDivisionError:
         xG = 0
     #xG = totalTimePlayed(playerID, postgreSQL_pool)/float_value

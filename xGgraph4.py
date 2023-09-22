@@ -115,6 +115,7 @@ def genGraphs(playerID, postgreSQL_pool, avgGoalsTotals, avgxGTotals):
                     plt.subplots_adjust(left=0.1, right=0.9, top=0.98, bottom=0.1)
                     #plt.show()
                     fig1.savefig(save_path, transparent=True)
+                    plt.close(fig1)
                     return j
 
     goals_rank = generate_graph(avgGoalsTotals, 'Average Minutes per Goal', f'static/images/ranks/goals/{playerID}.png')

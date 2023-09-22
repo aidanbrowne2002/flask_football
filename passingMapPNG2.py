@@ -130,6 +130,7 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
     if not average_threat:
         average_threat = 0
     print (f"AVERAGE THREAT = '{average_threat}'")
+    plt.close(fig1)
     return average_threat
 
 
