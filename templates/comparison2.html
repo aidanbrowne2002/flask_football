@@ -42,6 +42,26 @@
                 </tr>
             </thead>
                 <tbody>
+                        <tr class="title" id="dropdown0">
+                        <td>Radar Diagram</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Radar Diagram</td>
+                        <td>Radar Diagram</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <div style = "text-align: right;">
+                                <div class="radar-plot-container" id="radar-chart1"></div>
+                                </div>
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+
+                            </div>
+                            <div class="child-data-right">
+                                <div class="radar-plot-container" id="radar-chart2"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </td>
                         <tr class="title" id="dropdown1">
                         <td>{% if p1stats[0][1] != 0 %}
                             {{ (p1stats[0][2] / p1stats[0][1] * 100) | round(2) }}%
@@ -62,6 +82,7 @@
                                 <img src="{{ url_for('static', filename='images/successful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <p>Threat</p>
                                 <img src="{{ url_for('static', filename='images/color_key_success/'+player1+'_'+player2+'.png') }}" alt="Successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';" style="max-height: 300px; max-width: 100%;">
                             </div>
                             <div class="child-data-right">
@@ -89,6 +110,7 @@
                                 <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
+                                <p>Threat</p>
                                 <img src="{{ url_for('static', filename='images/color_key_unsuccess/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png'; " style="max-height: 300px; max-width: 100%;">
                             </div>
                             <div class="child-data-right">
@@ -333,26 +355,7 @@
                             </div>
                             <div class="clear"></div>
                         </td>
-                    <tr class="title" id="dropdown12">
-                        <td>Radar Diagram</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Radar Diagram</td>
-                        <td>Radar Diagram</td>
-                    </tr>
-                    <tr class="child-row">
-                        <td class="child-data" colspan="3">
-                            <div class="child-data-left">
-                                <div style = "text-align: right;">
-                                <div id="radar-chart1"></div>
-                                </div>
-                            </div>
-                            <div class="child-data-middle"> <!-- New middle child column -->
 
-                            </div>
-                            <div class="child-data-right">
-                                <div id="radar-chart2"></div>
-                            </div>
-                            <div class="clear"></div>
-                        </td>
                 </tbody>
             </table>
         </div>
@@ -709,12 +712,28 @@ var layout2 = {
         polar: {
             radialaxis: {
                 visible: true,
-                range: [0, 100]  // Adjust the range as needed
-            }
+                range: [0, 100],  // Adjust the range as needed
+                ticks: 'outside', // Place the ticks outside the radar
+                ticklen: 10,      // Set the length of the ticks
+                gridcolor: 'rgb(105,105,105)'
+            },
+            bgcolor: '#3b3a3a'
         },
-        showlegend: true,
+        showlegend: false,  // Remove the legend
         plot_bgcolor: 'rgba(0,0,0,0)',  // Transparent background
-        paper_bgcolor: 'rgba(0,0,0,0)'  // Transparent background
+        paper_bgcolor: 'rgba(0,0,0,0)',  // Transparent background
+        margin: {
+            t: 15,  // Top margin
+            l: 15,  // Left margin
+            r: 15,  // Right margin
+            b: 15   // Bottom margin
+        },
+        // Adjust the label font size and color
+        font: {
+            family: 'Arial',  // Specify the font family
+            size: 14,         // Specify the font size
+            color: 'white'    // Specify the font color
+        }
     };
 
     Plotly.newPlot('radar-chart1', data1, layout1, {displayModeBar: false});
@@ -765,16 +784,35 @@ var layout2 = {
         polar: {
             radialaxis: {
                 visible: true,
-                range: [0, 100]  // Adjust the range as needed
-            }
+                range: [0, 100],  // Adjust the range as needed
+                ticks: 'outside', // Place the ticks outside the radar
+                ticklen: 10,      // Set the length of the ticks
+                gridcolor: 'rgb(105,105,105)'
+            },
+            bgcolor: '#3b3a3a'
         },
-        showlegend: true,
+        showlegend: false,  // Remove the legend
         plot_bgcolor: 'rgba(0,0,0,0)',  // Transparent background
-        paper_bgcolor: 'rgba(0,0,0,0)'  // Transparent background
+        paper_bgcolor: 'rgba(0,0,0,0)',  // Transparent background
+        margin: {
+            t: 15,  // Top margin
+            l: 15,  // Left margin
+            r: 15,  // Right margin
+            b: 15   // Bottom margin
+        },
+        // Adjust the label font size and color
+        font: {
+            family: 'Arial',  // Specify the font family
+            size: 14,         // Specify the font size
+            color: 'white'    // Specify the font color
+        }
     };
 
     Plotly.newPlot('radar-chart2', data2, layout2, {displayModeBar: false});
 </script>
+
+
+
 
 
 

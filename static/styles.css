@@ -461,3 +461,10 @@ table td:nth-child(2) {
     padding: 0; /* Remove any padding */
     /* Add any other styling you need */
 }
+.radar-plot-container {
+    width: 100%; /* Adjust as needed */
+    height: 350px; /* Initial height, adjust as needed */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    /* Add any other styling you need */
+}
