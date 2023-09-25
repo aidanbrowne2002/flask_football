@@ -666,12 +666,32 @@ var layout2 = {
     // Define data for the first radar chart
     var categories1 = ['Passing Success', 'On target', 'Successful Tackles', 'Aerial Duels Won', 'Interceptions made', 'Passing Success']; // Add the first category again
     var values1 = [
-        {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }},
-        {{ (p1onTarget*100) | round(2) }},
-        {{ (p1tackles["successful_tackles"] / p1tackles["total_tackles"] * 100) | round(2) }},
-        {{ (p1aerials["successful_aerials"]/ p1aerials["total_aerials"]*100) | round(2) }},
+        {% if p1stats[0][3] != 0 %}
+            {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
+        {% if p1onTarget != 0 %}
+            {{ (p1onTarget * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
+        {% if p1tackles["total_tackles"] != 0 %}
+            {{ (p1tackles["successful_tackles"] / p1tackles["total_tackles"] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
+        {% if p1aerials["total_aerials"] != 0 %}
+            {{ (p1aerials["successful_aerials"] / p1aerials["total_aerials"] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
         {{ p1interceptions }},
-        {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }} // Add the first data point again
+        {% if p1stats[0][3] != 0 %}
+            {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %}
     ];
 
     // Create the first radar chart using Plotly
@@ -702,12 +722,32 @@ var layout2 = {
     // Define data for the second radar chart
     var categories2 = ['Passing Success', 'On target', 'Successful Tackles', 'Aerial Duels Won', 'Interceptions Made', 'Passing Success']; // Add the first category again
     var values2 = [
-        {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }},
-        {{ (p2onTarget*100) | round(2) }},
-        {{ (p2tackles["successful_tackles"] / p2tackles["total_tackles"] * 100) | round(2) }},
-        {{ (p2aerials["successful_aerials"]/ p2aerials["total_aerials"]*100) | round(2) }},
+        {% if p2stats[0][2] != 0 %}
+            {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
+        {% if p2onTarget != 0 %}
+            {{ (p2onTarget * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
+        {% if p2tackles["total_tackles"] != 0 %}
+            {{ (p2tackles["successful_tackles"] / p2tackles["total_tackles"] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
+        {% if p2aerials["total_aerials"] != 0 %}
+            {{ (p2aerials["successful_aerials"] / p2aerials["total_aerials"] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %},
         {{ p2interceptions }},
-        {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }} // Add the first data point again
+        {% if p2stats[0][2] != 0 %}
+            {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }}
+        {% else %}
+            0
+        {% endif %}
     ];
 
     // Create the second radar chart using Plotly
@@ -735,6 +775,8 @@ var layout2 = {
 
     Plotly.newPlot('radar-chart2', data2, layout2, {displayModeBar: false});
 </script>
+
+
 
 
 
