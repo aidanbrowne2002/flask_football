@@ -399,7 +399,7 @@ def playerxG(playerID, postgreSQL_pool):
     # release the connection back to the connection pool
     if result and result[0] is not None:
         float_value = float(result[0])
-        print(float_value)
+        #print(float_value)
     else:
         print("No result or result is None")
     print (f"XG VALUES --- xg: {float_value}, total time played: {totalTimePlayed(playerID, postgreSQL_pool)}")
@@ -410,3 +410,87 @@ def playerxG(playerID, postgreSQL_pool):
     #xG = totalTimePlayed(playerID, postgreSQL_pool)/float_value
     postgreSQL_pool.putconn(ps_connection)
     return xG
+
+def playerNationality(playerID, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select nationality from players where id = {playerID};"""
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchone()
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    if result is not None:
+        result = result[0]
+        print(result)
+    else:
+        print("No result or result is None")
+    return result
+
+def flag(nationality):
+    nation_to_flag = {
+        "Burkina Faso": "bf.png",
+        "Italy": "it.png",
+        "Venezuela": "ve.png",
+        "Uruguay": "uy.png",
+        "Cameroon": "cm.png",
+        "Czech Republic": "cz.png",
+        "Sweden": "se.png",
+        "USA": "us.png",
+        "Germany": "de.png",
+        "Macedonia": "mk.png",
+        "Canada": "ca.png",
+        "Portugal": "pt.png",
+        "Colombia": "co.png",
+        "Wales": "gb-wls.png",
+        "Ukraine": "ua.png",
+        "Argentina": "ar.png",
+        "England": "gb-eng.png",
+        "Egypt": "eg.png",
+        "Greece": "gr.png",
+        "Republic of Ireland": "ie.png",
+        "Northern Ireland": "gb-nir.png",
+        "Algeria": "dz.png",
+        "Chile": "cl.png",
+        "France": "fr.png",
+        "Réunion": "re.png",
+        "Estonia": "ee.png",
+        "Slovakia": "sk.png",
+        "South Africa": "za.png",
+        "Kenya": "ke.png",
+        "Senegal": "sn.png",
+        "Ghana": "gh.png",
+        "Iceland": "is.png",
+        "Yugoslavia": "no data",  # No flag provided
+        "Kosovo": "xk.png",
+        "Japan": "jp.png",
+        "Sierra Leone": "sl.png",
+        "Denmark": "dk.png",
+        "Bosnia and Herzegovina": "ba.png",
+        "Jamaica": "jm.png",
+        "no data": "no data",  # No flag provided
+        "Korea Republic": "kp.png",
+        "Nigeria": "ng.png",
+        "Switzerland": "ch.png",
+        "Ecuador": "ec.png",
+        "Congo DR": "cd.png",
+        "Côte d'Ivoire": "ci.png",
+        "Norway": "no.png",
+        "Armenia": "am.png",
+        "Scotland": "gb-sct.png",
+        "Netherlands": "nl.png",
+        "Romania": "ro.png",
+        "Brazil": "br.png",
+        "Austria": "at.png",
+        "Australia": "au.png",
+        "Serbia": "rs.png",
+        "Ethiopia": "et.png",
+        "Lithuania": "lt.png",
+        "Spain": "es.png",
+        "Swaziland": "sz.png",
+        "Morocco": "ma.png",
+        "Belgium": "be.png",
+        "Burundi": "bi.png",
+        "Poland": "pl.png",
+        "Costa Rica": "cr.png",
+    }
+    return nation_to_flag[nationality]

@@ -19,7 +19,7 @@ def save_color_key_image(value1, value2, player1, player2, outcome, names, box_w
     fig, ax = plt.subplots(figsize=(3, 6))  # Adjust the width and height as needed
 
     # Display the image
-    ax.imshow(img, extent=[-0.5, 0.5, -2, 2])  # Adjust x-axis range here
+    ax.imshow(img, extent=[-0.2, 0.2, -2, 2])  # Adjust x-axis range here
 
     # Plot arrows with y positions based on the mean values
     arrow_length = 0.2  # Length of the arrows

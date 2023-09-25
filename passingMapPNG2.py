@@ -94,7 +94,7 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
 
     threat_values = np.array([pt.calculate_threat_difference((start_x[i], start_y[i]), (end_x[i], end_y[i]))
                               for i in range(len(start_x))])
-    print (threat_values)
+    #print (threat_values)
     scaled_threat = sigmoid_scale(threat_values)
 
     # Normalize the threat values to [0, 1]
@@ -130,7 +130,7 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
         fig1.savefig(f'static/images/unsuccessful_passes/{player_id}.png', transparent=True)
     if not average_threat:
         average_threat = 0
-    print (f"AVERAGE THREAT = '{average_threat}'")
+    #print (f"AVERAGE THREAT = '{average_threat}'")
     plt.close(fig1)
     return threat_values, average_threat
 

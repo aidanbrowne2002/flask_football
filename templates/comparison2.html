@@ -36,9 +36,13 @@
             <table>
                 <thead>
                 <tr>
-                    <th>{{ player1position }}</th>
+                    <th>{{ player1position }}
+                        <img src="{{ url_for('static', filename='images/flag_icons/' + p1flag) }}" alt="national flag" class="flag-image">
+                    </th>
                     <th></th>
-                    <th>{{ player2position }}</th>
+                    <th>{{ player2position }}
+                        <img src="{{ url_for('static', filename='images/flag_icons/' + p2flag) }}" alt="national flag" class="flag-image">
+                    </th>
                 </tr>
             </thead>
                 <tbody>
@@ -667,7 +671,7 @@ var layout2 = {
 </script>
     <script>
     // Define data for the first radar chart
-    var categories1 = ['Passing Success', 'On target', 'Successful Tackles', 'Aerial Duels Won', 'Interceptions made', 'Passing Success']; // Add the first category again
+    var categories1 = ['Passing', 'On target', 'Tackles', 'Aerial Duels', 'Interceptions', 'Passing']; // Add the first category again
     var values1 = [
         {% if p1stats[0][3] != 0 %}
             {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}
@@ -726,7 +730,7 @@ var layout2 = {
             t: 15,  // Top margin
             l: 15,  // Left margin
             r: 15,  // Right margin
-            b: 15   // Bottom margin
+            b: 20   // Bottom margin
         },
         // Adjust the label font size and color
         font: {
@@ -739,7 +743,7 @@ var layout2 = {
     Plotly.newPlot('radar-chart1', data1, layout1, {displayModeBar: false});
 
     // Define data for the second radar chart
-    var categories2 = ['Passing Success', 'On target', 'Successful Tackles', 'Aerial Duels Won', 'Interceptions Made', 'Passing Success']; // Add the first category again
+    var categories2 = ['Passing', 'On target', 'Tackles', 'Aerial Duels', 'Interceptions', 'Passing']; // Add the first category again
     var values2 = [
         {% if p2stats[0][2] != 0 %}
             {{ (p2stats[0][2] / p2stats[0][1] * 100) | round(2) }}
@@ -798,7 +802,7 @@ var layout2 = {
             t: 15,  // Top margin
             l: 15,  // Left margin
             r: 15,  // Right margin
-            b: 15   // Bottom margin
+            b: 20   // Bottom margin
         },
         // Adjust the label font size and color
         font: {

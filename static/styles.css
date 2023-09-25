@@ -131,6 +131,11 @@ button.centered-button {
     width: 80%;
     vertical-align: top; /* This aligns the top of the images if they have different heights */
 }
+.flag-image{
+    display: inline-block;
+    width: 25px;
+    vertical-align: top;
+}
 #loader {
     position: fixed;
     top: 50vh;

@@ -62,6 +62,6 @@ def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successf
         txRating = 0
     print (f"txRating final: {txRating}")
 
-    return txRating, txinfo
+    return round(txRating,0), txinfo
 
 
