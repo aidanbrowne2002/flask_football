@@ -427,6 +427,33 @@ def playerNationality(playerID, postgreSQL_pool):
         print("No result or result is None")
     return result
 
+def assists(playerID, postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""SELECT 
+  COUNT(CASE WHEN assist = 1 THEN 1 END) AS assist_count,
+  COUNT(CASE WHEN keypass = 1 THEN 1 END) AS keypass_count
+FROM eventfact
+WHERE player_id = { playerID };
+"""
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+    try:
+        num_assists = result[0][0]
+    except IndexError:
+        num_assists = 0
+    try:
+        num_keypasses = result[0][1]
+    except IndexError:
+        num_keypasses = 0
+    return num_assists, num_keypasses
+
+
+
+
 def flag(nationality):
     nation_to_flag = {
         "Burkina Faso": "bf.png",
