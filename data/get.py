@@ -419,6 +419,7 @@ def playerNationality(playerID, postgreSQL_pool):
     result = ps_cursor.fetchone()
     ps_cursor.close()
     # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
     if result is not None:
         result = result[0]
         print(result)

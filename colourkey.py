@@ -23,12 +23,12 @@ def save_color_key_image(value1, value2, player1, player2, outcome, names, box_w
 
     # Plot arrows with y positions based on the mean values
     arrow_length = 0.2  # Length of the arrows
-    ax.arrow(-1, mean_value1, arrow_length, 0, head_width=0.1, head_length=0.2, fc='orange', ec='orange')  # Left to right
-    ax.arrow(1, mean_value2, -arrow_length, 0, head_width=0.1, head_length=0.2, fc='orange', ec='orange')  # Right to left
+    ax.arrow(-0.7, mean_value1, arrow_length, 0, head_width=0.1, head_length=0.2, fc='orange', ec='orange')  # Left to right
+    ax.arrow(0.7, mean_value2, -arrow_length, 0, head_width=0.1, head_length=0.2, fc='orange', ec='orange')  # Right to left
 
     # Add mean labels near the arrows
-    ax.text(-1, mean_value1+0.15, f'{mean_value1:.2f}', ha='left', va='center', color='w', fontsize=12)
-    ax.text(1, mean_value2+0.15, f'{mean_value2:.2f}', ha='right', va='center', color='w', fontsize=12)
+    ax.text(-0.7, mean_value1+0.15, f'{mean_value1:.2f}', ha='left', va='center', color='w', fontsize=12)
+    ax.text(0.7, mean_value2+0.15, f'{mean_value2:.2f}', ha='right', va='center', color='w', fontsize=12)
 
     # Remove labels and legend
     ax.set_xticks([])

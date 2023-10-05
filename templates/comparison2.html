@@ -48,7 +48,7 @@
                 <tbody>
                         <tr class="title" id="dropdown0">
                         <td>Radar Diagram</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Radar Diagram</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Overview</td>
                         <td>Radar Diagram</td>
                     </tr>
                     <tr class="child-row">
@@ -87,7 +87,7 @@
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <p>Threat</p>
-                                <img src="{{ url_for('static', filename='images/color_key_success/'+player1+'_'+player2+'.png') }}" alt="Successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';" style="max-height: 300px; max-width: 100%;">
+                                <img src="{{ url_for('static', filename='images/color_key_success/'+player1+'_'+player2+'.png') }}" alt="Successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';" style="max-height: 100%; max-width: 35%;">
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/successful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
@@ -115,7 +115,7 @@
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                                 <p>Threat</p>
-                                <img src="{{ url_for('static', filename='images/color_key_unsuccess/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png'; " style="max-height: 300px; max-width: 100%;">
+                                <img src="{{ url_for('static', filename='images/color_key_unsuccess/'+player1+'_'+player2+'.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png'; " style="max-height: 100%; max-width: 35%;">
                             </div>
                             <div class="child-data-right">
                                 <img src="{{ url_for('static', filename='images/unsuccessful_passes/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">

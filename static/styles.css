@@ -135,6 +135,7 @@ button.centered-button {
     display: inline-block;
     width: 25px;
     vertical-align: top;
+    horiz-align: center;
 }
 #loader {
     position: fixed;
@@ -471,5 +472,10 @@ table td:nth-child(2) {
     height: 350px; /* Initial height, adjust as needed */
     margin: 0; /* Remove any margin */
     padding: 0; /* Remove any padding */
+    horiz-align: center;
     /* Add any other styling you need */
+}
+
+.plot-container plotly{
+    horiz-align: center;
 }

@@ -277,8 +277,6 @@ def comparison():
         p2aerials = get.getPlayeraerial(player_ids[1], get_db_pool())
         p1blocks = get.getPlayerblocks(player_ids[0], get_db_pool())
         p2blocks = get.getPlayerblocks(player_ids[1], get_db_pool())
-        #print (f"{p1stats[1][1]}, {p1onTarget}")
-        #print (p2stats[1][1], p2onTarget)
         p1nationality = get.playerNationality(player_ids[0], get_db_pool())
         p2nationality = get.playerNationality(player_ids[1], get_db_pool())
         p1flag = get.flag(p1nationality)
