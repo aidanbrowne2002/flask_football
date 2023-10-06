@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 
-def save_color_key_image(value1, value2, player1, player2, outcome, names, box_width=0.83):
+def save_color_key_image(value1, value2, player1, player2, outcome, box_width=0.83):
     mean_value1 = np.mean(value1)
     mean_value2 = np.mean(value2)
 
@@ -10,7 +10,7 @@ def save_color_key_image(value1, value2, player1, player2, outcome, names, box_w
     #if abs(mean_value1) > 2 or abs(mean_value2) > 2:
         #raise ValueError("Mean values must be between -2 and 2")
 
-    if outcome == 1:
+    if outcome in (1,2,3):
         img = mpimg.imread('static/images/passing_success.png')  # Replace 'background_image.png' with your image file
     else:
         img = mpimg.imread('static/images/passing_fail.png')
@@ -41,7 +41,13 @@ def save_color_key_image(value1, value2, player1, player2, outcome, names, box_w
     if outcome == 1:
         fig.savefig(f'static/images/color_key_success/{player1}_{player2}.png', bbox_inches='tight', transparent=True,
                     format='png')
-    else:
+    elif outcome == 0:
         fig.savefig(f'static/images/color_key_unsuccess/{player1}_{player2}.png', bbox_inches='tight', transparent=True,
+                    format='png')
+    elif outcome == 2:
+        fig.savefig(f'static/images/assists_colourkey/{player1}_{player2}.png', bbox_inches='tight', transparent=True,
+                    format='png')
+    elif outcome == 3:
+        fig.savefig(f'static/images/keypasses_colourkey/{player1}_{player2}.png', bbox_inches='tight', transparent=True,
                     format='png')
     plt.close(fig)

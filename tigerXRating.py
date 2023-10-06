@@ -24,7 +24,7 @@ def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successf
                (shotsOnTarget * shotOnTargetM) + \
                (xG * xGM) + \
                (successfulPasses * successfulPassM * successfulPassThreat) + \
-               (failedPasses * failedPassM *(1 - failedPassThreat)) + \
+               (failedPasses * failedPassM *(1-failedPassThreat)) + \
                (successfulChallenge * successfulChallengeM) + \
                (unsuccessfulChallenge * failedChallengeM) + \
                (shotOffTarget * shotOffTargetM)
@@ -36,7 +36,7 @@ def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successf
     print(f"Shots On Target: {shotsOnTarget}, multiplier: {shotOnTargetM}, score: {shotsOnTarget * shotOnTargetM}")
     print(f"XG: {xG}, multiplier: {xGM}, score: {xG * xGM}")
     print(f"Successful Passes: {successfulPasses}, multiplier: {successfulPassM}, threat: {successfulPassThreat}, score: {successfulPasses * successfulPassM * successfulPassThreat}")
-    print(f"Failed Passes: {failedPasses}, multiplier: {failedPassM}, threat: {1-failedPassThreat}, score: {failedPasses * failedPassM *(1 - failedPassThreat)}")
+    print(f"Failed Passes: {failedPasses}, multiplier: {failedPassM}, threat: {1-failedPassThreat}, score: {failedPasses * failedPassM *(1-failedPassThreat)}")
     print(f"Successful Challenges: {successfulChallenge}, multiplier: {successfulChallengeM}, score: {successfulChallenge * successfulChallengeM}")
     print(f"Unsuccessful Challenges: {unsuccessfulChallenge}, multiplier: {failedChallengeM}, score: {unsuccessfulChallenge * failedChallengeM}")
     print(f"Shot Off Target: {shotOffTarget}, multiplier: {shotOffTargetM}, score: {shotOffTarget * shotOffTargetM}")
@@ -48,7 +48,7 @@ def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successf
               (f"Shots On Target: {shotsOnTarget}, multiplier: {shotOnTargetM}, score: {shotsOnTarget * shotOnTargetM}"),
               (f"XG: {xG}, multiplier: {xGM}, score: {round(xG * xGM, 2)}"),
               (f"Successful Passes: {successfulPasses}, multiplier: {successfulPassM}, threat: {successfulPassThreat}, score: {round(successfulPasses * successfulPassM * successfulPassThreat, 2)}"),
-              (f"Failed Passes: {failedPasses}, multiplier: {failedPassM}, threat: {1-failedPassThreat}, score: {round(failedPasses * failedPassM *(1 - failedPassThreat), 2)}"),
+              (f"Failed Passes: {failedPasses}, multiplier: {failedPassM}, threat: {1-failedPassThreat}, score: {round(failedPasses * failedPassM *(1-failedPassThreat), 2)}"),
               (f"Successful Challenges: {successfulChallenge}, multiplier: {successfulChallengeM}, score: {successfulChallenge * successfulChallengeM}"),
               (f"Unsuccessful Challenges: {unsuccessfulChallenge}, multiplier: {failedChallengeM}, score: {unsuccessfulChallenge * failedChallengeM}"),
               (f"Shot Off Target: {shotOffTarget}, multiplier: {shotOffTargetM}, score: {shotOffTarget * shotOffTargetM}"),

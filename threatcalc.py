@@ -114,4 +114,5 @@ class PitchThreat:
         end_threat = self.pitch[end_y][end_x]
 
         # Return the difference in threat
+        #print (end_threat, start_threat)
         return end_threat - start_threat

@@ -52,6 +52,7 @@ def generate_player_plot(player_id, success, postgreSQL_pool):
 
     query = """SELECT
         e.event_id,
+        e.outcome,
         e.x AS start_x,
         e.y AS start_y,
         MAX(CASE WHEN q.q_id = 56 THEN q.value ELSE NULL END) AS zone,

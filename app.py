@@ -12,6 +12,8 @@ import colourkey
 import importlib
 import tigerXRating
 import keyPassPNG
+import numpy as np
+
 
 
 
@@ -232,6 +234,7 @@ def comparison():
                 spasses.append(passes)
                 sthreatvals.append(threatval)
             except:
+                print ("failed passes s")
                 spasses.append(0)
                 sthreatvals.append(0)
             try:
@@ -239,6 +242,7 @@ def comparison():
                 upasses.append(passes)
                 uthreatvals.append(threatval)
             except:
+                print("failed passes u")
                 upasses.append(0)
                 uthreatvals.append(0)
             try:
@@ -257,8 +261,8 @@ def comparison():
         p1stats = stats[0]
         p2stats = stats[1]
         #print(spasses)
-        colourkey.save_color_key_image(sthreatvals[0],sthreatvals[1],str(player_ids[0]),str(player_ids[1]),1, session['selected_names'])
-        colourkey.save_color_key_image(uthreatvals[0],uthreatvals[1],str(player_ids[0]),str(player_ids[1]),0, session['selected_names'])
+        colourkey.save_color_key_image(sthreatvals[0],sthreatvals[1],str(player_ids[0]),str(player_ids[1]),1)
+        colourkey.save_color_key_image(uthreatvals[0],uthreatvals[1],str(player_ids[0]),str(player_ids[1]),0)
         source1, target1, value1 = data.sankey.sankey(player_ids[0], get_db_pool())
         source2, target2, value2 = data.sankey.sankey(player_ids[1], get_db_pool())
 
@@ -281,14 +285,16 @@ def comparison():
         p2nationality = get.playerNationality(player_ids[1], get_db_pool())
         p1flag = get.flag(p1nationality)
         p2flag = get.flag(p2nationality)
-        p1rating, p1info = tigerXRating.ratePlayer(p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], spasses[0], p1stats[0][3], upasses[0], float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p1stats[1][1]*(1-p1onTarget),2), float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
-        p2rating, p2info = tigerXRating.ratePlayer(p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], spasses[1], p2stats[0][3], upasses[1], float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p2stats[1][1]*(1-p2onTarget),2), float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
+        p1rating, p1info = tigerXRating.ratePlayer(p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], np.mean(sthreatvals[0]), p1stats[0][3], np.mean(uthreatvals[0]), float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p1stats[1][1]*(1-p1onTarget),2), float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
+        p2rating, p2info = tigerXRating.ratePlayer(p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], np.mean(sthreatvals[1]), p2stats[0][3], np.mean(uthreatvals[1]), float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p2stats[1][1]*(1-p2onTarget),2), float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
         p1assists, p1keypasses = get.assists(player_ids[0], get_db_pool())
         p2assists, p2keypasses = get.assists(player_ids[1], get_db_pool())
-        keyPassPNG.generate_player_plot(player_ids[0], 1, get_db_pool())
-        keyPassPNG.generate_player_plot(player_ids[1], 1, get_db_pool())
-        keyPassPNG.generate_player_plot(player_ids[0], 0, get_db_pool())
-        keyPassPNG.generate_player_plot(player_ids[1], 0, get_db_pool())
+        p1assistthreats, p1assiststhreatsavg = keyPassPNG.generate_player_plot(player_ids[0], 1, get_db_pool())
+        p2assistthreats, p2assiststhreatsavg = keyPassPNG.generate_player_plot(player_ids[1], 1, get_db_pool())
+        p1keypassthreats, p1keypassthreatsavg = keyPassPNG.generate_player_plot(player_ids[0], 0, get_db_pool())
+        p2keypassthreats, p2keypassthreatsavg = keyPassPNG.generate_player_plot(player_ids[1], 0, get_db_pool())
+        colourkey.save_color_key_image(p1assistthreats, p2assistthreats, str(player_ids[0]), str(player_ids[1]), 2)
+        colourkey.save_color_key_image(p1keypassthreats, p2keypassthreats, str(player_ids[0]), str(player_ids[1]), 3)
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
