@@ -11,6 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import colourkey
 import importlib
 import tigerXRating
+import keyPassPNG
 
 
 
@@ -284,6 +285,10 @@ def comparison():
         p2rating, p2info = tigerXRating.ratePlayer(p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], spasses[1], p2stats[0][3], upasses[1], float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p2stats[1][1]*(1-p2onTarget),2), float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
         p1assists, p1keypasses = get.assists(player_ids[0], get_db_pool())
         p2assists, p2keypasses = get.assists(player_ids[1], get_db_pool())
+        keyPassPNG.generate_player_plot(player_ids[0], 1, get_db_pool())
+        keyPassPNG.generate_player_plot(player_ids[1], 1, get_db_pool())
+        keyPassPNG.generate_player_plot(player_ids[0], 0, get_db_pool())
+        keyPassPNG.generate_player_plot(player_ids[1], 0, get_db_pool())
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),

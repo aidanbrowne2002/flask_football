@@ -434,7 +434,7 @@ def assists(playerID, postgreSQL_pool):
   COUNT(CASE WHEN assist = 1 THEN 1 END) AS assist_count,
   COUNT(CASE WHEN keypass = 1 THEN 1 END) AS keypass_count
 FROM eventfact
-WHERE player_id = { playerID };
+WHERE player_id = {playerID};
 """
     ps_cursor.execute(query)
     result = ps_cursor.fetchall()

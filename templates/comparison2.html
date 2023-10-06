@@ -360,17 +360,37 @@
                             <div class="clear"></div>
                         </td>
                     <tr class="title" id="dropdown12">
-                        <td>{{ p1assists }} assists, {{ p1keypasses }} key passes</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Assists and keypasses</td>
-                        <td>{{ p2assists }} assists, {{ p2keypasses }} key passes</td>
+                        <td>{{ p1assists }} Assists</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Assists</td>
+                        <td>{{ p2assists }} Assists</td>
                     </tr>
                     <tr class="child-row">
                         <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
                             <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/assists/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="child-data-middle"> <!-- New middle child column -->
                             </div>
                             <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/assists/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    <tr class="title" id="dropdown13">
+                        <td>{{ p1keypasses }} Key Passes</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Key Passes</td>
+                        <td>{{ p2keypasses }} Key Passes</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/keypasses/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/keypasses/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
                             </div>
                             <div class="clear"></div>
                         </td>
