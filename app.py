@@ -91,6 +91,15 @@ class User(UserMixin):
 def load_user(user_id):
     return User.get(user_id)
 
+@app.context_processor
+def inject_user():
+    if current_user.is_authenticated:
+        username = current_user.username
+    else:
+        username = None
+    return dict(user_current=username)
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -106,7 +115,7 @@ def login():
             return redirect(next_page)
         else:
             flash('Invalid credentials', 'danger')
-    return render_template('login.html')
+    return render_template('login.html',)
 
 @app.route('/logout')
 @login_required
@@ -311,7 +320,16 @@ def comparison():
 
 
 
-
+@app.route('/admin_page')
+@login_required
+def admin_page():
+    if current_user.username == 'admin':
+        # Only allow access to users with the username 'admin'
+        users = get.users(get_db_pool())
+        return render_template('admin_page.html', users=users, active_page='admin')
+    else:
+        flash('You do not have permission to access this page.', 'danger')
+        return redirect('/')
 
 @app.route('/load_stats', methods=['POST'])
 def load_stats():

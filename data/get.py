@@ -522,3 +522,13 @@ def flag(nationality):
         "Costa Rica": "cr.png",
     }
     return nation_to_flag[nationality]
+def users(postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select username from users;"""
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+    return result

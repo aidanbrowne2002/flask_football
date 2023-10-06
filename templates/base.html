@@ -22,6 +22,10 @@
                 {% else %}
                     <li{% if active_page == 'login' %} class="active"{% endif %}><a href="/login">Login</a></li>
                 {% endif %}
+                {% if user_current == 'admin' %}
+                    <li{% if active_page == 'admin' %} class="active"{% endif %}><a href="/admin_page">Admin Page</a></li>
+                {% endif %}
+
             </ul>
         </div>
     </header>
