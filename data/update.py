@@ -3,6 +3,8 @@ import psycopg2
 from psycopg2 import pool
 import numpy as np
 from collections import defaultdict
+from werkzeug.security import generate_password_hash
+
 
 def player_xg_goals(player_id, postgreSQL_pool):
     xG_matrix = xgMatrix(postgreSQL_pool)
@@ -112,3 +114,36 @@ where event_type IN (13,14,15,16) and x > 50"""
     # Calculate xG for each bin
     xG_matrix = np.divide(goal_matrix, shot_matrix, out=np.zeros_like(goal_matrix), where=shot_matrix != 0)
     return xG_matrix
+
+def addUser(postgreSQL_pool, username, password):
+    try:
+        # Connect to your database
+        ps_connection = postgreSQL_pool.getconn()
+        ps_cursor = ps_connection.cursor()
+
+        # Hash the password before storing it
+        hashed_password = generate_password_hash(password)
+
+        # Insert the user into the database
+        ps_cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+        ps_connection.commit()
+    finally:
+        # Close the connection
+        ps_cursor.close()
+        # release the connection back to connection pool
+        postgreSQL_pool.putconn(ps_connection)
+
+def removeUser(postgreSQL_pool, username):
+    try:
+        # Connect to your database
+        ps_connection = postgreSQL_pool.getconn()
+        ps_cursor = ps_connection.cursor()
+        query = "DELETE FROM users WHERE username = %s"
+        ps_cursor.execute(query, (username,))
+        ps_connection.commit()
+    finally:
+        # Close the connection
+        ps_cursor.close()
+        # release the connection back to connection pool
+        postgreSQL_pool.putconn(ps_connection)
+

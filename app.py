@@ -1,7 +1,7 @@
 import data.sankey
 import xGgraph4
-from flask import Flask, render_template, request, session, redirect, url_for, flash
-from data import get, credentials, sankey
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
+from data import get, credentials, sankey, update
 import passingmapPNG
 import passingMapPNG2
 import psycopg2
@@ -320,9 +320,38 @@ def comparison():
 
 
 
-@app.route('/admin_page')
+@app.route('/admin_page', methods=['DELETE', 'POST', 'GET'])
 @login_required
 def admin_page():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == 'admin':
+            flash('Cannot change admin user', 'danger')
+            return redirect('/admin_page')
+        else:
+            update.addUser(get_db_pool(), username, password)
+            return redirect('/admin_page')
+    if request.method == 'DELETE':
+        data = request.get_json()
+        username_to_remove = data.get('username')
+
+        if username_to_remove == 'admin':
+            flash('Cannot change admin user', 'danger')
+            return redirect('/admin_page')
+
+        if current_user.username == 'admin':
+            # Call your remove user function here
+            update.removeUser(get_db_pool(), username_to_remove)
+
+            # Send a JSON response indicating success
+            return jsonify({'message': 'User removed successfully'})
+        else:
+            # Send a JSON response indicating lack of permission
+            return jsonify({'error': 'You do not have permission to remove users'})
+
+
+
     if current_user.username == 'admin':
         # Only allow access to users with the username 'admin'
         users = get.users(get_db_pool())

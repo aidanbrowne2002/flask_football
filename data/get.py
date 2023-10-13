@@ -525,7 +525,7 @@ def flag(nationality):
 def users(postgreSQL_pool):
     ps_connection = postgreSQL_pool.getconn()
     ps_cursor = ps_connection.cursor()
-    query = f"""select username from users;"""
+    query = f"""select username, created from users;"""
     ps_cursor.execute(query)
     result = ps_cursor.fetchall()
     ps_cursor.close()

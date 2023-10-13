@@ -3,16 +3,69 @@
 {% block title %}Comparison{% endblock %}
 
 {% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
-<table>
-  <tr>
-    <th>Usernames</th>
-  </tr>
-  {% for user in users %}
-    <tr>
-      <td>{{ user }}</td>
-    </tr>
-  {% endfor %}
-</table>
+    <div class="form-container">
+        <form action="/admin_page" method="POST">
+            <h1>Add User</h1>
+            <input type="text" id="username" name="username" value="UserName" onfocus="clearText(this)">
+            <input type="text" id="password" name="password" value="Password" onfocus="clearText(this)">
+            <button type="submit" class="centered-button" id="loadStatsButton">Add</button>
+            <script>
+                function clearText(element) {
+                    if (element.value === element.defaultValue) {
+                        element.value = '';
+                    }
+                }
+            </script>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <tr class="title">
+                <th>Users</th>
+                <th>Created on (BST-1)</th>
+                <th>Remove</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td><button type="button" class="remove-button centered-button" data-username="{{ user[0] }}">remove</button></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add a click event listener to all elements with the class 'remove-button'
+            const removeButtons = document.querySelectorAll('.remove-button');
+
+            removeButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const username = button.getAttribute('data-username');
+                    removeUser(username);
+                });
+            });
+
+            function removeUser(username) {
+                // Make an AJAX request to the server to remove the user
+                const xhr = new XMLHttpRequest();
+                xhr.open('DELETE', '/admin_page');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        // Handle success, e.g., refresh the page or update the UI
+                        window.location.reload();
+                    } else {
+                        // Handle error
+                        console.error(xhr.statusText);
+                    }
+                };
+                xhr.send(JSON.stringify({ username: username }));
+            }
+        });
+    </script>
 
 {% endblock %}

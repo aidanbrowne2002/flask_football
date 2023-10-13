@@ -713,8 +713,8 @@ var layout2 = {
     // Define data for the first radar chart
     var categories1 = ['Passing', 'On target', 'Tackles', 'Aerial Duels', 'Interceptions', 'Passing']; // Add the first category again
     var values1 = [
-        {% if p1stats[0][3] != 0 %}
-            {{ (p1stats[0][3] / p1stats[0][1] * 100) | round(2) }}
+        {% if p1stats[0][2] != 0 %}
+            {{ (p1stats[0][2] / p1stats[0][1] * 100) | round(2) }}
         {% else %}
             0
         {% endif %},
