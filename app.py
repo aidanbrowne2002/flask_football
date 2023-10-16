@@ -316,7 +316,7 @@ def comparison():
                            p1aerials = p1aerials, p2aerials = p2aerials, p1blocks = p1blocks, p2blocks = p2blocks,
                            p1rating = p1rating, p2rating = p2rating, p1info = p1info, p2info = p2info, p1flag = p1flag,
                            p2flag = p2flag, p1assists = p1assists, p2assists = p2assists, p1keypasses = p1keypasses,
-                           p2keypasses = p2keypasses)
+                           p2keypasses = p2keypasses, user = current_user.username)
 
 
 

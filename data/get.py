@@ -414,7 +414,7 @@ def playerxG(playerID, postgreSQL_pool):
 def playerNationality(playerID, postgreSQL_pool):
     ps_connection = postgreSQL_pool.getconn()
     ps_cursor = ps_connection.cursor()
-    query = f"""select nationality from players where id = {playerID};"""
+    query = f"""select country from players where id = {playerID};"""
     ps_cursor.execute(query)
     result = ps_cursor.fetchone()
     ps_cursor.close()

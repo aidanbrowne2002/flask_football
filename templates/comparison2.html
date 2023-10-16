@@ -46,7 +46,7 @@
                 </tr>
             </thead>
                 <tbody>
-                        <tr class="title" id="dropdown0">
+                <tr class="title" id="dropdown0">
                         <td>Radar Diagram</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Overview</td>
                         <td>Radar Diagram</td>
@@ -66,6 +66,87 @@
                             </div>
                             <div class="clear"></div>
                         </td>
+                    </tr>
+                <tr class="title" id="dropdown3">
+                        <td>Ranked {{ ranks[0][0] }} Amongst {{ p1type }}s</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Goals</td>
+                        <td>Ranked {{ ranks[1][0] }} Amongst {{ p2type }}s</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/ranks/goals/' + player1 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Strikers</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Midfielders</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Wingers/Wingbacks</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Defenders</span>
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/ranks/goals/' + player2 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    <tr class="title" id="dropdown12">
+                        <td>{{ p1assists }} Assists</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Assists</td>
+                        <td>{{ p2assists }} Assists</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/assists/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <p>Threat</p>
+                                <img src="{{ url_for('static', filename='images/assists_colourkey/'+player1+'_'+player2+'.png') }}" alt="Successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';" style="max-height: 100%; max-width: 35%;">
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/assists/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                <tr class="title" id="dropdown4">
+                        <td>Ranked {{ ranks[0][1] }} Amongst {{ p1type }}s</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Expected Goals</td>
+                        <td>Ranked {{ ranks[1][1] }} Amongst {{ p2type }}s</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3">
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Strikers</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Midfielders</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Wingers/Wingbacks</span>
+                                <br>
+                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
+                                <span style="vertical-align: middle;">Defenders</span>
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
                         <tr class="title" id="dropdown1">
                         <td>{% if p1stats[0][1] != 0 %}
                             {{ (p1stats[0][2] / p1stats[0][1] * 100) | round(2) }}%
@@ -123,66 +204,7 @@
                             <div class="clear"></div>
                         </td>
                     </tr>
-                    </tr>
-                    <tr class="title" id="dropdown3">
-                        <td>Ranked {{ ranks[0][0] }} Amongst {{ p1type }}s</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Goals</td>
-                        <td>Ranked {{ ranks[1][0] }} Amongst {{ p2type }}s</td>
-                    </tr>
-                    <tr class="child-row">
-                        <td class="child-data" colspan="3">
-                            <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/ranks/goals/' + player1 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="child-data-middle"> <!-- New middle child column -->
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Strikers</span>
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Midfielders</span>
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Wingers/Wingbacks</span>
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Defenders</span>
-                            </div>
-                            <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/ranks/goals/' + player2 + '.png') }}" alt="goals/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="clear"></div>
-                        </td>
-                    </tr>
-                    <tr class="title" id="dropdown4">
-                        <td>Ranked {{ ranks[0][1] }} Amongst {{ p1type }}s</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Expected Goals</td>
-                        <td>Ranked {{ ranks[1][1] }} Amongst {{ p2type }}s</td>
-                    </tr>
-                    <tr class="child-row">
-                        <td class="child-data" colspan="3">
-                            <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player1 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="child-data-middle"> <!-- New middle child column -->
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #1f76b3; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Strikers</span>
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #fd7e0e; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Midfielders</span>
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #2c9f2c; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Wingers/Wingbacks</span>
-                                <br>
-                                <div style="display: inline-block; width: 25px; height: 3px; background-color: #d42728; vertical-align: middle;"></div>
-                                <span style="vertical-align: middle;">Defenders</span>
-                            </div>
-                            <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/ranks/xG/' + player2 + '.png') }}" alt="Miinutes/xg" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="clear"></div>
-                        </td>
+
 
                     <tr class="title" id="dropdown5">
                         <td>{{ (p1stats[1][1])}} Shots</td>
@@ -331,6 +353,29 @@
                             </div>
                             <div class="clear"></div>
                         </td>
+
+
+                    <tr class="title" id="dropdown13">
+                        <td>{{ p1keypasses }} Key Passes</td>
+                        <td><i class="fas fa-caret-down dropdown-icon"></i>Key Passes</td>
+                        <td>{{ p2keypasses }} Key Passes</td>
+                    </tr>
+                    <tr class="child-row">
+                        <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
+                            <div class="child-data-left">
+                                <img src="{{ url_for('static', filename='images/keypasses/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="child-data-middle"> <!-- New middle child column -->
+                                <p>Threat</p>
+                                <img src="{{ url_for('static', filename='images/keypasses_colourkey/'+player1+'_'+player2+'.png') }}" alt="Successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';" style="max-height: 100%; max-width: 35%;">
+                            </div>
+                            <div class="child-data-right">
+                                <img src="{{ url_for('static', filename='images/keypasses/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    {% if user == "admin" %}
                     <tr class="title" id="dropdown11">
                         <td>Tx Info</td>
                         <td><i class="fas fa-caret-down dropdown-icon"></i>Tx Info</td>
@@ -359,46 +404,8 @@
                             </div>
                             <div class="clear"></div>
                         </td>
-                    <tr class="title" id="dropdown12">
-                        <td>{{ p1assists }} Assists</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Assists</td>
-                        <td>{{ p2assists }} Assists</td>
                     </tr>
-                    <tr class="child-row">
-                        <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
-                            <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/assists/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="child-data-middle"> <!-- New middle child column -->
-                                <p>Threat</p>
-                                <img src="{{ url_for('static', filename='images/assists_colourkey/'+player1+'_'+player2+'.png') }}" alt="Successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';" style="max-height: 100%; max-width: 35%;">
-                            </div>
-                            <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/assists/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="clear"></div>
-                        </td>
-                    </tr>
-                    <tr class="title" id="dropdown13">
-                        <td>{{ p1keypasses }} Key Passes</td>
-                        <td><i class="fas fa-caret-down dropdown-icon"></i>Key Passes</td>
-                        <td>{{ p2keypasses }} Key Passes</td>
-                    </tr>
-                    <tr class="child-row">
-                        <td class="child-data" colspan="3"> <!-- Update colspan to 4 for the new column -->
-                            <div class="child-data-left">
-                                <img src="{{ url_for('static', filename='images/keypasses/' + player1 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="child-data-middle"> <!-- New middle child column -->
-                                <p>Threat</p>
-                                <img src="{{ url_for('static', filename='images/keypasses_colourkey/'+player1+'_'+player2+'.png') }}" alt="Successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';" style="max-height: 100%; max-width: 35%;">
-                            </div>
-                            <div class="child-data-right">
-                                <img src="{{ url_for('static', filename='images/keypasses/' + player2 + '.png') }}" alt="successful Passing Map" class="inline-image" onError="this.onerror=null;this.src='/static/images/noimage.png';">
-                            </div>
-                            <div class="clear"></div>
-                        </td>
-                    </tr>
+                    {% endif %}
 
                 </tbody>
             </table>
