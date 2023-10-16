@@ -8,6 +8,7 @@
     <div class="form-container">
         <form action="/admin_page" method="POST">
             <h1>Add User</h1>
+            <input type="hidden" name="action" value="POST">
             <input type="text" id="username" name="username" value="UserName" onfocus="clearText(this)">
             <input type="text" id="password" name="password" value="Password" onfocus="clearText(this)">
             <button type="submit" class="centered-button" id="loadStatsButton">Add</button>
@@ -36,6 +37,24 @@
                 </tr>
             {% endfor %}
         </table>
+    </div>
+    <div class="table-container">
+        <form action="/admin_page" method="POST">
+        <input type="hidden" name="action" value="UPDATE">
+        <table>
+            <tr class="title">
+                <th>Multiplier</th>
+                <th>Value</th>
+            </tr>
+            {% for multiplier in multipliers %}
+                <tr>
+                    <td>{{ multiplier[1] }}</td>
+                    <td><input type="text" id={{ multiplier[1] }} name={{ multiplier[1] }} value={{ multiplier[0] }}></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <button type="submit" class="centered-button" id="loadStatsButton">UPDATE</button>
+        </form>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

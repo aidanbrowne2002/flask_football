@@ -147,3 +147,17 @@ def removeUser(postgreSQL_pool, username):
         # release the connection back to connection pool
         postgreSQL_pool.putconn(ps_connection)
 
+def multipliers(postgreSQL_pool, multipliers):
+    try:
+        # Connect to your database
+        ps_connection = postgreSQL_pool.getconn()
+        ps_cursor = ps_connection.cursor()
+        query = "UPDATE tigerx SET multiplier = %s WHERE name = %s"
+        for multiplier in multipliers:
+            ps_cursor.execute(query, (multiplier[0], multiplier[1]))
+        ps_connection.commit()
+    finally:
+        # Close the connection
+        ps_cursor.close()
+        # release the connection back to connection pool
+        postgreSQL_pool.putconn(ps_connection)

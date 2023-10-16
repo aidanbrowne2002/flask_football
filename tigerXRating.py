@@ -1,18 +1,23 @@
-def ratePlayer(goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successfulPasses, successfulPassThreat,
+from data import get
+
+def ratePlayer(postgreSQL_pool ,goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successfulPasses, successfulPassThreat,
                failedPasses, failedPassThreat, successfulChallenge, unsuccessfulChallenge, shotOffTarget, aerialDuelLost,
                minutesPlayed):
+
+    multipliers = get.multipliers(postgreSQL_pool)
+
     #Define Worth
-    goalM = 100
-    interceptionM = 25
-    xGM = 20
-    aerialWonM = 20
-    aerialLostM = -20
-    shotOnTargetM = 15
-    shotOffTargetM = -5
-    successfulPassM = 2
-    failedPassM = -2
-    successfulChallengeM = 3
-    failedChallengeM = -3
+    goalM = multipliers[7][0]
+    interceptionM = multipliers[1][0]
+    xGM = multipliers[6][0]
+    aerialWonM = multipliers[2][0]
+    aerialLostM = multipliers[3][0]
+    shotOnTargetM = multipliers[5][0]
+    shotOffTargetM = multipliers[10][0]
+    successfulPassM = multipliers[0][0]
+    failedPassM = multipliers[4][0]
+    successfulChallengeM = multipliers[8][0]
+    failedChallengeM = multipliers[9][0]
 
 
     txRating = 0

@@ -532,3 +532,14 @@ def users(postgreSQL_pool):
     # release the connection back to the connection pool
     postgreSQL_pool.putconn(ps_connection)
     return result
+
+def multipliers(postgreSQL_pool):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select multiplier, name from tigerx;"""
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+    return result

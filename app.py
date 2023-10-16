@@ -294,8 +294,8 @@ def comparison():
         p2nationality = get.playerNationality(player_ids[1], get_db_pool())
         p1flag = get.flag(p1nationality)
         p2flag = get.flag(p2nationality)
-        p1rating, p1info = tigerXRating.ratePlayer(p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], np.mean(sthreatvals[0]), p1stats[0][3], np.mean(uthreatvals[0]), float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p1stats[1][1]*(1-p1onTarget),2), float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
-        p2rating, p2info = tigerXRating.ratePlayer(p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], np.mean(sthreatvals[1]), p2stats[0][3], np.mean(uthreatvals[1]), float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p2stats[1][1]*(1-p2onTarget),2), float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
+        p1rating, p1info = tigerXRating.ratePlayer(get_db_pool(), p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], np.mean(sthreatvals[0]), p1stats[0][3], np.mean(uthreatvals[0]), float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p1stats[1][1]*(1-p1onTarget),2), float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
+        p2rating, p2info = tigerXRating.ratePlayer(get_db_pool(), p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], np.mean(sthreatvals[1]), p2stats[0][3], np.mean(uthreatvals[1]), float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p2stats[1][1]*(1-p2onTarget),2), float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
         p1assists, p1keypasses = get.assists(player_ids[0], get_db_pool())
         p2assists, p2keypasses = get.assists(player_ids[1], get_db_pool())
         p1assistthreats, p1assiststhreatsavg = keyPassPNG.generate_player_plot(player_ids[0], 1, get_db_pool())
@@ -320,18 +320,26 @@ def comparison():
 
 
 
-@app.route('/admin_page', methods=['DELETE', 'POST', 'GET'])
+@app.route('/admin_page', methods=['DELETE', 'POST', 'GET', 'UPDATE'])
 @login_required
 def admin_page():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username == 'admin':
-            flash('Cannot change admin user', 'danger')
-            return redirect('/admin_page')
-        else:
-            update.addUser(get_db_pool(), username, password)
-            return redirect('/admin_page')
+        if request.form['action'] == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            if username == 'admin':
+                flash('Cannot change admin user', 'danger')
+                return redirect('/admin_page')
+            else:
+                update.addUser(get_db_pool(), username, password)
+                return redirect('/admin_page')
+        if request.form['action'] == 'UPDATE':
+            multipliers = get.multipliers(get_db_pool())
+            newMultipliers = []
+            for multiples in multipliers:
+                newMultipliers.append([request.form[multiples[1]], multiples[1]])
+            print(f"new: {newMultipliers}")
+            update.multipliers(get_db_pool(), newMultipliers)
     if request.method == 'DELETE':
         data = request.get_json()
         username_to_remove = data.get('username')
@@ -355,7 +363,9 @@ def admin_page():
     if current_user.username == 'admin':
         # Only allow access to users with the username 'admin'
         users = get.users(get_db_pool())
-        return render_template('admin_page.html', users=users, active_page='admin')
+        multipliers = get.multipliers(get_db_pool())
+        print (multipliers)
+        return render_template('admin_page.html', users=users, active_page='admin', multipliers=multipliers)
     else:
         flash('You do not have permission to access this page.', 'danger')
         return redirect('/')
