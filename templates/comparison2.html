@@ -20,13 +20,31 @@
                 <h1>Players</h1>
                 <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
                 <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}" style="text-align: right;">
-                <button type="submit" class="centered-button" id="loadStatsButton">Compare</button>
+
+                <!-- Container for the button and switch -->
+                <div class="button-switch-container">
+                    <!-- Style the button as before -->
+                    <button type="submit" class="centered-button" id="loadStatsButton">Compare</button>
+
+                    <!-- Style the switch as before -->
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
             </form>
+
+
+
         </div>
 
         <div class="right-section">
             <div id="rating-chart2"></div>
         </div>
+    </div>
+    <div class = "betting-data">
+        <p>------------------------------------------------------------------------------------------------ Betting ------------------------------------------------------------------------------------------------------------------------</p>
+
     </div>
 
     <div id="loader"></div>
@@ -414,6 +432,15 @@
     </div>
 
 <script>
+    function toggleBettingData() {
+        var bettingData = document.querySelector('.betting-data');
+        var checkbox = document.querySelector('.switch input');
+
+        bettingData.style.display = checkbox.checked ? 'block' : 'none';
+    }
+
+    // Attach the toggleBettingData function to the checkbox's onchange event
+    document.querySelector('.switch input').onchange = toggleBettingData;
     $(document).ready(function () {
         var availableTags = {{ autocompleteData|tojson|safe }};
 
@@ -428,6 +455,7 @@
             $('.table-container').hide(); // Hide .table-container and its children
             $('.footer').hide();
             $('.page-container').hide();
+            $('.betting-data').hide();
         });
 
         $('.title').each(function () {
