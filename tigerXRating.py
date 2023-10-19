@@ -2,7 +2,7 @@ from data import get
 
 def ratePlayer(postgreSQL_pool ,goals, xG, interceptions, aerialDuelsWon, shotsOnTarget, successfulPasses, successfulPassThreat,
                failedPasses, failedPassThreat, successfulChallenge, unsuccessfulChallenge, shotOffTarget, aerialDuelLost,
-               minutesPlayed):
+               minutesPlayed, assists, keypasses):
 
     multipliers = get.multipliers(postgreSQL_pool)
 
@@ -18,6 +18,8 @@ def ratePlayer(postgreSQL_pool ,goals, xG, interceptions, aerialDuelsWon, shotsO
     failedPassM = multipliers[4][0]
     successfulChallengeM = multipliers[8][0]
     failedChallengeM = multipliers[9][0]
+    assistM = multipliers[11][0]
+    keypassm = multipliers[12][0]
 
 
     txRating = 0
@@ -32,7 +34,9 @@ def ratePlayer(postgreSQL_pool ,goals, xG, interceptions, aerialDuelsWon, shotsO
                (failedPasses * failedPassM *(1-failedPassThreat)) + \
                (successfulChallenge * successfulChallengeM) + \
                (unsuccessfulChallenge * failedChallengeM) + \
-               (shotOffTarget * shotOffTargetM)
+               (shotOffTarget * shotOffTargetM) + \
+               (assistM * assists) + \
+               (keypassm * keypasses)
 
     print(f"Goals: {goals}, multiplier: {goalM}, score: {goals * goalM}")
     print(f"Interceptions: {interceptions}, multiplier: {interceptionM}, score: {interceptions * interceptionM}")
@@ -46,6 +50,8 @@ def ratePlayer(postgreSQL_pool ,goals, xG, interceptions, aerialDuelsWon, shotsO
     print(f"Unsuccessful Challenges: {unsuccessfulChallenge}, multiplier: {failedChallengeM}, score: {unsuccessfulChallenge * failedChallengeM}")
     print(f"Shot Off Target: {shotOffTarget}, multiplier: {shotOffTargetM}, score: {shotOffTarget * shotOffTargetM}")
     print(f"minutesPlayed: {minutesPlayed}")
+    print(f"assists: {assists}, multiplier: {assistM}, score: {assists * assistM}")
+    print(f"keypasses: {keypasses}, multiplier: {keypassm}, score: {keypasses * keypassm}")
     txinfo = [(f"Goals: {goals}, multiplier: {goalM}, score: {goals * goalM}"),
               (f"Interceptions: {interceptions}, multiplier: {interceptionM}, score: {interceptions * interceptionM}"),
               (f"Aerial Duels Won: {aerialDuelsWon}, multiplier: {aerialWonM}, score: {aerialDuelsWon * aerialWonM}"),
@@ -57,7 +63,7 @@ def ratePlayer(postgreSQL_pool ,goals, xG, interceptions, aerialDuelsWon, shotsO
               (f"Successful Challenges: {successfulChallenge}, multiplier: {successfulChallengeM}, score: {successfulChallenge * successfulChallengeM}"),
               (f"Unsuccessful Challenges: {unsuccessfulChallenge}, multiplier: {failedChallengeM}, score: {unsuccessfulChallenge * failedChallengeM}"),
               (f"Shot Off Target: {shotOffTarget}, multiplier: {shotOffTargetM}, score: {shotOffTarget * shotOffTargetM}"),
-              (f"minutesPlayed: {minutesPlayed}")]
+              (f"minutesPlayed: {minutesPlayed}"), (f"assists: {assists}, multiplier: {assistM}, score: {assists * assistM}"), (f"keypasses: {keypasses}, multiplier: {keypassm}, score: {keypasses * keypassm}")]
 
     print(f"txRating pre time: {txRating}")
     print (f"minutesPlayed: {minutesPlayed}")

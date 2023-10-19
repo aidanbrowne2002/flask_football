@@ -294,10 +294,27 @@ def comparison():
         p2nationality = get.playerNationality(player_ids[1], get_db_pool())
         p1flag = get.flag(p1nationality)
         p2flag = get.flag(p2nationality)
-        p1rating, p1info = tigerXRating.ratePlayer(get_db_pool(), p1scored, get.playerxG(player_ids[0], get_db_pool()), p1interceptions, p1aerials["successful_aerials"], p1onTarget * (p1stats[1][1]), p1stats[0][2], np.mean(sthreatvals[0]), p1stats[0][3], np.mean(uthreatvals[0]), float(p1tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p1stats[1][1]*(1-p1onTarget),2), float(p1aerials["total_aerials"]-p1aerials["successful_aerials"]),get.totalTimePlayed(player_ids[0], get_db_pool()))
-        p2rating, p2info = tigerXRating.ratePlayer(get_db_pool(), p2scored, get.playerxG(player_ids[1], get_db_pool()), p2interceptions, p2aerials["successful_aerials"], p2onTarget * (p2stats[1][1]), p2stats[0][2], np.mean(sthreatvals[1]), p2stats[0][3], np.mean(uthreatvals[1]), float(p2tackles["successful_tackles"]), float(p1tackles["total_tackles"]-p1tackles["successful_tackles"]), round(p2stats[1][1]*(1-p2onTarget),2), float(p2aerials["total_aerials"]-p2aerials["successful_aerials"]),get.totalTimePlayed(player_ids[1], get_db_pool()))
         p1assists, p1keypasses = get.assists(player_ids[0], get_db_pool())
         p2assists, p2keypasses = get.assists(player_ids[1], get_db_pool())
+        p1rating, p1info = tigerXRating.ratePlayer(get_db_pool(), p1scored, get.playerxG(player_ids[0], get_db_pool()),
+                                                   p1interceptions, p1aerials["successful_aerials"],
+                                                   p1onTarget * (p1stats[1][1]), p1stats[0][2], np.mean(sthreatvals[0]),
+                                                   p1stats[0][3], np.mean(uthreatvals[0]),
+                                                   float(p1tackles["successful_tackles"]),
+                                                   float(p1tackles["total_tackles"] - p1tackles["successful_tackles"]),
+                                                   round(p1stats[1][1] * (1 - p1onTarget), 2),
+                                                   float(p1aerials["total_aerials"] - p1aerials["successful_aerials"]),
+                                                   get.totalTimePlayed(player_ids[0], get_db_pool()), p1assists, p1keypasses)
+        p2rating, p2info = tigerXRating.ratePlayer(get_db_pool(), p2scored, get.playerxG(player_ids[1], get_db_pool()),
+                                                   p2interceptions, p2aerials["successful_aerials"],
+                                                   p2onTarget * (p2stats[1][1]), p2stats[0][2], np.mean(sthreatvals[1]),
+                                                   p2stats[0][3], np.mean(uthreatvals[1]),
+                                                   float(p2tackles["successful_tackles"]),
+                                                   float(p1tackles["total_tackles"] - p1tackles["successful_tackles"]),
+                                                   round(p2stats[1][1] * (1 - p2onTarget), 2),
+                                                   float(p2aerials["total_aerials"] - p2aerials["successful_aerials"]),
+                                                   get.totalTimePlayed(player_ids[1], get_db_pool()), p2assists, p2keypasses)
+
         p1assistthreats, p1assiststhreatsavg = keyPassPNG.generate_player_plot(player_ids[0], 1, get_db_pool())
         p2assistthreats, p2assiststhreatsavg = keyPassPNG.generate_player_plot(player_ids[1], 1, get_db_pool())
         p1keypassthreats, p1keypassthreatsavg = keyPassPNG.generate_player_plot(player_ids[0], 0, get_db_pool())
