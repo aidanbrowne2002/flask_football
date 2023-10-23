@@ -20,30 +20,44 @@
                 <h1>Players</h1>
                 <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
                 <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}" style="text-align: right;">
+                <button type="submit" class="centered-button" id="loadStatsButton">Compare</button>
 
-                <!-- Container for the button and switch -->
-                <div class="button-switch-container">
-                    <!-- Style the button as before -->
-                    <button type="submit" class="centered-button" id="loadStatsButton">Compare</button>
-
-                    <!-- Style the switch as before -->
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
             </form>
-
-
-
         </div>
+
 
         <div class="right-section">
             <div id="rating-chart2"></div>
         </div>
     </div>
+    <div class="betting-control">
+    <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+    </label>
+    <p style="margin-left: 10px; color: orange">
+        Toggle Betting data
+    </p>
+    </div>
+
     <div class = "betting-data">
-        <p>------------------------------------------------------------------------------------------------ Betting ------------------------------------------------------------------------------------------------------------------------</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <p> player 1 </p>
+                    </th>
+                    <th></th>
+                    <th>
+                        <p> player 2 </p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+
+            </tbody>
+        </table>
 
     </div>
 
@@ -57,7 +71,8 @@
                     <th>{{ player1position }}
                         <img src="{{ url_for('static', filename='images/flag_icons/' + p1flag) }}" alt="national flag" class="flag-image">
                     </th>
-                    <th></th>
+                    <th>
+                    </th>
                     <th>{{ player2position }}
                         <img src="{{ url_for('static', filename='images/flag_icons/' + p2flag) }}" alt="national flag" class="flag-image">
                     </th>
@@ -456,6 +471,7 @@
             $('.footer').hide();
             $('.page-container').hide();
             $('.betting-data').hide();
+            $('.betting-control').hide();
         });
 
         $('.title').each(function () {
