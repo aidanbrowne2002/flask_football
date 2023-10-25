@@ -48,7 +48,7 @@
                         {% if betting_data[0] >= 0 %}
                             <p style="color: orange; font-size: 20pt; margin-right: 70px"> {{ p1rating }} + <span style="color: green">{{ betting_data[0] }}</span> = {{ p1rating+betting_data[0] }} </p>
                         {% else %}
-                            <p style="color: orange; font-size: 20pt; margin-right: 70px"> {{ p1rating }} + <span style="color: red">{{ betting_data[0] }}</span> = {{ p1rating+betting_data[0] }} </p>
+                            <p style="color: orange; font-size: 20pt; margin-right: 70px"> {{ p1rating }} - <span style="color: red">{{ betting_data[0] }}</span> = {{ p1rating+betting_data[0] }} </p>
                         {% endif %}
                     </th>
                     <th></th>
@@ -56,7 +56,7 @@
                         {% if betting_data[1] >= 0 %}
                             <p style="color: orange; font-size: 20pt; margin-left: 70px"> {{ p2rating }} + <span style="color: green">{{ betting_data[1] }}</span> = {{ p2rating+betting_data[1] }} </p>
                         {% else %}
-                            <p style="color: orange; font-size: 20pt; margin-left: 70px"> {{ p2rating }} + <span style="color: red">{{ betting_data[1] }}</span> = {{ p2rating+betting_data[1] }} </p>
+                            <p style="color: orange; font-size: 20pt; margin-left: 70px"> {{ p2rating }} - <span style="color: red">{{ betting_data[1] }}</span> = {{ p2rating+betting_data[1] }} </p>
                         {% endif %}
                     </th>
                 </tr>
