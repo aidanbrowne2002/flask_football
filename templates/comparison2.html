@@ -36,7 +36,7 @@
         <span class="slider round"></span>
     </label>
     <p style="margin-left: 10px; color: orange">
-        Toggle Betting data
+        Enable Betting data
     </p>
     </div>
 
@@ -45,11 +45,19 @@
             <thead>
                 <tr>
                     <th>
-                        <p> {{ p1rating }} + {{ betting_data[0] }} = {{ p1rating+betting_data[0] }} </p>
+                        {% if betting_data[0] >= 0 %}
+                            <p style="color: orange; font-size: 20pt; margin-right: 70px"> {{ p1rating }} + <span style="color: green">{{ betting_data[0] }}</span> = {{ p1rating+betting_data[0] }} </p>
+                        {% else %}
+                            <p style="color: orange; font-size: 20pt; margin-right: 70px"> {{ p1rating }} + <span style="color: red">{{ betting_data[0] }}</span> = {{ p1rating+betting_data[0] }} </p>
+                        {% endif %}
                     </th>
                     <th></th>
                     <th>
-                        <p> {{ p2rating }} + {{ betting_data[1] }} = {{ p2rating+betting_data[1] }} </p>
+                        {% if betting_data[1] >= 0 %}
+                            <p style="color: orange; font-size: 20pt; margin-left: 70px"> {{ p2rating }} + <span style="color: green">{{ betting_data[1] }}</span> = {{ p2rating+betting_data[1] }} </p>
+                        {% else %}
+                            <p style="color: orange; font-size: 20pt; margin-left: 70px"> {{ p2rating }} + <span style="color: red">{{ betting_data[1] }}</span> = {{ p2rating+betting_data[1] }} </p>
+                        {% endif %}
                     </th>
                 </tr>
             </thead>
