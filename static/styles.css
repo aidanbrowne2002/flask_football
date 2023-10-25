@@ -37,6 +37,7 @@
 .form-container {
     width: 30%; /* Set a fixed width for the container */
     margin: 5px auto; /* Center the container horizontally */
+    margin-top: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;

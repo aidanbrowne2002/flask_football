@@ -21,7 +21,13 @@
                 <input type="text" id="player1Name" name="playerName" value="{{ playernames[0] }}">
                 <input type="text" id="player2Name" name="playerName" value="{{ playernames[1] }}" style="text-align: right;">
                 <button type="submit" class="centered-button" id="loadStatsButton">Compare</button>
-
+                <label class="switch" style="margin-top: 10px;">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <p style="margin-left: 10px; color: orange">
+                    Enable Betting data
+                </p>
             </form>
         </div>
 
@@ -31,13 +37,8 @@
         </div>
     </div>
     <div class="betting-control">
-    <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-    </label>
-    <p style="margin-left: 10px; color: orange">
-        Enable Betting data
-    </p>
+
+
     </div>
 
     <div class = "betting-data">
