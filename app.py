@@ -323,6 +323,8 @@ def comparison():
         colourkey.save_color_key_image(p1assistthreats, p2assistthreats, str(player_ids[0]), str(player_ids[1]), 2)
         colourkey.save_color_key_image(p1keypassthreats, p2keypassthreats, str(player_ids[0]), str(player_ids[1]), 3)
         betting_data = [random.randint(-20,20), random.randint(-20,20)]
+        player1clubid, player1clubname = get.club(postgreSQL_pool, player_ids[0])
+        player2clubid, player2clubname = get.club(postgreSQL_pool, player_ids[1])
 
     return render_template('comparison2.html', autocompleteData=fullnames, compare=True, players=player_ids,
                            playernames=session['selected_names'], player1=str(player_ids[0]),
@@ -335,7 +337,8 @@ def comparison():
                            p1aerials = p1aerials, p2aerials = p2aerials, p1blocks = p1blocks, p2blocks = p2blocks,
                            p1rating = p1rating, p2rating = p2rating, p1info = p1info, p2info = p2info, p1flag = p1flag,
                            p2flag = p2flag, p1assists = p1assists, p2assists = p2assists, p1keypasses = p1keypasses,
-                           p2keypasses = p2keypasses, user = current_user.username, betting_data=betting_data)
+                           p2keypasses = p2keypasses, user = current_user.username, betting_data=betting_data,
+                           player1clubname = player1clubname, player2clubname = player2clubname)
 
 
 

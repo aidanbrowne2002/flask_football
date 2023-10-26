@@ -543,3 +543,19 @@ def multipliers(postgreSQL_pool):
     # release the connection back to the connection pool
     postgreSQL_pool.putconn(ps_connection)
     return result
+
+def club(postgreSQL_pool, playerID):
+    ps_connection = postgreSQL_pool.getconn()
+    ps_cursor = ps_connection.cursor()
+    query = f"""select game_club_id from players_in_game where game_player_id = {playerID};"""
+    ps_cursor.execute(query)
+    result = ps_cursor.fetchall()
+
+    query = f"""select team_name from club where id = {result[0][0]};"""
+    ps_cursor.execute(query)
+    club_name = ps_cursor.fetchall()
+
+    ps_cursor.close()
+    # release the connection back to the connection pool
+    postgreSQL_pool.putconn(ps_connection)
+    return result[0][0], club_name[0][0]

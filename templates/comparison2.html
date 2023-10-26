@@ -47,17 +47,17 @@
                 <tr>
                     <th>
                         {% if betting_data[0] >= 0 %}
-                            <p style="color: orange; font-size: 20pt; margin-right: 70px"> {{ p1rating|int }} + <span style="color: green">{{ betting_data[0] }}</span> = {{ (p1rating+betting_data[0])|int }} </p>
+                            <p style="color: orange; font-size: 20pt; margin-right: 70px"><span style="color: green">+{{ betting_data[0] }}</span> = {{ (p1rating+betting_data[0])|int }} </p>
                         {% else %}
-                            <p style="color: orange; font-size: 20pt; margin-right: 70px"> {{ p1rating|int }} - <span style="color: red">{{ betting_data[0]|abs }}</span> = {{ (p1rating+betting_data[0])|int }} </p>
+                            <p style="color: orange; font-size: 20pt; margin-right: 70px"><span style="color: red">-{{ betting_data[0]|abs }}</span> = {{ (p1rating+betting_data[0])|int }} </p>
                         {% endif %}
                     </th>
                     <th></th>
                     <th>
                         {% if betting_data[1] >= 0 %}
-                            <p style="color: orange; font-size: 20pt; margin-left: 70px"> {{ p2rating|int }} + <span style="color: green">{{ betting_data[1] }}</span> = {{ (p2rating+betting_data[1])|int }} </p>
+                            <p style="color: orange; font-size: 20pt; margin-left: 70px"><span style="color: green">+{{ betting_data[1] }}</span> = {{ (p2rating+betting_data[1])|int }} </p>
                         {% else %}
-                            <p style="color: orange; font-size: 20pt; margin-left: 70px"> {{ p2rating|int }} - <span style="color: red">{{ betting_data[1]|abs }}</span> = {{ (p2rating+betting_data[1])|int }} </p>
+                            <p style="color: orange; font-size: 20pt; margin-left: 70px"><span style="color: red">-{{ betting_data[1]|abs }}</span> = {{ (p2rating+betting_data[1])|int }} </p>
                         {% endif %}
                     </th>
                 </tr>
@@ -77,12 +77,16 @@
             <table>
                 <thead>
                 <tr>
-                    <th>{{ player1position }}
+                    <th>
+                        <img src="{{ url_for('static', filename='images/badges/' + player1clubname) }}.png" alt="national flag" class="flag-image">
+                        {{ player1position }}
                         <img src="{{ url_for('static', filename='images/flag_icons/' + p1flag) }}" alt="national flag" class="flag-image">
                     </th>
                     <th>
                     </th>
-                    <th>{{ player2position }}
+                    <th>
+                        <img src="{{ url_for('static', filename='images/badges/' + player2clubname) }}.png" alt="national flag" class="flag-image">
+                        {{ player2position }}
                         <img src="{{ url_for('static', filename='images/flag_icons/' + p2flag) }}" alt="national flag" class="flag-image">
                     </th>
                 </tr>
