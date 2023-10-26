@@ -141,8 +141,14 @@ button.centered-button {
 }
 .flag-image{
     display: inline-block;
-    width: 25px;
-    vertical-align: top;
+    width: 30px;
+    vertical-align: middle;
+    horiz-align: center;
+}
+.club-image{
+    display: inline-block;
+    width: 37px;
+    vertical-align: middle;
     horiz-align: center;
 }
 #loader {
